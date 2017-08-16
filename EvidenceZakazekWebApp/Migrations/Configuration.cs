@@ -1,5 +1,6 @@
 namespace EvidenceZakazekWebApp.Migrations
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,6 +27,12 @@ namespace EvidenceZakazekWebApp.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Suppliers.AddOrUpdate(
+                      new Supplier { Name = "Sonepar" },
+                      new Supplier { Name = "Sick" },
+                      new Supplier { Name = "ControlTech" }
+                );
         }
     }
 }
