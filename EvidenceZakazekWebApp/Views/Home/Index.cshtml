@@ -6,6 +6,6 @@
 <ul class="products">
     @foreach (var product in Model)
     {
-        <li>@product.Name | @product.OrderNumber | @product.Price Kč</li>
+        <li>@product.Supplier.Name | @product.Name | @product.OrderNumber | @product.Price Kč</li>
     }
 </ul>

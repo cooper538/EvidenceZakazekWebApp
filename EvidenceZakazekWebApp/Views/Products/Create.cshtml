@@ -1,12 +1,14 @@
 ﻿@model EvidenceZakazekWebApp.ViewModels.ProductFormViewModel
 @{
-    ViewBag.Title = "Vytvoř produkt";
+    ViewBag.Title = "Vytvořit produkt";
 }
 
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("Create", "Products"))
 {
+    <p class="alert alert-info">Věchny pole jsou <strong>povinné</strong>.</p>
+    @Html.AntiForgeryToken();
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
