@@ -12,11 +12,11 @@ namespace EvidenceZakazekWebApp.Models
 
         [Required]
         [StringLength(255)]
-        public string TypeName { get; set; }
+        public string OrderNumber { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string OrderNumber { get; set; }
+        public string TypeName { get; set; }
 
         public decimal Price { get; set; }
 
