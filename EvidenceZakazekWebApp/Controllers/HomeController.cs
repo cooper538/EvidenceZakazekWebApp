@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EvidenceZakazekWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,18 @@ namespace EvidenceZakazekWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        ApplicationDbContext _context;
+
+        public HomeController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var products = _context.Products.ToList();
+
+            return View(products);
         }
 
         public ActionResult About()

@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201708160902170_AddProductAndSupplierTable.Designer.cs">
       <DependentUpon>201708160902170_AddProductAndSupplierTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708161301422_RenameKeyForeignPropertyInProduct.cs" />
+    <Compile Include="Migrations\201708161301422_RenameKeyForeignPropertyInProduct.Designer.cs">
+      <DependentUpon>201708161301422_RenameKeyForeignPropertyInProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -277,6 +281,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708160902170_AddProductAndSupplierTable.resx">
       <DependentUpon>201708160902170_AddProductAndSupplierTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708161301422_RenameKeyForeignPropertyInProduct.resx">
+      <DependentUpon>201708161301422_RenameKeyForeignPropertyInProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

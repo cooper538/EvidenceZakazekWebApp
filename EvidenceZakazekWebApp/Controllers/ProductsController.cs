@@ -23,5 +23,23 @@ namespace EvidenceZakazekWebApp.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Create(ProductFormViewModel viewModel)
+        {
+            var product = new Product()
+            {
+                Name = viewModel.Name,
+                OrderNumber = viewModel.OrderNumber,
+                TypeName = viewModel.TypeName,
+                Price = viewModel.Price,
+                SupplierId = viewModel.Supplier
+            };
+
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
