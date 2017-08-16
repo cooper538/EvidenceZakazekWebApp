@@ -27,6 +27,12 @@ namespace EvidenceZakazekWebApp.Controllers
         [HttpPost]
         public ActionResult Create(ProductFormViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Suppliers = _context.Suppliers.ToList();
+                return View("Create", viewModel);
+            }
+
             var product = new Product()
             {
                 Name = viewModel.Name,

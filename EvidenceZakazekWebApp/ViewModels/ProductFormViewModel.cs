@@ -7,18 +7,24 @@ namespace EvidenceZakazekWebApp.ViewModels
 {
     public class ProductFormViewModel
     {
+        [Required]
         [DisplayName("Jméno")]
         public string Name { get; set; }
 
+        [Required]
         [DisplayName("Objednací číslo")]
         public string OrderNumber { get; set; }
 
+        [Required]
         [DisplayName("Typové označení")]
         public string TypeName { get; set; }
 
+        // Inspired by (\. to \,) https://stackoverflow.com/a/308124
+        [RegularExpression(@"^\d+([\,]\d*)?$", ErrorMessage = "Pole Cena musí obsahovat číslo.")]
         [DisplayName("Cena")]
         public decimal Price { get; set; }
 
+        [Required]
         [DisplayName("Dodavatel")]
         public int Supplier { get; set; }
 
