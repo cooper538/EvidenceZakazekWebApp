@@ -3,45 +3,42 @@
     ViewBag.Title = "Home Page";
 }
 
-@*<ul class="products">
-        @foreach (var product in Model)
-        {
-            <li>@product.Supplier.Name | @product.Name | @product.OrderNumber | @product.Price Kč</li>
-        }
-    </ul>*@
+<table id="products" class="table table-striped table-bordered"></table>
 
-<table id="products" class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-        </tr>
-        <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-        </tr>
-    </tbody>
-</table>
 
 @section scripts
 {
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/datatables.js"></script>
 
     <script>
-        $(document).ready( function () {
-            $('table#products').DataTable({
-                "searching": false,
-                "paging": false,
-                "ordering": false,
-                "info": false
+        $.getJSON("/api/Products", function (json) {
+            $(document).ready(function () {
+
+                // format like columns: [{ "title": "name"}, { "title": "country"}]
+                var columnHeaders = [];
+                $.each(json[0], function (key) {
+                    columnHeaders.push({ "title": key });
+                });
+
+                // format like data: [["John Doe","Fresno"],["Billy","Fresno"],["Tom","Kern"],["King Smith","Kings"]]}]
+                var tableData = new Array();
+                for (var i = 0; i < json.length; i++) {
+                    var arr = new Array();
+                    for (var key in json[i]) {
+                        arr.push(json[i][key]);
+                    }
+                    tableData.push(arr);
+                }
+
+                $('#products').DataTable({
+                    data: tableData,
+                    columns: columnHeaders,
+                    searching: false,
+                    paging: false,
+                    ordering: false,
+                    info: false
+                });
             });
         });
-    </script>>
- 
+    </script> 
 }
