@@ -11,28 +11,15 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/datatables.js"></script>
 
     <script>
-        $.getJSON("/api/Products", function (json) {
+        $.getJSON("/api/Products/forTable", function (json) {
             $(document).ready(function () {
 
                 // format like columns: [{ "title": "name"}, { "title": "country"}]
-                var columnHeaders = [];
-                $.each(json[0], function (key) {
-                    columnHeaders.push({ "title": key });
-                });
-
                 // format like data: [["John Doe","Fresno"],["Billy","Fresno"],["Tom","Kern"],["King Smith","Kings"]]}]
-                var tableData = new Array();
-                for (var i = 0; i < json.length; i++) {
-                    var arr = new Array();
-                    for (var key in json[i]) {
-                        arr.push(json[i][key]);
-                    }
-                    tableData.push(arr);
-                }
 
                 $('#products').DataTable({
-                    data: tableData,
-                    columns: columnHeaders,
+                    data: json["data"],
+                    columns: json["columns"],
                     searching: false,
                     paging: false,
                     ordering: false,
