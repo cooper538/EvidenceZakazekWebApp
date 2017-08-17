@@ -50,3 +50,7 @@ span.field-validation-error {
 .products {
   margin-top: 20px;
 }
+table#products {
+  margin-top: 20px;
+  width: 80%;
+}
