@@ -1,0 +1,32 @@
+﻿@model EvidenceZakazekWebApp.ViewModels.ProductCategoryFormViewModel
+@using MyToolkit.Html
+@{
+    ViewBag.Title = "Vytvořit kategorii";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "Products"))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PropertyDefinitions, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CollectionEditorFor(m => m.PropertyDefinitions, "Partial/PropertyDefinitionForm", "GetPropertyDefinitionForm",
+            "Přidej vlastnost", new { @class = "btn btn-default" })
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    
+}
