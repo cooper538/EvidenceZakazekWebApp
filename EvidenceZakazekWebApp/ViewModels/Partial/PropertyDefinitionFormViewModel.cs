@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EvidenceZakazekWebApp.ViewModels.Partial
 {
@@ -8,10 +9,12 @@ namespace EvidenceZakazekWebApp.ViewModels.Partial
 
         [Required]
         [StringLength(255)]
+        [DisplayName("Jméno")]
         public string Name { get; set; }
 
         [Required]
         [StringLength(255)]
+        [DisplayName("Měrná Jednotka")]
         public string MeasureUnit { get; set; }
     }
 }
