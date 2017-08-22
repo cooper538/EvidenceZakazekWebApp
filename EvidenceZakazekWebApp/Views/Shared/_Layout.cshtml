@@ -23,7 +23,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Vytvořit produkt", "Create", "Products")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -39,5 +38,9 @@
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @section scripts
+    {
+
+    }
 </body>
 </html>

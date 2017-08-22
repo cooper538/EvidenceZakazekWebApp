@@ -16,6 +16,24 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
+        @* Vyřešeno pomocí https://stackoverflow.com/a/35551184/6355668 *@
+        <li class="dropdown">
+            <a id="dLabel" href="onClick()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" CausesValidation="false">
+                Produkty
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                <li><a href="@Url.Action("Create", "Products")">Přidej produkt</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+        <a id="dLabel" href="onClick()" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Kategorie produktů
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+            <li><a href="@Url.Action("Create", "ProductCategories")">Přidej kategorii</a></li>
+        </ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
