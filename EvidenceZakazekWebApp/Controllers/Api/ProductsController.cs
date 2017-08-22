@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Reflection;
 using System.Collections;
 using Newtonsoft.Json;
+using EvidenceZakazekWebApp.Helpers;
 
 namespace EvidenceZakazekWebApp.Controllers.Api
 {
@@ -44,7 +45,7 @@ namespace EvidenceZakazekWebApp.Controllers.Api
 
             // from https://stackoverflow.com/a/10542548/6355668
             // without serialize it (problem with escaping)
-            var tableData = GetObjectArray(productDtos);
+            var tableData = ObjectHelper.GetObjectArray(productDtos);
 
             var columnHeaders = new[] {
                 new { title = "Id" },
@@ -59,11 +60,6 @@ namespace EvidenceZakazekWebApp.Controllers.Api
                 data = tableData,
                 columns = columnHeaders
             }); 
-        }
-
-        public static IEnumerable<object> GetObjectArray<T>(IEnumerable<T> obj)
-        {
-            return obj.Select(o => o.GetType().GetProperties().Select(p => p.GetValue(o, null)));
         }
     }
 }

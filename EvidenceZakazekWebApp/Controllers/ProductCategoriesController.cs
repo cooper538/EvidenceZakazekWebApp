@@ -16,6 +16,11 @@ namespace EvidenceZakazekWebApp.Controllers
             _context = new ApplicationDbContext();
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Create()
         {
             var viewModel = new ProductCategoryFormViewModel();

@@ -10,6 +10,9 @@ namespace EvidenceZakazekWebApp.App_Start
         {
             CreateMap<Product, ProductDto>()
                 .ForMember(pd => pd.SupplierName, opt => opt.MapFrom(p => p.Supplier.Name));
+
+            CreateMap<ProductCategory, ProductCategoryDto>();
+            CreateMap<PropertyDefinition, PropertyDefinitionDto>();
         }
     }
 }
