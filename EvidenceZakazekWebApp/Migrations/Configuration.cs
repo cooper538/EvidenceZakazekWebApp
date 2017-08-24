@@ -26,13 +26,40 @@
             //
 
             context.Suppliers.AddOrUpdate(
-                    s => s.Name,
-                    new Supplier { Id = 1, Name = "Sonepar" },
-                    new Supplier { Id = 2, Name = "Sick" },
-                    new Supplier { Id = 3, Name = "ControlTech" },
-                    new Supplier { Id = 4, Name = "Schrack" }
-
+                s => s.Name,
+                new Supplier { Id = 1, Name = "Sonepar" },
+                new Supplier { Id = 2, Name = "Sick" },
+                new Supplier { Id = 3, Name = "ControlTech" },
+                new Supplier { Id = 4, Name = "Schrack" }
                 );
+
+            context.ProductCategories.AddOrUpdate(
+                pc => pc.Name,
+                new ProductCategory
+                {
+                    Id = 1,
+                    Name = "Jističe",
+                });
+
+            context.SaveChanges();
+
+            context.PropertyDefinitions.AddOrUpdate(
+                pd => new { pd.Name, pd.ProductCategoryId },
+                new PropertyDefinition
+                {
+                    Name = "Vypínací charakteristika",
+                    MeasureUnit = "Typ",
+                    ProductCategoryId = 1
+
+                },
+                new PropertyDefinition
+                {
+                    Name = "Jmenovitý proud",
+                    MeasureUnit = "A",
+                    ProductCategoryId = 1
+                });
+
+            context.SaveChanges();
 
             context.Products.AddOrUpdate(
                 p => p.Name,
@@ -42,7 +69,8 @@
                     OrderNumber = "BM017104--",
                     TypeName = "BM017104--",
                     Price = 183.70M,
-                    SupplierId = 4
+                    SupplierId = 4,
+                    ProductCategoryId = 1
                 },
                 new Product
                 {
@@ -50,7 +78,8 @@
                     OrderNumber = "BE400204--",
                     TypeName = "BE400204--",
                     Price = 421.85M,
-                    SupplierId = 4
+                    SupplierId = 4,
+                    ProductCategoryId = 1
                 },
                 new Product
                 {
@@ -58,10 +87,10 @@
                     OrderNumber = "3031238",
                     TypeName = "ST 2,5-PE",
                     Price = 81.74M,
-                    SupplierId = 1
+                    SupplierId = 1,
+                    ProductCategoryId = 1
                 }
             );
         }
-
     }
 }

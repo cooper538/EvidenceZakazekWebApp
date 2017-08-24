@@ -20,9 +20,14 @@ namespace EvidenceZakazekWebApp.Models
 
         public decimal Price { get; set; }
 
+        [Required]
         public Supplier Supplier { get; set; }
 
-        [Required]
         public int SupplierId { get; set; }
+
+        [Required]
+        public ProductCategory ProductCategory { get; set; }
+
+        public int ProductCategoryId { get; set; }
     }
 }

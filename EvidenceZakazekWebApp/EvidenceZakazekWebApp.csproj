@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MigrationHelper.cs" />
     <Compile Include="Helpers\ObjectHelper.cs" />
     <Compile Include="Migrations\201708160658231_InitialModel.cs" />
     <Compile Include="Migrations\201708160658231_InitialModel.Designer.cs">
@@ -223,6 +224,14 @@
     <Compile Include="Migrations\201708180856498_CreateProductCategoryAndProperty.cs" />
     <Compile Include="Migrations\201708180856498_CreateProductCategoryAndProperty.Designer.cs">
       <DependentUpon>201708180856498_CreateProductCategoryAndProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708231125433_AddCategoryIdToProduct.cs" />
+    <Compile Include="Migrations\201708231125433_AddCategoryIdToProduct.Designer.cs">
+      <DependentUpon>201708231125433_AddCategoryIdToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708231145201_Product-ProductCategoryId-DropDefault.cs" />
+    <Compile Include="Migrations\201708231145201_Product-ProductCategoryId-DropDefault.Designer.cs">
+      <DependentUpon>201708231145201_Product-ProductCategoryId-DropDefault.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -300,6 +309,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\Site.less" />
+    <Content Include="PackageManager_comands.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -385,6 +395,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708180856498_CreateProductCategoryAndProperty.resx">
       <DependentUpon>201708180856498_CreateProductCategoryAndProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708231125433_AddCategoryIdToProduct.resx">
+      <DependentUpon>201708231125433_AddCategoryIdToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708231145201_Product-ProductCategoryId-DropDefault.resx">
+      <DependentUpon>201708231145201_Product-ProductCategoryId-DropDefault.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

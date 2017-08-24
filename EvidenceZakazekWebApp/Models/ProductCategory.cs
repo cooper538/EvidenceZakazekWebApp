@@ -12,5 +12,7 @@ namespace EvidenceZakazekWebApp.Models
         public string Name { get; set; }
 
         public ICollection<PropertyDefinition> PropertyDefinitions { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }
