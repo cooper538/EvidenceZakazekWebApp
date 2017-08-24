@@ -11,7 +11,6 @@ namespace EvidenceZakazekWebApp.Models
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string MeasureUnit { get; set; }
 

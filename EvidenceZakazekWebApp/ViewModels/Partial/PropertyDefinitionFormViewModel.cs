@@ -12,7 +12,6 @@ namespace EvidenceZakazekWebApp.ViewModels.Partial
         [DisplayName("Jméno")]
         public string Name { get; set; }
 
-        [Required]
         [StringLength(255)]
         [DisplayName("Měrná Jednotka")]
         public string MeasureUnit { get; set; }
