@@ -39,6 +39,11 @@
                 {
                     Id = 1,
                     Name = "Jističe",
+                },
+                new ProductCategory
+                {
+                    Id = 2,
+                    Name = "Stykače",
                 });
 
             context.SaveChanges();
@@ -48,7 +53,6 @@
                 new PropertyDefinition
                 {
                     Name = "Vypínací charakteristika",
-                    MeasureUnit = "Typ",
                     ProductCategoryId = 1
 
                 },
@@ -57,6 +61,11 @@
                     Name = "Jmenovitý proud",
                     MeasureUnit = "A",
                     ProductCategoryId = 1
+                },
+                new PropertyDefinition
+                {
+                    Name = "Počet NO kontaktů",
+                    ProductCategoryId = 2
                 });
 
             context.SaveChanges();
@@ -89,6 +98,15 @@
                     Price = 81.74M,
                     SupplierId = 1,
                     ProductCategoryId = 1
+                },
+                new Product
+                {
+                    Name = "Stykač DILER-40 230V 50Hz/240V",
+                    OrderNumber = "51759",
+                    TypeName = "DILER-40(230V50HZ,240V60HZ)	",
+                    Price = 614.22M,
+                    SupplierId = 1,
+                    ProductCategoryId = 2
                 }
             );
         }

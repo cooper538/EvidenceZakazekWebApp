@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Dtos;
-using EvidenceZakazekWebApp.Models;
-using System.Data.Entity;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Reflection;
-using System.Collections;
-using Newtonsoft.Json;
 using EvidenceZakazekWebApp.Helpers;
+using EvidenceZakazekWebApp.Models;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace EvidenceZakazekWebApp.Controllers.Api
 {
@@ -25,20 +20,12 @@ namespace EvidenceZakazekWebApp.Controllers.Api
             _mapper = MvcApplication.MapperConfiguration.CreateMapper();
         }
 
-        public IEnumerable<ProductDto> GetProducts()
-        {
-            var products = _context.Products
-                .Include(p => p.Supplier)
-                .ToList();
-
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
-        }
-
         [Route("~/api/products/forTable")]
         public IHttpActionResult GetProductsForTable()
         {
             var products = _context.Products
                 .Include(p => p.Supplier)
+                .Include(p => p.ProductCategory)
                 .ToList();
 
             var productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
@@ -50,16 +37,18 @@ namespace EvidenceZakazekWebApp.Controllers.Api
             var columnHeaders = new[] {
                 new { title = "Id" },
                 new { title = "Jméno" },
+                new { title = "Kategorie" },
                 new { title = "Objednací číslo" },
                 new { title = "Typové označení" },
                 new { title = "Cena" },
                 new { title = "Dodavatel" }
             };
-            
-            return Ok(new {
+
+            return Ok(new
+            {
                 data = tableData,
                 columns = columnHeaders
-            }); 
+            });
         }
     }
 }

@@ -23,7 +23,8 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var viewModel = new ProductFormViewModel
             {
-                Suppliers = _context.Suppliers.ToList()
+                Suppliers = _context.Suppliers.ToList(),
+                Categories = _context.ProductCategories.ToList()
             };
 
             return View(viewModel);
@@ -36,6 +37,7 @@ namespace EvidenceZakazekWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 viewModel.Suppliers = _context.Suppliers.ToList();
+                viewModel.Categories = _context.ProductCategories.ToList();
                 return View("Create", viewModel);
             }
 
@@ -45,7 +47,8 @@ namespace EvidenceZakazekWebApp.Controllers
                 OrderNumber = viewModel.OrderNumber,
                 TypeName = viewModel.TypeName,
                 Price = viewModel.Price,
-                SupplierId = viewModel.Supplier
+                SupplierId = viewModel.Supplier,
+                ProductCategoryId = viewModel.Category
             };
 
             _context.Products.Add(product);

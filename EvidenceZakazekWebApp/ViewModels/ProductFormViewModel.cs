@@ -29,5 +29,13 @@ namespace EvidenceZakazekWebApp.ViewModels
         public int Supplier { get; set; }
 
         public IEnumerable<Supplier> Suppliers { get; set; }
+
+        [Required]
+        [DisplayName("Kategorie")]
+        public int Category { get; set; }
+
+        public IEnumerable<ProductCategory> Categories { get; set; }
+
+        public IEnumerable<PropertyValue> PropertyValues { get; set; }
     }
 }
