@@ -1,0 +1,1 @@
+﻿1. Refactorovat jména V a VM a Action v Controller z PropertyValues na něco jako CategoryPropertyValues 

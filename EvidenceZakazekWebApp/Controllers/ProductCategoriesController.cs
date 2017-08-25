@@ -1,7 +1,7 @@
 ﻿using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
-using System.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -82,6 +82,25 @@ namespace EvidenceZakazekWebApp.Controllers
         public ActionResult GetPropertyDefinitionForm()
         {
             return PartialView("Partial/PropertyDefinitionForm", new PropertyDefinitionFormViewModel());
+        }
+
+        [HttpGet]
+        public ActionResult GetPropertyValuesForm(int categoryId)
+        {
+            var propertyDefinitions = _context.PropertyDefinitions
+                .Where(pd => pd.ProductCategoryId == categoryId)
+                .ToList();
+
+            List<PropertyValueFormViewModel> propertyValues = propertyDefinitions.Select(
+                pd => new PropertyValueFormViewModel()
+                {
+                    PropertyDefinitionId = pd.Id,
+                    PropertyDefinitionName = pd.Name,
+                    MeasureUnit = pd.MeasureUnit,
+                    Value = "",
+                }).ToList();
+
+            return PartialView("Partial/PropertyValuesForm", propertyValues);
         }
     }
 }

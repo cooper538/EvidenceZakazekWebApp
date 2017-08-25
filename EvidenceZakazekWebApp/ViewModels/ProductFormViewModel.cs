@@ -1,4 +1,5 @@
 ﻿using EvidenceZakazekWebApp.Models;
+using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -36,6 +37,6 @@ namespace EvidenceZakazekWebApp.ViewModels
 
         public IEnumerable<ProductCategory> Categories { get; set; }
 
-        public IEnumerable<PropertyValue> PropertyValues { get; set; }
+        public IEnumerable<PropertyValueFormViewModel> PropertyValues { get; set; }
     }
 }

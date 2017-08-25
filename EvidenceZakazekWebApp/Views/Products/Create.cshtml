@@ -29,8 +29,14 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Category)
-        @Html.DropDownListFor(m => m.Category, new SelectList(Model.Categories, "Id", "Name"), "", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Category, new SelectList(Model.Categories, "Id", "Name"), "", new { @class = "productCategory form-control"})
         @Html.ValidationMessageFor(m => m.Category)
+    </div>
+
+    <div class="form-group">
+        <ul class="propertyValues">
+            @*    @Html.Partial("Partial/PropertyValuesForm", Model.PropertyValues)*@
+        </ul>
     </div>
 
     <div class="form-group">
@@ -73,5 +79,32 @@
                 return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
             }
         });
+
+        $(".productCategory").change(function () {
+            var categoryIdVal = this.value;
+
+            $.get({
+                url: '@(Url.Action("GetPropertyValuesForm", "ProductCategories", null, Request.Url.Scheme))',
+                data: {categoryId : categoryIdVal},
+                dataType: 'html',
+                success: function (html) {
+                    //alert("Handler for .change() called.");
+
+                    $(".propertyValues").html(html);
+                    fnValidateDynamicContent($(".productForm"));
+                }
+
+            });
+
+    
+        });
+
+        function fnValidateDynamicContent(element) {
+            var currForm = element
+            currForm.removeData("validator");
+            currForm.removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse(currForm);
+            currForm.validate(); // This line is important and added for client side validation to trigger, without this it didn't fire client side errors.
+        }
     </script>
 }

@@ -1,0 +1,48 @@
+﻿@model IList<EvidenceZakazekWebApp.ViewModels.Partial.PropertyValueFormViewModel>
+@using EvidenceZakazekWebApp.Helpers
+
+@foreach (var propertyValue in Model)
+{
+    var guid = Guid.NewGuid().ToString();
+
+    <li>
+        <div class="panel panel-default">
+            @using (Html.BeginCollectionItemWithGuid("PropertyValues", @guid))
+            {
+                @Html.Hidden("PropertyDefinitionId", propertyValue.PropertyDefinitionId, new { @id = $"PropertyDefinitionId[{@guid}]" })
+                <div class="form-group">
+                    @* Order - Name / Value / HtmlProperties *@
+                    @Html.Label("PropertyDefinitionName", propertyValue.PropertyDefinitionName, new { @id =  $"PropertyDefinitionName[{@guid}]" })
+
+                    @if (propertyValue.MeasureUnit != null)
+                    {
+                        <div class="input-group">
+                            @Html.TextBox("Value", propertyValue.Value, new
+                            {
+                                @id = $"PropertyValue[{@guid}]",
+                                @class = "form-control",
+                                data_val = "true",
+                                data_val_required = "Pole Hodnota je povinné."
+                            })
+                            <span class="input-group-addon">@propertyValue.MeasureUnit</span>
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.TextBox("Value", propertyValue.Value, new
+                        {
+                            @id = $"PropertyValue[{@guid}]",
+                            @class = "form-control",
+                            data_val = "true",
+                            data_val_required = "Pole Hodnota je povinné."
+                        })
+                    }
+
+                    <span class="field-validation-valid" data-valmsg-for="PropertyValues[@guid].Value" data-valmsg-replace="true"></span>
+                </div>
+            }
+        </div>
+    </li>
+}
+
+

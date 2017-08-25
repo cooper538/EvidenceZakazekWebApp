@@ -57,3 +57,16 @@ table#products {
   margin-top: 20px;
   width: 80%;
 }
+ul.propertyValues {
+  list-style-type: none;
+  padding-left: 0;
+}
+ul.propertyValues .panel {
+  width: fit-content;
+}
+ul.propertyValues .panel .form-group {
+  margin: 10px;
+}
+ul.propertyValues .panel .form-group input {
+  width: 280px;
+}

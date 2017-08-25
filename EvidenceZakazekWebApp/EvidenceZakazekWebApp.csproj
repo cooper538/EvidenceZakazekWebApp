@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MyHtmlHelper.cs" />
     <Compile Include="Helpers\MigrationHelper.cs" />
     <Compile Include="Helpers\ObjectHelper.cs" />
     <Compile Include="Migrations\201708160658231_InitialModel.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CustomAttributes\EnsureOneElementAttribute.cs" />
+    <Compile Include="ViewModels\Partial\PropertyValueFormViewModel.cs" />
     <Compile Include="ViewModels\Partial\PropertyDefinitionFormViewModel.cs" />
     <Compile Include="ViewModels\ProductCategoryFormViewModel.cs" />
     <Compile Include="ViewModels\ProductFormViewModel.cs" />
@@ -333,6 +335,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="To-Do.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -374,6 +377,7 @@
     <Content Include="Views\Shared\Partial\PropertyDefinitionForm.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\ProductCategories\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\PropertyValuesForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
