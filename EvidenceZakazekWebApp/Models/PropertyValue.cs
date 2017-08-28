@@ -10,9 +10,14 @@ namespace EvidenceZakazekWebApp.Models
         [StringLength(255)]
         public string Value { get; set; }
 
-        [Required]
         public PropertyDefinition PropertyDefinition { get; set; }
 
+        [Required]
         public int PropertyDefinitionId { get; set; }
+
+        public Product Product { get; set; }
+
+        [Required]
+        public int ProductId { get; set; }
     }
 }

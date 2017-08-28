@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EvidenceZakazekWebApp.Models
 {
@@ -29,5 +30,7 @@ namespace EvidenceZakazekWebApp.Models
 
         [Required]
         public int ProductCategoryId { get; set; }
+
+        public ICollection<PropertyValue> PropertyValues { get; set; }
     }
 }

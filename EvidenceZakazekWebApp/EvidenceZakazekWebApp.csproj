@@ -238,6 +238,14 @@
     <Compile Include="Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.Designer.cs">
       <DependentUpon>201708240724269_SetMeasureUnitInPropertyDefinitionOptional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708281116177_RemoveProductPropertyTable.cs" />
+    <Compile Include="Migrations\201708281116177_RemoveProductPropertyTable.Designer.cs">
+      <DependentUpon>201708281116177_RemoveProductPropertyTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708281118212_PropertyValue-ProductId-DropDefault.cs" />
+    <Compile Include="Migrations\201708281118212_PropertyValue-ProductId-DropDefault.Designer.cs">
+      <DependentUpon>201708281118212_PropertyValue-ProductId-DropDefault.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -245,7 +253,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
-    <Compile Include="Models\ProductProperty.cs" />
     <Compile Include="Models\PropertyDefinition.cs" />
     <Compile Include="Models\PropertyValue.cs" />
     <Compile Include="Models\Supplier.cs" />
@@ -412,6 +419,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.resx">
       <DependentUpon>201708240724269_SetMeasureUnitInPropertyDefinitionOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708281116177_RemoveProductPropertyTable.resx">
+      <DependentUpon>201708281116177_RemoveProductPropertyTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708281118212_PropertyValue-ProductId-DropDefault.resx">
+      <DependentUpon>201708281118212_PropertyValue-ProductId-DropDefault.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

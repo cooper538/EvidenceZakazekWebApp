@@ -25,6 +25,7 @@
             //    );
             //
 
+
             context.Suppliers.AddOrUpdate(
                 s => s.Name,
                 new Supplier { Id = 1, Name = "Sonepar" },
@@ -52,19 +53,22 @@
                 pd => new { pd.Name, pd.ProductCategoryId },
                 new PropertyDefinition
                 {
+                    Id = 1,
                     Name = "Vypínací charakteristika",
                     ProductCategoryId = 1
 
                 },
                 new PropertyDefinition
                 {
+                    Id = 2,
                     Name = "Jmenovitý proud",
                     MeasureUnit = "A",
                     ProductCategoryId = 1
                 },
                 new PropertyDefinition
                 {
-                    Name = "Počet NO kontaktů",
+                    Id = 3,
+                    Name = "Počet pomocných NO kontaktů",
                     ProductCategoryId = 2
                 });
 
@@ -74,6 +78,7 @@
                 p => p.Name,
                 new Product
                 {
+                    Id = 1,
                     Name = "Jistič C4/1",
                     OrderNumber = "BM017104--",
                     TypeName = "BM017104--",
@@ -83,6 +88,7 @@
                 },
                 new Product
                 {
+                    Id = 2,
                     Name = "Motorový spínač s ochranou 0,4-0,63A,2P",
                     OrderNumber = "BE400204--",
                     TypeName = "BE400204--",
@@ -92,6 +98,7 @@
                 },
                 new Product
                 {
+                    Id = 3,
                     Name = "Svorka řadová pro ochranný vodič ST 2,5-PE",
                     OrderNumber = "3031238",
                     TypeName = "ST 2,5-PE",
@@ -101,12 +108,37 @@
                 },
                 new Product
                 {
+                    Id = 4,
                     Name = "Stykač DILER-40 230V 50Hz/240V",
                     OrderNumber = "51759",
                     TypeName = "DILER-40(230V50HZ,240V60HZ)	",
                     Price = 614.22M,
                     SupplierId = 1,
                     ProductCategoryId = 2
+                }
+            );
+
+            context.SaveChanges();
+
+            context.PropertyValues.AddOrUpdate(
+                pv => new { pv.ProductId, pv.PropertyDefinitionId, pv.Value },
+                new PropertyValue
+                {
+                    ProductId = 1,
+                    PropertyDefinitionId = 1,
+                    Value = "B",
+                },
+                new PropertyValue
+                {
+                    ProductId = 1,
+                    PropertyDefinitionId = 2,
+                    Value = "10",
+                },
+                new PropertyValue
+                {
+                    ProductId = 4,
+                    PropertyDefinitionId = 3,
+                    Value = "4",
                 }
             );
         }

@@ -7,7 +7,6 @@ namespace EvidenceZakazekWebApp.Models
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<ProductProperty> ProductProperties { get; set; }
 
         public DbSet<Supplier> Suppliers { get; set; }
 
@@ -48,15 +47,10 @@ namespace EvidenceZakazekWebApp.Models
             //   .WithMany(u => u.UserNotifications)
             //   .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ProductProperty>()
-               .HasRequired(pp => pp.PropertyDefinition)
-               .WithMany()
-               .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ProductProperty>()
-               .HasRequired(pp => pp.PropertyValue)
-               .WithMany()
-               .WillCascadeOnDelete(false);
+            modelBuilder.Entity<PropertyValue>()
+                .HasRequired(pv => pv.Product)
+                .WithMany(p => p.PropertyValues)
+                .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
         }
