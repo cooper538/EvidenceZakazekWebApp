@@ -48,7 +48,14 @@ namespace EvidenceZakazekWebApp.Controllers
                 TypeName = viewModel.TypeName,
                 Price = viewModel.Price,
                 SupplierId = viewModel.Supplier,
-                ProductCategoryId = viewModel.Category
+                ProductCategoryId = viewModel.Category,
+                PropertyValues = viewModel.PropertyValues.Select(
+                    pv => new PropertyValue()
+                    {
+                        Value = pv.Value,
+                        PropertyDefinitionId = pv.PropertyDefinitionId
+                    }
+                ).ToList()
             };
 
             _context.Products.Add(product);
