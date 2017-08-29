@@ -5,7 +5,7 @@
 
 <h2>@Model.Heading</h2>
 
-<table class="table table-striped table-bordered @Model.ControllerName" data-controller-name="@Model.ControllerName"></table>
+<table class="table table-striped table-bordered crudTable" data-controller-name="@Model.ControllerName"></table>
 
 
 @section scripts
@@ -13,29 +13,62 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/datatables.js"></script>
 
     <script>
-        var table = $("table").first();
+        var table = $(".table");
         var controllerName = table.attr("data-controller-name");
         var controllerNameCap = capitalizeFirstLetter(controllerName);
 
-        $.getJSON("/api/" + controllerNameCap +"/forTable", function (json) {
-            $(document).ready(function () {
-
+        $(document).ready(function () {
+            $.getJSON("/api/" + controllerNameCap +"/forTable", function (json) {
+           
                 // format like columns: [{ "title": "name"}, { "title": "country"}]
                 // format like data: [["John Doe","Fresno"],["Billy","Fresno"],["Tom","Kern"],["King Smith","Kings"]]}]
 
-                table.DataTable({
+                json["columns"].push({ "title": "Akce" })
+
+                for (var i = 0; i < json["data"].length; i++) {
+                    json["data"][i].push(null);
+                }
+
+                var table = $(".table").DataTable({
                     data: json["data"],
                     columns: json["columns"],
                     searching: false,
                     paging: false,
                     ordering: false,
-                    info: false
+                    info: false,
+                    columnDefs: [ {
+                        targets: -1,
+                        data: null,
+                        defaultContent: editBtnFactory() + deleteBtnFactory() + detailBtnFactory()
+                    } ]
+                });
+
+                table.on('click', '.js-btn-detail', function () {
+                    var data = table.row($(this).parents('tr')).data();
+                    var id = data[0];
+                    window.location.href = controllerNameCap + "/Detail/" + id;
                 });
             });
         });
 
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        }
+
+        function editBtnFactory() {
+            return btnFactory("btn-warning js-btn-edit", "pencil");
+        }
+
+        function deleteBtnFactory() {
+            return btnFactory("btn-danger js-btn-delete", "remove");
+        }
+
+        function detailBtnFactory() {
+            return btnFactory("btn-info js-btn-detail", "info-sign");
+        }
+
+        function btnFactory(classes, glyphName) {
+            return '<button type="button" class="btn btn-default btn-xs '+ classes +'"><span class="glyphicon glyphicon-'+ glyphName  +'"></span></button>'
         }
     </script>
 }
