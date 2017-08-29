@@ -49,6 +49,10 @@ span.field-validation-error {
 .input-group {
   width: 300px;
 }
+.table {
+  white-space: nowrap;
+  width: 1%;
+}
 /* Page-level styles */
 .products {
   margin-top: 20px;
@@ -56,6 +60,9 @@ span.field-validation-error {
 table#products {
   margin-top: 20px;
   width: 80%;
+}
+.productCategoryProperties ul > li .form-group {
+  margin-bottom: 0;
 }
 ul.propertyValues {
   list-style-type: none;
@@ -69,4 +76,14 @@ ul.propertyValues .panel .form-group {
 }
 ul.propertyValues .panel .form-group input {
   width: 280px;
+}
+table.detail {
+  margin-top: 20px;
+}
+table.detail tr td {
+  padding-right: 45px;
+}
+table.detail tr td:first-child {
+  font-weight: bold;
+  padding-right: 18px;
 }

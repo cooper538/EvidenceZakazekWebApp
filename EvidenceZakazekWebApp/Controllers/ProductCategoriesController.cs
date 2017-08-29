@@ -2,6 +2,7 @@
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -18,7 +19,13 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new CrudTableViewModel()
+            {
+                Heading = "Kategorie produktů",
+                ControllerName = "productCategories"
+            };
+
+            return View("CrudTable", viewModel);
         }
 
         public ActionResult Create()
@@ -77,6 +84,35 @@ namespace EvidenceZakazekWebApp.Controllers
             //};
 
             return View();
+        }
+
+        public ActionResult Detail(int id)
+        {
+            var viewModel = new DetailViewModel()
+            {
+                Heading = "Detail kategorie s id:" + id,
+                ControllerName = "ProductCategories"
+            };
+
+            var productCategory = _context.ProductCategories
+                .Include(pc => pc.PropertyDefinitions)
+                .SingleOrDefault(pc => pc.Id == id);
+
+            var staticProperties = new Dictionary<string, string>()
+            {
+                //{ "Id", productCategory.Id.ToString() },
+                { "Jméno", productCategory.Name },
+            };
+
+            var dynamicProperties = productCategory.PropertyDefinitions
+                .ToDictionary(dp => dp.Name, dp => dp.MeasureUnit);
+
+            var properties = staticProperties.Union(dynamicProperties)
+                .ToDictionary(p => p.Key, p => p.Value);
+
+            viewModel.Properties = properties;
+
+            return View("Detail", viewModel);
         }
 
         public ActionResult GetPropertyDefinitionForm()

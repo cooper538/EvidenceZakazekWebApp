@@ -44,6 +44,11 @@ span.field-validation-error {
     width: 300px;
 }
 
+.table{
+    white-space: nowrap;
+    width: 1%;
+}
+
 /* Page-level styles */
 
 .products{
@@ -53,6 +58,10 @@ span.field-validation-error {
 table#products {
     .voffset2;
     width: 80%;
+}
+
+.productCategoryProperties ul > li .form-group {
+    margin-bottom: 0;
 }
 
 ul.propertyValues {
@@ -69,8 +78,19 @@ ul.propertyValues {
                 width: 280px;
             }
         }
-    }
+    }    
+}
 
-    
+table.detail{
+    .voffset2;
+    tr{
+        td{
+            &:first-child{
+            font-weight: bold;
+            padding-right: 18px;
+            }
+            padding-right: 45px;
+        }
+    }
 }
 
