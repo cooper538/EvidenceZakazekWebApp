@@ -57,7 +57,13 @@ span.field-validation-error {
 .crudTable {
   margin-top: 20px;
 }
-.crudTable td > button:not(:last-child) {
+.crudTable thead tr th:first-child {
+  display: none;
+}
+.crudTable tbody tr td:first-child {
+  display: none;
+}
+.crudTable tbody tr td > button:not(:last-child) {
   margin-right: 5px;
 }
 .productCategoryProperties ul > li .form-group {

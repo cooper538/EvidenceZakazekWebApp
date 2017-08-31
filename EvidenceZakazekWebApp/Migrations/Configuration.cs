@@ -1,6 +1,8 @@
 ﻿namespace EvidenceZakazekWebApp.Migrations
 {
     using Models;
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<EvidenceZakazekWebApp.Models.ApplicationDbContext>
@@ -64,82 +66,48 @@
                     Name = "Jmenovitý proud",
                     MeasureUnit = "A",
                     ProductCategoryId = 1
-                },
-                new PropertyDefinition
-                {
-                    Id = 3,
-                    Name = "Počet pomocných NO kontaktů",
-                    ProductCategoryId = 2
                 });
 
             context.SaveChanges();
 
-            context.Products.AddOrUpdate(
-                p => p.Name,
-                new Product
-                {
-                    Id = 1,
-                    Name = "Jistič C4/1",
-                    OrderNumber = "BM017104--",
-                    TypeName = "BM017104--",
-                    Price = 183.70M,
-                    SupplierId = 4,
-                    ProductCategoryId = 1
-                },
-                new Product
-                {
-                    Id = 2,
-                    Name = "Motorový spínač s ochranou 0,4-0,63A,2P",
-                    OrderNumber = "BE400204--",
-                    TypeName = "BE400204--",
-                    Price = 421.85M,
-                    SupplierId = 4,
-                    ProductCategoryId = 1
-                },
-                new Product
-                {
-                    Id = 3,
-                    Name = "Svorka řadová pro ochranný vodič ST 2,5-PE",
-                    OrderNumber = "3031238",
-                    TypeName = "ST 2,5-PE",
-                    Price = 81.74M,
-                    SupplierId = 1,
-                    ProductCategoryId = 1
-                },
-                new Product
-                {
-                    Id = 4,
-                    Name = "Stykač DILER-40 230V 50Hz/240V",
-                    OrderNumber = "51759",
-                    TypeName = "DILER-40(230V50HZ,240V60HZ)	",
-                    Price = 614.22M,
-                    SupplierId = 1,
-                    ProductCategoryId = 2
-                }
-            );
+            List<int> listNumbers = new List<int>();
+            for (int i = 1; i < 10; i++)
+            {
+                listNumbers.Add(i);
+            }
 
+            int categoryId = 1;
+            var rnd = new Random();
+            listNumbers.ForEach(n => context.Products.AddOrUpdate(
+                p => new { p.Name },
+                   new Product
+                   {
+                       Id = n,
+                       Name = $"Jistič {categoryId + n}",
+                       OrderNumber = $"order_{n * 100}",
+                       TypeName = $"type_{ n * 100 }",
+                       Price = new decimal(rnd.Next(1,1000)),
+                       SupplierId = 1,
+                       ProductCategoryId = 1
+                   }
+                ));
+            
             context.SaveChanges();
 
-            context.PropertyValues.AddOrUpdate(
+            listNumbers.ForEach(n => context.PropertyValues.AddOrUpdate(
                 pv => new { pv.ProductId, pv.PropertyDefinitionId, pv.Value },
                 new PropertyValue
                 {
-                    ProductId = 1,
+                    ProductId = n,
                     PropertyDefinitionId = 1,
                     Value = "B",
                 },
                 new PropertyValue
                 {
-                    ProductId = 1,
+                    ProductId = n,
                     PropertyDefinitionId = 2,
-                    Value = "10",
-                },
-                new PropertyValue
-                {
-                    ProductId = 4,
-                    PropertyDefinitionId = 3,
-                    Value = "4",
-                }
+                    Value = $"{n*10}"
+                })
             );
         }
     }

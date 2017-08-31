@@ -53,8 +53,29 @@ span.field-validation-error {
 
 .crudTable{
     .voffset2;
-    td > button:not(:last-child){
-        margin-right: 5px;
+    
+    thead{
+        tr{
+            th{
+                &:first-child{
+                    display: none;
+                }
+            }
+        }
+    }
+
+    tbody{
+        tr{
+            td{
+                &:first-child{
+                    display: none;                
+                }
+
+                > button:not(:last-child){
+                    margin-right: 5px;
+                }
+            }
+        }
     }
 }
 

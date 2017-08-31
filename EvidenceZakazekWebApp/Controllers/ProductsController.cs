@@ -1,6 +1,10 @@
-﻿using EvidenceZakazekWebApp.Models;
+﻿using AutoMapper;
+using EvidenceZakazekWebApp.Dtos;
+using EvidenceZakazekWebApp.Dtos.Interfaces;
+using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,18 +14,35 @@ namespace EvidenceZakazekWebApp.Controllers
     public class ProductsController : Controller
     {
         ApplicationDbContext _context;
+        IMapper _mapper;
 
         public ProductsController()
         {
             _context = new ApplicationDbContext();
+            _mapper = MvcApplication.MapperConfiguration.CreateMapper();
+
         }
 
         public ActionResult Index()
         {
+            var products = _context.Products
+                .Include(p => p.ProductCategory)
+                .Include(p => p.Supplier)
+                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
+                .Where(p => p.ProductCategory.Name == "Test")
+                .ToList();
+
+            var productDtos = _mapper.Map< List<Product>, List<ProductDto>>(products);
+            var productTableDtos = _mapper.Map<List<ProductDto>, List<ProductTableDto>>(productDtos);
+
+            var CrudtableDtos = new Collection<ICrudTableDto>();
+            productTableDtos.ForEach(ptd => CrudtableDtos.Add(ptd));
+
             var viewModel = new CrudTableViewModel()
             {
                 Heading = "Produkty",
-                ControllerName = "products"
+                ControllerName = "products",
+                CrudTableDtos = CrudtableDtos
             };
 
             return View("CrudTable", viewModel);

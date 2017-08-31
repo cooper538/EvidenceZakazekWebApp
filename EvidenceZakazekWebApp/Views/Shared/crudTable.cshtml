@@ -3,73 +3,65 @@
     ViewBag.Title = Model.Heading;
 }
 
+@helper btnFactory(string classes, string glyphName) {
+    <button type="button" class="btn btn-default btn-xs @classes "><span class="glyphicon glyphicon-@glyphName "></span></button>
+}
+
 <h2>@Model.Heading</h2>
 
-<table class="table table-striped table-bordered crudTable" data-controller-name="@Model.ControllerName"></table>
+<table class="table table-striped table-bordered crudTable" data-controller-name="@Model.ControllerName">
+    <thead>
+        <tr>
+            <th>id</th>
+            @foreach (var ColumnName in Model.CrudTableDtos.FirstOrDefault().ColumnNames)
+            {
+                <th>@ColumnName</th>
+            }
+            <th>Akce</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var CrudTableDto in Model.CrudTableDtos)
+        {
+            <tr>
+                <td>@CrudTableDto.Id</td>
+
+                @foreach (var property in CrudTableDto.Properties)
+                {
+                    <td>@property.Value</td>
+                }
+
+                <td>
+                    @btnFactory("btn-warning js-btn-edit", "pencil")
+                    @btnFactory("btn-danger js-btn-delete", "remove")
+                    @btnFactory("btn-info js-btn-detail", "info-sign")
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 
 @section scripts
 {
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/datatables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/datatables.js"></script>
 
     <script>
-        var table = $(".table");
-        var controllerName = table.attr("data-controller-name");
-        var controllerNameCap = capitalizeFirstLetter(controllerName);
-
         $(document).ready(function () {
-            $.getJSON("/api/" + controllerNameCap +"/forTable", function (json) {
-           
-                // format like columns: [{ "title": "name"}, { "title": "country"}]
-                // format like data: [["John Doe","Fresno"],["Billy","Fresno"],["Tom","Kern"],["King Smith","Kings"]]}]
+            var table = $(".table").DataTable({
+                searching: false,
+                paging: false,
+                ordering: false,
+                info: false
+            });
 
-                json["columns"].push({ "title": "Akce" })
-
-                for (var i = 0; i < json["data"].length; i++) {
-                    json["data"][i].push(null);
-                }
-
-                var table = $(".table").DataTable({
-                    data: json["data"],
-                    columns: json["columns"],
-                    searching: false,
-                    paging: false,
-                    ordering: false,
-                    info: false,
-                    columnDefs: [ {
-                        targets: -1,
-                        data: null,
-                        defaultContent: editBtnFactory() + deleteBtnFactory() + detailBtnFactory()
-                    } ]
-                });
-
-                table.on('click', '.js-btn-detail', function () {
-                    var data = table.row($(this).parents('tr')).data();
-                    var id = data[0];
-                    window.location.href = controllerNameCap + "/Detail/" + id;
-                });
+            table.on('click', '.js-btn-detail', function () {
+                var data = table.row($(this).parents('tr')).data();
+                var id = data[0];
+                window.location.href = window.location +  "/Detail/" + id;
             });
         });
-
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-        }
-
-        function editBtnFactory() {
-            return btnFactory("btn-warning js-btn-edit", "pencil");
-        }
-
-        function deleteBtnFactory() {
-            return btnFactory("btn-danger js-btn-delete", "remove");
-        }
-
-        function detailBtnFactory() {
-            return btnFactory("btn-info js-btn-detail", "info-sign");
-        }
-
-        function btnFactory(classes, glyphName) {
-            return '<button type="button" class="btn btn-default btn-xs '+ classes +'"><span class="glyphicon glyphicon-'+ glyphName  +'"></span></button>'
-        }
     </script>
 }
 

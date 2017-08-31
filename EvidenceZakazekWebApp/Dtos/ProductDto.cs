@@ -1,4 +1,6 @@
-﻿namespace EvidenceZakazekWebApp.Dtos
+﻿using System.Collections.Generic;
+
+namespace EvidenceZakazekWebApp.Dtos
 {
     public class ProductDto
     {
@@ -9,5 +11,7 @@
         public string TypeName { get; set; }
         public decimal Price { get; set; }
         public string SupplierName { get; set; }
+
+        public ICollection<PropertyValueDto> PropertyValues { get; set; }
     }
 }
