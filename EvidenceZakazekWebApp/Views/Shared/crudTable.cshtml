@@ -48,6 +48,14 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/datatables.js"></script>
 
     <script>
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        }
+
+        var controllerName = $(".table").attr("data-controller-name");
+        var controllerNameCap = capitalizeFirstLetter(controllerName);
+
         $(document).ready(function () {
             var table = $(".table").DataTable({
                 searching: false,
@@ -74,9 +82,20 @@
                 var data = table.row($(this).parents('tr')).data();
                 var productId = data[0];
 
+                var confirmMsg = "";
+                switch (controllerName) {
+                    case "products":
+                        confirmMsg = "<p>Opravdu chceš odstanit tento produkt?</p>";
+                    case "productCategories":
+                        confirmMsg = '<p>Opravdu chceš odstanit tuto kategorii?</p>';
+                        confirmMsg += '<p class="text-danger"><b>(Produkty patřící kategorii budou odstraněny)</b></p>'
+                    default:
+                        cofirmMsg = "Text pro tento kontroler nebyl implementován!!"
+                }
+
                 bootbox.dialog({
                     title: 'Confirm',
-                    message: "Opravdu chceš odstanit tento produkt?",
+                    message: confirmMsg,
                     buttons: {
                         no: {
                             label: "Ne",
@@ -90,7 +109,7 @@
                             className: 'btn-danger',
                             callback: function () {
                                 $.ajax({
-                                    url: "/api/Products/" + productId,
+                                    url: "/api/" + controllerNameCap + "/" + productId,
                                     method: "Delete"
                                 })
                                 .done(function () {
