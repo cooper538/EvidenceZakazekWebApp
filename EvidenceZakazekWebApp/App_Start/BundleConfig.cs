@@ -23,6 +23,7 @@ namespace EvidenceZakazekWebApp
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/bootbox.js",
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 

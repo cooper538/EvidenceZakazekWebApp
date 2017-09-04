@@ -3,6 +3,7 @@ using EvidenceZakazekWebApp.Dtos;
 using EvidenceZakazekWebApp.Dtos.Interfaces;
 using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
+using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -29,10 +30,10 @@ namespace EvidenceZakazekWebApp.Controllers
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Supplier)
                 .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
-                .Where(p => p.ProductCategory.Name == "Test")
+                .Where(p => p.ProductCategory.Name == "Jističe")
                 .ToList();
 
-            var productDtos = _mapper.Map< List<Product>, List<ProductDto>>(products);
+            var productDtos = _mapper.Map<List<Product>, List<ProductDto>>(products);
             var productTableDtos = _mapper.Map<List<ProductDto>, List<ProductTableDto>>(productDtos);
 
             var CrudtableDtos = new Collection<ICrudTableDto>();
@@ -52,11 +53,12 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var viewModel = new ProductFormViewModel
             {
+                Heading = "Přidej produkt",
                 Suppliers = _context.Suppliers.ToList(),
                 Categories = _context.ProductCategories.ToList()
             };
 
-            return View(viewModel);
+            return View("ProductForm", viewModel);
         }
 
         [HttpPost]
@@ -67,7 +69,7 @@ namespace EvidenceZakazekWebApp.Controllers
             {
                 viewModel.Suppliers = _context.Suppliers.ToList();
                 viewModel.Categories = _context.ProductCategories.ToList();
-                return View("Create", viewModel);
+                return View("ProductForm", viewModel);
             }
 
             var product = new Product()
@@ -90,7 +92,82 @@ namespace EvidenceZakazekWebApp.Controllers
             _context.Products.Add(product);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Products");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var product = _context.Products
+                .Include(p => p.Supplier)
+                .Include(p => p.ProductCategory)
+                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
+                .Single(p => p.Id == id);
+
+            var viewModel = new ProductFormViewModel
+            {
+                Heading = $"Editace produktu s id:{product.Id}",
+                Id = product.Id,
+                Name = product.Name,
+                OrderNumber = product.OrderNumber,
+                TypeName = product.TypeName,
+                Price = product.Price,
+                Supplier = product.SupplierId, // rename supplier to supplierId, same for Category
+                Suppliers = _context.Suppliers.ToList(),
+                Category = product.ProductCategoryId,
+                Categories = _context.ProductCategories.ToList(),
+                PropertyValues = product.PropertyValues.Select(pv =>
+                    new PropertyValueFormViewModel
+                    {
+                        PropertyDefinitionId = pv.PropertyDefinitionId,
+                        PropertyDefinitionName = pv.PropertyDefinition.Name,
+                        Value = pv.Value,
+                        MeasureUnit = pv.PropertyDefinition.MeasureUnit
+                    }
+                ).ToList()
+            };
+
+            return View("ProductForm", viewModel);
+        }
+
+        public ActionResult Update(ProductFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Suppliers = _context.Suppliers.ToList();
+                viewModel.Categories = _context.ProductCategories.ToList();
+                return View("ProductForm", viewModel);
+            }
+
+            var product = _context.Products
+                .Include(p => p.Supplier)
+                .Include(p => p.ProductCategory)
+                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
+                .Single(p => p.Id == viewModel.Id);
+
+            var oldPropertyValues = _context.PropertyValues
+                .Where(pv => pv.ProductId == product.Id)
+                .ToList();
+
+            _context.PropertyValues.RemoveRange(oldPropertyValues);
+
+            product.Name = viewModel.Name;
+            product.OrderNumber = viewModel.OrderNumber;
+            product.TypeName = viewModel.TypeName;
+            product.Price = viewModel.Price;
+            product.SupplierId = viewModel.Supplier;
+            product.ProductCategoryId = viewModel.Category;
+
+            product.PropertyValues = viewModel.PropertyValues.Select(pv =>
+                new PropertyValue
+                {
+                    Value = pv.Value,
+                    PropertyDefinitionId = pv.PropertyDefinitionId
+                }
+            ).ToList();
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Products");
         }
 
         public ActionResult Detail(int id)
@@ -107,7 +184,6 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var staticProperties = new Dictionary<string, string>()
             {
-                //{ "Id", product.Id.ToString() },
                 { "Jméno", product.Name },
                 { "Objednací číslo", product.OrderNumber },
                 { "Typové označení", product.TypeName },
@@ -117,7 +193,7 @@ namespace EvidenceZakazekWebApp.Controllers
             // https://stackoverflow.com/a/953961/6355668
             var dynamicProperties = product.PropertyValues
                 .ToDictionary(pv => pv.PropertyDefinition.Name, pv => $"{pv.Value} {pv.PropertyDefinition.MeasureUnit}");
-            
+
             // https://stackoverflow.com/a/10559415/2756329
             var properties = staticProperties.Union(dynamicProperties)
                 .ToDictionary(p => p.Key, p => p.Value);

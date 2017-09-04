@@ -1,14 +1,15 @@
 ﻿@model EvidenceZakazekWebApp.ViewModels.ProductFormViewModel
 @{
-    ViewBag.Title = "Vytvořit produkt";
+    ViewBag.Title = Model.Heading;
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "Products"))
+@using (Html.BeginForm(Model.Action, "Products"))
 {
     <p class="alert alert-info">Věchny pole jsou <strong>povinné</strong>.</p>
     @Html.AntiForgeryToken();
+    @Html.HiddenFor(p => p.Id)
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -35,7 +36,10 @@
 
     <div class="form-group">
         <ul class="propertyValues">
-            @*    @Html.Partial("Partial/PropertyValuesForm", Model.PropertyValues)*@
+            @if (Model.Action == "Update")
+            {
+                @Html.Partial("Partial/PropertyValuesForm", Model.PropertyValues)
+            }
         </ul>
     </div>
 
@@ -47,7 +51,7 @@
                 override default validation message https://stackoverflow.com/a/16081262
             *@
             @Html.TextBoxFor(m => m.Price,
-            new { Value = "", @class = "form-control", data_val_number = "Pole Cena musí obsahovat číslo." })
+            new { @class = "form-control", data_val_number = "Pole Cena musí obsahovat číslo." })
             <span class="input-group-addon">Kč</span>
         </div>
         @Html.ValidationMessageFor(m => m.Price)
@@ -93,9 +97,7 @@
                     $(".propertyValues").html(html);
                     fnValidateDynamicContent($(".productForm"));
                 }
-
             });
-
     
         });
 
