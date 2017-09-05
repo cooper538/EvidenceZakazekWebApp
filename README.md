@@ -2,7 +2,7 @@ v0.1 - CRUD for Products and ProductCategories is complete
 
 in next version:
 - refactoting 
--- rich model/ light controller / maybe add services
+- - rich model/ light controller / maybe add services
 -- integrita modelu
 -- repozitáře
 -- automatizované testy
