@@ -1,4 +1,4 @@
-v0.1 - CRUD for Products and ProductCategories is complete
+v0.1 - CRUD for Products and ProductCategories is complete. In very straightforward way.
 
 in next version:
 - refactoting 
