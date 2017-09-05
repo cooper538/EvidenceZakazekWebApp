@@ -6,7 +6,9 @@ in next version:
 - - integrita modelu
 - - repozitáře
 - - automatizované testy
+
 - fukce
 - - select Products pro export xls, csv
 - - upload souborů pro Products
--přispůsobení GUI pro Alpha testování
+
+- přispůsobení GUI pro Alpha testování
