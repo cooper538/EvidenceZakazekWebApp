@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace EvidenceZakazekWebApp.Models
 {
     public class PropertyDefinition
     {
+        public PropertyDefinition()
+        {
+            PropertyValues = new Collection<PropertyValue>();
+        }
+
         public int Id { get; set; }
 
         [Required]

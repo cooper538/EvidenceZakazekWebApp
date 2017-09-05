@@ -13,6 +13,11 @@ namespace EvidenceZakazekWebApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // hemlp by https://stackoverflow.com/a/13827068
+            routes.MapRoute(name: "IndexRoute", url: "{controller}/{id}",
+                defaults: new { controller = "Home", action = "Index" },
+                constraints: new { id = @"^[0-9]+$" });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

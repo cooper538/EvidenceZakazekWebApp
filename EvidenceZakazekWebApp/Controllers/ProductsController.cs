@@ -24,13 +24,14 @@ namespace EvidenceZakazekWebApp.Controllers
 
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int id = 1)
         {
-            var products = _context.Products
-                .Include(p => p.ProductCategory)
-                .Include(p => p.Supplier)
-                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
-                .Where(p => p.ProductCategory.Name == "Jističe")
+            var products = _context.ProductCategories
+                .Include(pc => pc.Products.Select(p => p.ProductCategory))
+                .Include(pc => pc.Products.Select(p => p.Supplier))
+                .Include(pc => pc.Products.Select(p => p.PropertyValues.Select(pv => pv.PropertyDefinition)))
+                .Single(pc =>pc.Id == id)
+                .Products
                 .ToList();
 
             var productDtos = _mapper.Map<List<Product>, List<ProductDto>>(products);
@@ -167,7 +168,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Products");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Detail(int id)

@@ -14,7 +14,7 @@
                     @Html.TextBoxFor(m => m.MeasureUnit, new { @class = "form-control col-md-2" })
                     @Html.ValidationMessageFor(m => m.MeasureUnit, null, new { @class = "text-danger" })
                 <input type="button" value="Delete" class="btn btn-default"
-                       onclick="$(this).parent().remove();" style="margin-left: 30px" />
+                       onclick="$(this).parent().parent().parent().remove().fadeOut();" style="margin-left: 30px" />
             </div>
 
         }

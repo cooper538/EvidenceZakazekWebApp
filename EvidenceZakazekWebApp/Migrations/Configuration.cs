@@ -66,7 +66,14 @@
                     Name = "Jmenovitý proud",
                     MeasureUnit = "A",
                     ProductCategoryId = 1
-                });
+                },
+                 new PropertyDefinition
+                 {
+                     Id = 2,
+                     Name = "Počet NO kontaktů",
+                     MeasureUnit = "A",
+                     ProductCategoryId = 2
+                 });
 
             context.SaveChanges();
 
