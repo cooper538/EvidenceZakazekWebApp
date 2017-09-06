@@ -79,8 +79,8 @@ namespace EvidenceZakazekWebApp.Controllers
                 OrderNumber = viewModel.OrderNumber,
                 TypeName = viewModel.TypeName,
                 Price = viewModel.Price,
-                SupplierId = viewModel.Supplier,
-                ProductCategoryId = viewModel.Category,
+                SupplierId = viewModel.SupplierId,
+                ProductCategoryId = viewModel.CategoryId,
                 PropertyValues = viewModel.PropertyValues.Select(
                     pv => new PropertyValue()
                     {
@@ -112,9 +112,9 @@ namespace EvidenceZakazekWebApp.Controllers
                 OrderNumber = product.OrderNumber,
                 TypeName = product.TypeName,
                 Price = product.Price,
-                Supplier = product.SupplierId, // rename supplier to supplierId, same for Category
+                SupplierId = product.SupplierId, // rename supplier to supplierId, same for Category
                 Suppliers = _context.Suppliers.ToList(),
-                Category = product.ProductCategoryId,
+                CategoryId = product.ProductCategoryId,
                 Categories = _context.ProductCategories.ToList(),
                 PropertyValues = product.PropertyValues.Select(pv =>
                     new PropertyValueFormViewModel
@@ -155,8 +155,8 @@ namespace EvidenceZakazekWebApp.Controllers
             product.OrderNumber = viewModel.OrderNumber;
             product.TypeName = viewModel.TypeName;
             product.Price = viewModel.Price;
-            product.SupplierId = viewModel.Supplier;
-            product.ProductCategoryId = viewModel.Category;
+            product.SupplierId = viewModel.SupplierId;
+            product.ProductCategoryId = viewModel.CategoryId;
 
             product.PropertyValues = viewModel.PropertyValues.Select(pv =>
                 new PropertyValue
