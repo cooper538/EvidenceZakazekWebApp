@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Dtos;
 using EvidenceZakazekWebApp.Models;
+using EvidenceZakazekWebApp.ViewModels;
+using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +12,7 @@ namespace EvidenceZakazekWebApp.App_Start
     {
         public MappingProfile()
         {
+            // Product
             CreateMap<Product, ProductDto>()
                 .ForMember(pd => pd.SupplierName, opt => opt.MapFrom(p => p.Supplier.Name))
                 .ForMember(pd => pd.CategoryName, opt => opt.MapFrom(p => p.ProductCategory.Name));
@@ -29,6 +32,16 @@ namespace EvidenceZakazekWebApp.App_Start
                 .ForMember(ptd => ptd.Properties, opt => opt.Ignore())
                 .ForMember(ptd => ptd.ColumnNames, opt => opt.Ignore());
 
+            CreateMap<ProductFormViewModel, Product>()
+                .ForMember(p => p.Supplier, opt => opt.Ignore())
+                .ForMember(p => p.ProductCategory, opt => opt.Ignore());
+
+            CreateMap<Product, ProductFormViewModel>()
+                .ForMember(pfvm => pfvm.Heading, opt => opt.Ignore())
+                .ForMember(pfvm => pfvm.Suppliers, opt => opt.Ignore())
+                .ForMember(pfvm => pfvm.ProductCategories, opt => opt.Ignore());
+
+            // ProductCategory
             CreateMap<ProductCategory, ProductCategoryDto>();
 
             CreateMap<ProductCategoryDto, ProductCategoryTableDto>()
@@ -39,9 +52,39 @@ namespace EvidenceZakazekWebApp.App_Start
                 .ForMember(ptd => ptd.Properties, opt => opt.Ignore())
                 .ForMember(ptd => ptd.ColumnNames, opt => opt.Ignore());
 
+            CreateMap<ProductCategoryFormViewModel, ProductCategory>()
+                .ForMember(pc => pc.Products, opt => opt.Ignore());
+
+            CreateMap<ProductCategory, ProductCategoryFormViewModel>()
+                .ForMember(pcfvm => pcfvm.Heading, opt => opt.Ignore());
+
+
+            // PropertyDefinition
             CreateMap<PropertyDefinition, PropertyDefinitionDto>();
 
+            CreateMap<PropertyDefinitionFormViewModel, PropertyDefinition>()
+                .ForMember(pd => pd.ProductCategory, opt => opt.Ignore())
+                .ForMember(pd => pd.ProductCategoryId, opt => opt.Ignore())
+                .ForMember(pd => pd.PropertyValues, opt => opt.Ignore());
+
+            CreateMap<PropertyDefinition, PropertyDefinitionFormViewModel>();
+
+
+
+            // PropertyValue
             CreateMap<PropertyValue, PropertyValueDto>();
+
+            CreateMap<PropertyValueFormViewModel, PropertyValue>()
+                .ForMember(pv => pv.Id, opt => opt.Ignore())
+                .ForMember(pv => pv.PropertyDefinition, opt => opt.Ignore())
+                .ForMember(pv => pv.Product, opt => opt.Ignore())
+                .ForMember(pv => pv.ProductId, opt => opt.Ignore());
+
+            CreateMap<PropertyValue, PropertyValueFormViewModel>()             
+                .ForMember(pv => pv.PropertyDefinitionName, opt => opt.MapFrom( pv => 
+                    pv.PropertyDefinition.Name))
+                .ForMember(pv => pv.MeasureUnit, opt => opt.MapFrom(pv =>
+                    pv.PropertyDefinition.MeasureUnit));
         }
     }
 }

@@ -63,18 +63,8 @@ namespace EvidenceZakazekWebApp.Controllers
                 return View("ProductCategoryForm", viewModel);
             }
 
-            var productCategory = new ProductCategory
-            {
-                Name = viewModel.Name,
-                PropertyDefinitions = viewModel.PropertyDefinitions.Select(
-                        pdvm => new PropertyDefinition()
-                        {
-                            Id = pdvm.Id,
-                            Name = pdvm.Name,
-                            MeasureUnit = pdvm.MeasureUnit
-                        }
-                    ).ToList()
-            };
+            var productCategory = _mapper
+                .Map<ProductCategoryFormViewModel, ProductCategory>(viewModel);
 
             _context.ProductCategories.Add(productCategory);
             _context.SaveChanges();
@@ -90,16 +80,10 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var viewModel = new ProductCategoryFormViewModel
             {
-                Heading = $"Editace kategorie s id:{productCategory.Id}",
-                Id = productCategory.Id,
-                Name = productCategory.Name,
-                PropertyDefinitions = productCategory.PropertyDefinitions.Select(pd =>
-                new PropertyDefinitionFormViewModel {
-                    Id = pd.Id,
-                    Name = pd.Name,
-                    MeasureUnit = pd.MeasureUnit
-                }).ToList()  
+                Heading = $"Editace kategorie s id:{productCategory.Id}"
             };
+
+            _mapper.Map(productCategory, viewModel);
 
             return View("ProductCategoryForm", viewModel);
         }

@@ -41,9 +41,9 @@ namespace EvidenceZakazekWebApp.ViewModels
 
         [Required]
         [DisplayName("Kategorie")]
-        public int CategoryId { get; set; }
+        public int ProductCategoryId { get; set; }
 
-        public IEnumerable<ProductCategory> Categories { get; set; }
+        public IEnumerable<ProductCategory> ProductCategories { get; set; }
 
         public IEnumerable<PropertyValueFormViewModel> PropertyValues { get; set; }
 

@@ -56,7 +56,7 @@ namespace EvidenceZakazekWebApp.Controllers
             {
                 Heading = "Přidej produkt",
                 Suppliers = _context.Suppliers.ToList(),
-                Categories = _context.ProductCategories.ToList()
+                ProductCategories = _context.ProductCategories.ToList()
             };
 
             return View("ProductForm", viewModel);
@@ -69,26 +69,11 @@ namespace EvidenceZakazekWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 viewModel.Suppliers = _context.Suppliers.ToList();
-                viewModel.Categories = _context.ProductCategories.ToList();
+                viewModel.ProductCategories = _context.ProductCategories.ToList();
                 return View("ProductForm", viewModel);
             }
 
-            var product = new Product()
-            {
-                Name = viewModel.Name,
-                OrderNumber = viewModel.OrderNumber,
-                TypeName = viewModel.TypeName,
-                Price = viewModel.Price,
-                SupplierId = viewModel.SupplierId,
-                ProductCategoryId = viewModel.CategoryId,
-                PropertyValues = viewModel.PropertyValues.Select(
-                    pv => new PropertyValue()
-                    {
-                        Value = pv.Value,
-                        PropertyDefinitionId = pv.PropertyDefinitionId
-                    }
-                ).ToList()
-            };
+            var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
 
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -107,25 +92,11 @@ namespace EvidenceZakazekWebApp.Controllers
             var viewModel = new ProductFormViewModel
             {
                 Heading = $"Editace produktu s id:{product.Id}",
-                Id = product.Id,
-                Name = product.Name,
-                OrderNumber = product.OrderNumber,
-                TypeName = product.TypeName,
-                Price = product.Price,
-                SupplierId = product.SupplierId, // rename supplier to supplierId, same for Category
                 Suppliers = _context.Suppliers.ToList(),
-                CategoryId = product.ProductCategoryId,
-                Categories = _context.ProductCategories.ToList(),
-                PropertyValues = product.PropertyValues.Select(pv =>
-                    new PropertyValueFormViewModel
-                    {
-                        PropertyDefinitionId = pv.PropertyDefinitionId,
-                        PropertyDefinitionName = pv.PropertyDefinition.Name,
-                        Value = pv.Value,
-                        MeasureUnit = pv.PropertyDefinition.MeasureUnit
-                    }
-                ).ToList()
+                ProductCategories = _context.ProductCategories.ToList()
             };
+
+            _mapper.Map<Product, ProductFormViewModel>(product, viewModel);
 
             return View("ProductForm", viewModel);
         }
@@ -135,7 +106,7 @@ namespace EvidenceZakazekWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 viewModel.Suppliers = _context.Suppliers.ToList();
-                viewModel.Categories = _context.ProductCategories.ToList();
+                viewModel.ProductCategories = _context.ProductCategories.ToList();
                 return View("ProductForm", viewModel);
             }
 
@@ -156,7 +127,7 @@ namespace EvidenceZakazekWebApp.Controllers
             product.TypeName = viewModel.TypeName;
             product.Price = viewModel.Price;
             product.SupplierId = viewModel.SupplierId;
-            product.ProductCategoryId = viewModel.CategoryId;
+            product.ProductCategoryId = viewModel.ProductCategoryId;
 
             product.PropertyValues = viewModel.PropertyValues.Select(pv =>
                 new PropertyValue
