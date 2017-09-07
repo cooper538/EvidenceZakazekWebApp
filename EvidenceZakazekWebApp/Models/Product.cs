@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace EvidenceZakazekWebApp.Models
@@ -32,5 +33,10 @@ namespace EvidenceZakazekWebApp.Models
         public int ProductCategoryId { get; set; }
 
         public ICollection<PropertyValue> PropertyValues { get; set; }
+
+        public Product()
+        {
+            PropertyValues = new Collection<PropertyValue>();
+        }
     }
 }

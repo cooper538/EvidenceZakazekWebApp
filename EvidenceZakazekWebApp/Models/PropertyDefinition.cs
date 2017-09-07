@@ -6,11 +6,6 @@ namespace EvidenceZakazekWebApp.Models
 {
     public class PropertyDefinition
     {
-        public PropertyDefinition()
-        {
-            PropertyValues = new Collection<PropertyValue>();
-        }
-
         public int Id { get; set; }
 
         [Required]
@@ -26,5 +21,10 @@ namespace EvidenceZakazekWebApp.Models
         public int ProductCategoryId { get; set; }
 
         public ICollection<PropertyValue> PropertyValues { get; set; }
+
+        public PropertyDefinition()
+        {
+            PropertyValues = new Collection<PropertyValue>();
+        }
     }
 }
