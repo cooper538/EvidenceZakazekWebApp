@@ -1,6 +1,6 @@
 v0.1 - CRUD for Products and ProductCategories is complete. In very straightforward way.
 
-in next version:
+in next version (v0.2):
 - refactoting 
 - - rich model/ light controller / maybe add services
 - - integrita modelu
