@@ -17,20 +17,32 @@ namespace EvidenceZakazekWebApp.App_Start
                 .ForMember(pd => pd.SupplierName, opt => opt.MapFrom(p => p.Supplier.Name))
                 .ForMember(pd => pd.CategoryName, opt => opt.MapFrom(p => p.ProductCategory.Name));
 
-            CreateMap<ProductDto, ProductTableDto>()
-                .ForMember(ptd => ptd.StaticProperties, opt => opt.MapFrom(pd =>
-                    new Dictionary<string, string>() {
-                        { "Dodavatel", pd.SupplierName },
-                        { "Název", pd.Name },
-                        { "Kategorie", pd.CategoryName },
-                        { "Objednací číslo", pd.OrderNumber },
-                        { "Typové označení", pd.TypeName },
-                        { "Cena", pd.Price.ToString() }
-                    }))
-                .ForMember(ptd => ptd.DynamicProperties, opt => opt.MapFrom(pd => pd.PropertyValues
-                    .ToDictionary(pvd => pvd.PropertyDefinitionName, pvd => pvd.Value)))
-                .ForMember(ptd => ptd.Properties, opt => opt.Ignore())
-                .ForMember(ptd => ptd.ColumnNames, opt => opt.Ignore());
+            CreateMap<Product, CrudRowViewModel>()
+                .ForMember(crvm => crvm.Properties, opt => opt.MapFrom(p =>
+                    new Dictionary<string, string> {
+                        { "Dodavatel", p.Supplier.Name },
+                        { "Název", p.Name },
+                        { "Kategorie", p.ProductCategory.Name },
+                        { "Objednací číslo", p.OrderNumber },
+                        { "Typové označení", p.TypeName },
+                        { "Cena", p.Price.ToString() }}
+                    .Concat(PropertyValuesToDict(p)).ToDictionary(s => s.Key, s => s.Value)
+                    ));
+
+            CreateMap<Product, DetailViewModel>()
+                .ForMember(dvm => dvm.Properties, opt => opt.MapFrom(p =>
+                    new Dictionary<string, string> {
+                        { "Název", p.Name },
+                        { "Dodavatel", p.Supplier.Name },
+                        { "Objednací číslo", p.OrderNumber },
+                        { "Typové označení", p.TypeName },
+                        { "Cena", $"{p.Price} Kč"  }
+                    }
+                    .Concat(PropertyValuesToDict(p)).ToDictionary(s => s.Key, s => s.Value)
+                    ))
+                .ForMember(dvm => dvm.Heading, opt => opt.Ignore())
+                .ForMember(dvm => dvm.ControllerName, opt => opt.Ignore());
+
 
             CreateMap<ProductFormViewModel, Product>()
                 .ForMember(p => p.Supplier, opt => opt.Ignore())
@@ -44,13 +56,21 @@ namespace EvidenceZakazekWebApp.App_Start
             // ProductCategory
             CreateMap<ProductCategory, ProductCategoryDto>();
 
-            CreateMap<ProductCategoryDto, ProductCategoryTableDto>()
-                .ForMember(pctd => pctd.StaticProperties, opt => opt.MapFrom(pcd =>
-                    new Dictionary<string, string>() {
-                        { "Název", pcd.Name }
-                    }))
-                .ForMember(ptd => ptd.Properties, opt => opt.Ignore())
-                .ForMember(ptd => ptd.ColumnNames, opt => opt.Ignore());
+            CreateMap<ProductCategory, CrudRowViewModel>()
+                .ForMember(crvm => crvm.Properties, opt => opt.MapFrom(pc =>
+                    new Dictionary<string, string> {
+                        { "Název", pc.Name }}
+                ));
+
+            CreateMap<ProductCategory, DetailViewModel>()
+                .ForMember(dvm => dvm.Properties, opt => opt.MapFrom(pc =>
+                    new Dictionary<string, string> {
+                        { "Název", pc.Name }}
+                    .Concat(PropertyDefinitionsToDict(pc)).ToDictionary(s => s.Key, s => s.Value)
+                ))
+                .ForMember(dvm => dvm.Heading, opt => opt.Ignore())
+                .ForMember(dvm => dvm.ControllerName, opt => opt.Ignore());
+
 
             CreateMap<ProductCategoryFormViewModel, ProductCategory>()
                 .ForMember(pc => pc.Products, opt => opt.Ignore());
@@ -80,11 +100,27 @@ namespace EvidenceZakazekWebApp.App_Start
                 .ForMember(pv => pv.Product, opt => opt.Ignore())
                 .ForMember(pv => pv.ProductId, opt => opt.Ignore());
 
-            CreateMap<PropertyValue, PropertyValueFormViewModel>()             
-                .ForMember(pv => pv.PropertyDefinitionName, opt => opt.MapFrom( pv => 
-                    pv.PropertyDefinition.Name))
+            CreateMap<PropertyValue, PropertyValueFormViewModel>()
+                .ForMember(pv => pv.PropertyDefinitionName, opt => opt.MapFrom(pv =>
+                   pv.PropertyDefinition.Name))
                 .ForMember(pv => pv.MeasureUnit, opt => opt.MapFrom(pv =>
                     pv.PropertyDefinition.MeasureUnit));
+        }
+
+        // Product functions
+
+        public IDictionary<string, string> PropertyValuesToDict(Product product)
+        {
+            return product.PropertyValues.ToDictionary(pv =>
+                pv.PropertyDefinition.Name, pv => pv.Value);
+        }
+
+        // ProductCategory functions
+
+        public IDictionary<string, string> PropertyDefinitionsToDict(ProductCategory productCategory)
+        {
+            return productCategory.PropertyDefinitions
+                .ToDictionary(dp => dp.Name, dp => dp.MeasureUnit);
         }
     }
 }

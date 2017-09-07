@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Dtos;
-using EvidenceZakazekWebApp.Dtos.Interfaces;
 using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -27,17 +24,13 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var productCategories = _context.ProductCategories.ToList();
 
-            var productCategoryDtos = _mapper.Map<List<ProductCategory>, List<ProductCategoryDto>>(productCategories);
-            var productCategoryTableDtos = _mapper.Map<List<ProductCategoryDto>, List<ProductCategoryTableDto>>(productCategoryDtos);
-
-            var CrudtableDtos = new Collection<ICrudTableDto>();
-            productCategoryTableDtos.ForEach(pctd => CrudtableDtos.Add(pctd));
+            var crudRowViewModels = _mapper.Map<List<ProductCategory>, List<CrudRowViewModel>>(productCategories);
 
             var viewModel = new CrudTableViewModel()
             {
                 Heading = "Kategorie",
                 ControllerName = "productCategories",
-                CrudTableDtos = CrudtableDtos
+                CrudRowViewModels = crudRowViewModels
             };
 
             return View("CrudTable", viewModel);
@@ -104,7 +97,8 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var oldPropetyDefinitions = productCategory.PropertyDefinitions;
             var newPropertyDefinitions = viewModel.PropertyDefinitions.Select(pd =>
-                new PropertyDefinition {
+                new PropertyDefinition
+                {
                     Id = pd.Id,
                     Name = pd.Name,
                     MeasureUnit = pd.MeasureUnit
@@ -141,12 +135,13 @@ namespace EvidenceZakazekWebApp.Controllers
                     foreach (var product in productCategory.Products)
                     {
                         newPropertyDefinition.PropertyValues.Add(
-                            new PropertyValue {
+                            new PropertyValue
+                            {
                                 ProductId = product.Id,
                                 Value = "(Nezadáno)"
                             });
                     }
-                    
+
                 }
             }
 
@@ -157,29 +152,17 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Detail(int id)
         {
+            var productCategory = _context.ProductCategories
+                .Include(pc => pc.PropertyDefinitions)
+                .SingleOrDefault(pc => pc.Id == id);
+
             var viewModel = new DetailViewModel()
             {
                 Heading = "Detail kategorie s id:" + id,
                 ControllerName = "ProductCategories"
             };
 
-            var productCategory = _context.ProductCategories
-                .Include(pc => pc.PropertyDefinitions)
-                .SingleOrDefault(pc => pc.Id == id);
-
-            var staticProperties = new Dictionary<string, string>()
-            {
-                //{ "Id", productCategory.Id.ToString() },
-                { "Jméno", productCategory.Name },
-            };
-
-            var dynamicProperties = productCategory.PropertyDefinitions
-                .ToDictionary(dp => dp.Name, dp => dp.MeasureUnit);
-
-            var properties = staticProperties.Union(dynamicProperties)
-                .ToDictionary(p => p.Key, p => p.Value);
-
-            viewModel.Properties = properties;
+            _mapper.Map(productCategory, viewModel);
 
             return View("Detail", viewModel);
         }

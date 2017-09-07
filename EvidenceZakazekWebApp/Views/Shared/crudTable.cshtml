@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>id</th>
-            @foreach (var ColumnName in Model.CrudTableDtos.FirstOrDefault().ColumnNames)
+            @foreach (var ColumnName in Model.CrudRowViewModels.FirstOrDefault().ColumnNames)
             {
                 <th>@ColumnName</th>
             }
@@ -22,12 +22,12 @@
     </thead>
 
     <tbody>
-        @foreach (var CrudTableDto in Model.CrudTableDtos)
+        @foreach (var CrudRowViewModel in Model.CrudRowViewModels)
         {
             <tr>
-                <td>@CrudTableDto.Id</td>
+                <td>@CrudRowViewModel.Id</td>
 
-                @foreach (var property in CrudTableDto.Properties)
+                @foreach (var property in CrudRowViewModel.Properties)
                 {
                     <td>@property.Value</td>
                 }

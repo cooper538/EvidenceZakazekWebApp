@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Dtos;
-using EvidenceZakazekWebApp.Dtos.Interfaces;
 using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -30,21 +27,17 @@ namespace EvidenceZakazekWebApp.Controllers
                 .Include(pc => pc.Products.Select(p => p.ProductCategory))
                 .Include(pc => pc.Products.Select(p => p.Supplier))
                 .Include(pc => pc.Products.Select(p => p.PropertyValues.Select(pv => pv.PropertyDefinition)))
-                .Single(pc =>pc.Id == id)
+                .Single(pc => pc.Id == id)
                 .Products
                 .ToList();
 
-            var productDtos = _mapper.Map<List<Product>, List<ProductDto>>(products);
-            var productTableDtos = _mapper.Map<List<ProductDto>, List<ProductTableDto>>(productDtos);
-
-            var CrudtableDtos = new Collection<ICrudTableDto>();
-            productTableDtos.ForEach(ptd => CrudtableDtos.Add(ptd));
+            var crudRowViewModels = _mapper.Map<List<Product>, List<CrudRowViewModel>>(products);
 
             var viewModel = new CrudTableViewModel()
             {
                 Heading = "Produkty",
                 ControllerName = "products",
-                CrudTableDtos = CrudtableDtos
+                CrudRowViewModels = crudRowViewModels
             };
 
             return View("CrudTable", viewModel);
@@ -144,33 +137,18 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Detail(int id)
         {
+            var product = _context.Products
+                .Include(p => p.Supplier)
+                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
+                .SingleOrDefault(p => p.Id == id);
+
             var viewModel = new DetailViewModel()
             {
                 Heading = "Detail produktu s id:" + id,
                 ControllerName = "Products" // TODO: refaktoring to dynamic name, no magic strings
             };
 
-            var product = _context.Products
-                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
-                .SingleOrDefault(p => p.Id == id);
-
-            var staticProperties = new Dictionary<string, string>()
-            {
-                { "Jméno", product.Name },
-                { "Objednací číslo", product.OrderNumber },
-                { "Typové označení", product.TypeName },
-                { "Cena", $"{product.Price} Kč"  }
-            };
-
-            // https://stackoverflow.com/a/953961/6355668
-            var dynamicProperties = product.PropertyValues
-                .ToDictionary(pv => pv.PropertyDefinition.Name, pv => $"{pv.Value} {pv.PropertyDefinition.MeasureUnit}");
-
-            // https://stackoverflow.com/a/10559415/2756329
-            var properties = staticProperties.Union(dynamicProperties)
-                .ToDictionary(p => p.Key, p => p.Value);
-
-            viewModel.Properties = properties;
+            _mapper.Map(product, viewModel);
 
             return View("Detail", viewModel);
         }
