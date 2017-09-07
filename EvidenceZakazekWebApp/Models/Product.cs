@@ -38,5 +38,20 @@ namespace EvidenceZakazekWebApp.Models
         {
             PropertyValues = new Collection<PropertyValue>();
         }
+
+        public void Modify(Product updatedProduct, ICollection<PropertyValue> propertyValues)
+        {
+            if (updatedProduct == null)
+                throw new System.ArgumentNullException(nameof(updatedProduct));
+
+            Name = updatedProduct.Name;
+            OrderNumber = updatedProduct.OrderNumber;
+            TypeName = updatedProduct.TypeName;
+            Price = updatedProduct.Price;
+            SupplierId = updatedProduct.SupplierId;
+            ProductCategoryId = updatedProduct.ProductCategoryId;
+
+            PropertyValues = propertyValues;
+        }
     }
 }

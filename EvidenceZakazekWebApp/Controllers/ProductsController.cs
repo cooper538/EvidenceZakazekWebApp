@@ -3,6 +3,7 @@ using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -89,7 +90,7 @@ namespace EvidenceZakazekWebApp.Controllers
                 ProductCategories = _context.ProductCategories.ToList()
             };
 
-            _mapper.Map<Product, ProductFormViewModel>(product, viewModel);
+            _mapper.Map(product, viewModel);
 
             return View("ProductForm", viewModel);
         }
@@ -109,26 +110,18 @@ namespace EvidenceZakazekWebApp.Controllers
                 .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
                 .Single(p => p.Id == viewModel.Id);
 
+            // delete old PropertyValues
             var oldPropertyValues = _context.PropertyValues
                 .Where(pv => pv.ProductId == product.Id)
                 .ToList();
 
             _context.PropertyValues.RemoveRange(oldPropertyValues);
 
-            product.Name = viewModel.Name;
-            product.OrderNumber = viewModel.OrderNumber;
-            product.TypeName = viewModel.TypeName;
-            product.Price = viewModel.Price;
-            product.SupplierId = viewModel.SupplierId;
-            product.ProductCategoryId = viewModel.ProductCategoryId;
+            // Update Product and add PropertyValues 
+            var updatedProduct = _mapper.Map<Product>(viewModel);
+            var updatedPropertyValues = _mapper.Map<Collection<PropertyValue>>(viewModel.PropertyValues);
 
-            product.PropertyValues = viewModel.PropertyValues.Select(pv =>
-                new PropertyValue
-                {
-                    Value = pv.Value,
-                    PropertyDefinitionId = pv.PropertyDefinitionId
-                }
-            ).ToList();
+            product.Modify(updatedProduct, updatedPropertyValues);            
 
             _context.SaveChanges();
 
