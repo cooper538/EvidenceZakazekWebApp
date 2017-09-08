@@ -46,8 +46,7 @@ namespace EvidenceZakazekWebApp.App_Start
 
             CreateMap<ProductFormViewModel, Product>()
                 .ForMember(p => p.Supplier, opt => opt.Ignore())
-                .ForMember(p => p.ProductCategory, opt => opt.Ignore())
-                .ForMember(p => p.PropertyValues, opt => opt.Ignore());
+                .ForMember(p => p.ProductCategory, opt => opt.Ignore());
 
             CreateMap<Product, ProductFormViewModel>()
                 .ForMember(pfvm => pfvm.Heading, opt => opt.Ignore())

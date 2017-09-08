@@ -119,9 +119,8 @@ namespace EvidenceZakazekWebApp.Controllers
 
             // Update Product and add PropertyValues 
             var updatedProduct = _mapper.Map<Product>(viewModel);
-            var updatedPropertyValues = _mapper.Map<Collection<PropertyValue>>(viewModel.PropertyValues);
 
-            product.Modify(updatedProduct, updatedPropertyValues);            
+            product.Modify(updatedProduct);
 
             _context.SaveChanges();
 

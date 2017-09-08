@@ -39,7 +39,7 @@ namespace EvidenceZakazekWebApp.Models
             PropertyValues = new Collection<PropertyValue>();
         }
 
-        public void Modify(Product updatedProduct, ICollection<PropertyValue> propertyValues)
+        public void Modify(Product updatedProduct)
         {
             if (updatedProduct == null)
                 throw new System.ArgumentNullException(nameof(updatedProduct));
@@ -51,7 +51,7 @@ namespace EvidenceZakazekWebApp.Models
             SupplierId = updatedProduct.SupplierId;
             ProductCategoryId = updatedProduct.ProductCategoryId;
 
-            PropertyValues = propertyValues;
+            PropertyValues = updatedProduct.PropertyValues;
         }
     }
 }
