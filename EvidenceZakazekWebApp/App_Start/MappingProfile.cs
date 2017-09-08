@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Dtos;
 using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
@@ -13,10 +12,6 @@ namespace EvidenceZakazekWebApp.App_Start
         public MappingProfile()
         {
             // Product
-            CreateMap<Product, ProductDto>()
-                .ForMember(pd => pd.SupplierName, opt => opt.MapFrom(p => p.Supplier.Name))
-                .ForMember(pd => pd.CategoryName, opt => opt.MapFrom(p => p.ProductCategory.Name));
-
             CreateMap<Product, CrudRowViewModel>()
                 .ForMember(crvm => crvm.Properties, opt => opt.MapFrom(p =>
                     new Dictionary<string, string> {
@@ -54,8 +49,6 @@ namespace EvidenceZakazekWebApp.App_Start
                 .ForMember(pfvm => pfvm.ProductCategories, opt => opt.Ignore());
 
             // ProductCategory
-            CreateMap<ProductCategory, ProductCategoryDto>();
-
             CreateMap<ProductCategory, CrudRowViewModel>()
                 .ForMember(crvm => crvm.Properties, opt => opt.MapFrom(pc =>
                     new Dictionary<string, string> {
@@ -80,8 +73,6 @@ namespace EvidenceZakazekWebApp.App_Start
 
 
             // PropertyDefinition
-            CreateMap<PropertyDefinition, PropertyDefinitionDto>();
-
             CreateMap<PropertyDefinitionFormViewModel, PropertyDefinition>()
                 .ForMember(pd => pd.ProductCategory, opt => opt.Ignore())
                 .ForMember(pd => pd.ProductCategoryId, opt => opt.Ignore())
@@ -92,8 +83,6 @@ namespace EvidenceZakazekWebApp.App_Start
 
 
             // PropertyValue
-            CreateMap<PropertyValue, PropertyValueDto>();
-
             CreateMap<PropertyValueFormViewModel, PropertyValue>()
                 .ForMember(pv => pv.Id, opt => opt.Ignore())
                 .ForMember(pv => pv.PropertyDefinition, opt => opt.Ignore())

@@ -1,4 +1,4 @@
 ﻿Drop Db, create newDb, adn seed
 https://stackoverflow.com/a/32808843/6355668
-update-database -TargetMigration:0 -force| update-database -force | update-database -force
+update-database -TargetMigration:0 -force| update-database -force
 
