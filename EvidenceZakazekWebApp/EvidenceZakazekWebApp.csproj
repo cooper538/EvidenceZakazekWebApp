@@ -201,18 +201,12 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Dtos\ProductCategoryDto.cs" />
     <Compile Include="ViewModels\Partial\CrudRowViewModel.cs" />
-    <Compile Include="Dtos\ProductDto.cs" />
-    <Compile Include="Dtos\PropertyDefinitionDto.cs" />
-    <Compile Include="Dtos\PropertyValueDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CustomAttributes\Ignore.cs" />
     <Compile Include="Helpers\MyHtmlHelper.cs" />
     <Compile Include="Helpers\MigrationHelper.cs" />
-    <Compile Include="Helpers\ObjectHelper.cs" />
     <Compile Include="Migrations\201708160658231_InitialModel.cs" />
     <Compile Include="Migrations\201708160658231_InitialModel.Designer.cs">
       <DependentUpon>201708160658231_InitialModel.cs</DependentUpon>
@@ -395,6 +389,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
