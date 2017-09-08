@@ -93,21 +93,12 @@ namespace EvidenceZakazekWebApp.Controllers
                 .Include(pc => pc.PropertyDefinitions)
                 .Single(pc => pc.Id == viewModel.Id);
 
-            productCategory.Name = viewModel.Name;
-
-            var oldPropetyDefinitions = productCategory.PropertyDefinitions;
-            var newPropertyDefinitions = viewModel.PropertyDefinitions.Select(pd =>
-                new PropertyDefinition
-                {
-                    Id = pd.Id,
-                    Name = pd.Name,
-                    MeasureUnit = pd.MeasureUnit
-                }).ToList();
+            var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);
 
             // Check of deleted properties
-            foreach (var oldPropertyDefinition in oldPropetyDefinitions.ToList())
+            foreach (var oldPropertyDefinition in productCategory.PropertyDefinitions.ToList())
             {
-                if (!newPropertyDefinitions.Any(npd => npd.Id == oldPropertyDefinition.Id))
+                if (!updatedPropertyDefinitions.Any(npd => npd.Id == oldPropertyDefinition.Id))
                 {
                     var propertyDefinitionForDelete = _context.PropertyDefinitions
                         .Include(pdfd => pdfd.PropertyValues)
@@ -118,32 +109,7 @@ namespace EvidenceZakazekWebApp.Controllers
                 }
             }
 
-            // Check of edited or added properties
-            foreach (var newPropertyDefinition in newPropertyDefinitions)
-            {
-                if (oldPropetyDefinitions.Any(opd => opd.Id == newPropertyDefinition.Id))
-                {
-                    var oldPropertyDefinition = oldPropetyDefinitions.Single(opd => opd.Id == newPropertyDefinition.Id);
-                    oldPropertyDefinition.Name = newPropertyDefinition.Name;
-                    oldPropertyDefinition.MeasureUnit = newPropertyDefinition.MeasureUnit;
-                }
-                else
-                {
-                    productCategory.PropertyDefinitions.Add(newPropertyDefinition);
-
-                    // With new propertyDefinition, have to be add specific productValue to every item in category                       
-                    foreach (var product in productCategory.Products)
-                    {
-                        newPropertyDefinition.PropertyValues.Add(
-                            new PropertyValue
-                            {
-                                ProductId = product.Id,
-                                Value = "(Nezadáno)"
-                            });
-                    }
-
-                }
-            }
+            productCategory.Modify(_mapper.Map<ProductCategory>(viewModel));
 
             _context.SaveChanges();
 

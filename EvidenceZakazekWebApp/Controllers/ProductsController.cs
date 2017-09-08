@@ -118,9 +118,7 @@ namespace EvidenceZakazekWebApp.Controllers
             _context.PropertyValues.RemoveRange(oldPropertyValues);
 
             // Update Product and add PropertyValues 
-            var updatedProduct = _mapper.Map<Product>(viewModel);
-
-            product.Modify(updatedProduct);
+            product.Modify(_mapper.Map<Product>(viewModel));
 
             _context.SaveChanges();
 
