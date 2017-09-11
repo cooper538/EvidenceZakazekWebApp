@@ -16,5 +16,10 @@ namespace EvidenceZakazekWebApp.ViewModels.Partial
                 return Properties.Select(p => p.Key).ToList();
             }
         }
+
+        public CrudRowViewModel()
+        {
+            Properties = new Dictionary<string, string>();
+        }
     }
 }

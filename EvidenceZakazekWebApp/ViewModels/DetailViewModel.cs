@@ -7,12 +7,14 @@ namespace EvidenceZakazekWebApp.ViewModels
 {
     public class DetailViewModel
     {
+        public string Heading { get; set; }
+        public string ControllerName { get; set; }
+
+        public Dictionary<string, string> Properties { get; set; }
+
         public DetailViewModel()
         {
             Properties = new Dictionary<string, string>();
         }
-        public string Heading { get; set; }
-        public string ControllerName { get; set; }
-        public Dictionary<string, string> Properties { get; set; }
     }
 }

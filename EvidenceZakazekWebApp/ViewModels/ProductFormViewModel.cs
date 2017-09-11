@@ -3,6 +3,7 @@ using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
@@ -37,15 +38,15 @@ namespace EvidenceZakazekWebApp.ViewModels
         [DisplayName("Dodavatel")]
         public int SupplierId { get; set; }
 
-        public IEnumerable<Supplier> Suppliers { get; set; }
+        public ICollection<Supplier> Suppliers { get; set; }
 
         [Required]
         [DisplayName("Kategorie")]
         public int ProductCategoryId { get; set; }
 
-        public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
 
-        public IEnumerable<PropertyValueFormViewModel> PropertyValues { get; set; }
+        public ICollection<PropertyValueFormViewModel> PropertyValues { get; set; }
 
         public string Action
         {
@@ -60,6 +61,13 @@ namespace EvidenceZakazekWebApp.ViewModels
                 var action = (Id != 0) ? update : create;
                 return (action.Body as MethodCallExpression).Method.Name;
             }
+        }
+
+        public ProductFormViewModel()
+        {
+            Suppliers = new Collection<Supplier>();
+            ProductCategories = new Collection<ProductCategory>();
+            PropertyValues = new Collection<PropertyValueFormViewModel>();
         }
     }
 }
