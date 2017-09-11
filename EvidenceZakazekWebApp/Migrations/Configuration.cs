@@ -29,7 +29,8 @@
                     new Supplier { Id = 3, Name = "ControlTech" },
                     new Supplier { Id = 4, Name = "Schrack" }
                     );
-                
+
+                // Product Categories
                 var seedProductCategoryDefinitions1 = new SeedProductCategoryDefinition
                 {
                     CatregoryName = "Jističe",
@@ -92,7 +93,7 @@
                     "Entity Validation Failed - errors follow:\n" +
                     sb.ToString(), ex
                 );
-            }            
+            }
         }
     }
 }
