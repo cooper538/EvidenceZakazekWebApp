@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="bootbox.min.js" />
 /// <reference path="bootstrap.js" />
+/// <reference path="commonutils.js" />
 /// <reference path="datatables/autofill.bootstrap.min.js" />
 /// <reference path="datatables/autofill.bootstrap4.min.js" />
 /// <reference path="datatables/autofill.foundation.min.js" />

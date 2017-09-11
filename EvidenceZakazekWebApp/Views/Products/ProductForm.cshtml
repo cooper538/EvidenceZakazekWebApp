@@ -69,6 +69,7 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+
     <script>
         // decimal separator override
         // dot. => comma,
@@ -92,8 +93,6 @@
                 data: {categoryId : categoryIdVal},
                 dataType: 'html',
                 success: function (html) {
-                    //alert("Handler for .change() called.");
-
                     $(".propertyValues").html(html);
                     fnValidateDynamicContent($(".productForm"));
                 }

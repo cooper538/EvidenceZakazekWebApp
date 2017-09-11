@@ -30,6 +30,9 @@ namespace EvidenceZakazekWebApp
             bundles.Add(new ScriptBundle("~/bundles/datatables-js").Include(
                       "~/Scripts/DataTables/jquery.dataTables.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/commonUtils").Include(
+            "~/Scripts/commonUtils.js"));
+
             // Css
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

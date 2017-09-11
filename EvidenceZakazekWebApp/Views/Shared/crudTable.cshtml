@@ -52,13 +52,8 @@
     @Scripts.Render("~/bundles/datatables-js")
 
     <script>
-
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-        }
-
         var controllerName = $(".table").attr("data-controller-name");
-        var controllerNameCap = capitalizeFirstLetter(controllerName);
+        var controllerNameCap = fnCapitalizeFirstLetter(controllerName);
 
         $(document).ready(function () {
             var table = $(".table").DataTable({
@@ -99,35 +94,23 @@
                         cofirmMsg = "Text pro tento kontroler nebyl implementován!!"
                 }
 
-                bootbox.dialog({
-                    title: 'Confirm',
-                    message: confirmMsg,
-                    buttons: {
-                        no: {
-                            label: "Ne",
-                            className: 'btn-default',
-                            callback: function () {
-                                bootbox.hideAll();
-                            }
-                        },
-                        yes: {
-                            label: "Ano",
-                            className: 'btn-danger',
-                            callback: function () {
-                                $.ajax({
-                                    url: "/api/" + controllerNameCap + "/" + productId,
-                                    method: "Delete"
-                                })
-                                .done(function () {
-                                    row.remove().draw();
-                                })
-                                .fail(function () {
-                                    alert("Něco se pokazilo!");
-                                });
-                            }
-                        }
-                    }
-                });              
+                CreateConfirmBootboxDialog(
+                    "Potvrdit",
+                    confirmMsg,
+                    function () {
+                        $.ajax({
+                            url: "/api/" + controllerNameCap + "/" + productId,
+                            method: "Delete"
+                        })
+                        .done(function () {
+                            row.remove().draw();
+                        })
+                        .fail(function () {
+                            alert("Něco se pokazilo!");
+                        });
+                    },
+                    function () {}
+                );             
             });
         });
     </script>
