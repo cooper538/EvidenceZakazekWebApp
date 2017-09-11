@@ -44,34 +44,70 @@ span.field-validation-error {
     width: 300px;
 }
 
-.table{
+.table {
     white-space: nowrap;
     width: 1%;
 }
 
 /* Page-level styles */
 
+// ProductCategory form
+form.productCategories {
+    .properties  {
+        ul {
+            > li {
+                .form-group {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+// Product form
+form.products {
+    ul.propertyValues {
+        list-style-type: none;
+        padding-left: 0;
+
+        .panel {
+            width: fit-content;
+        
+            .form-group {
+                margin: 10px;
+
+                input {
+                    width: 280px;
+                }
+            }
+        }    
+    }
+}
+
+
+
+// CRUD table
 .crudTable{
     .voffset2;
     
-    thead{
-        tr{
-            th{
-                &:first-child{
+    thead {
+        tr {
+            th {
+                &:first-child {
                     display: none;
                 }
             }
         }
     }
 
-    tbody{
-        tr{
-            td{
-                &:first-child{
+    tbody {
+        tr {
+            td {
+                &:first-child {
                     display: none;                
                 }
 
-                > button:not(:last-child){
+                > button:not(:last-child) {
                     margin-right: 5px;
                 }
             }
@@ -79,36 +115,18 @@ span.field-validation-error {
     }
 }
 
-.productCategoryProperties ul > li .form-group {
-    margin-bottom: 0;
-}
-
-ul.propertyValues {
-    list-style-type: none;
-    padding-left: 0;
-
-    .panel {
-        width: fit-content;
-        
-        .form-group{
-            margin: 10px;
-
-            input {
-                width: 280px;
-            }
-        }
-    }    
-}
-
-table.detail{
+// Detail
+table.detail {
     .voffset2;
-    tr{
-        td{
-            &:first-child{
-            font-weight: bold;
-            padding-right: 18px;
-            }
+
+    tr {
+        td {
             padding-right: 45px;
+
+             &:first-child {
+                font-weight: bold;
+                padding-right: 18px;
+            }
         }
     }
 }

@@ -54,6 +54,22 @@ span.field-validation-error {
   width: 1%;
 }
 /* Page-level styles */
+form.productCategories .properties ul > li .form-group {
+  margin-bottom: 0;
+}
+form.products ul.propertyValues {
+  list-style-type: none;
+  padding-left: 0;
+}
+form.products ul.propertyValues .panel {
+  width: fit-content;
+}
+form.products ul.propertyValues .panel .form-group {
+  margin: 10px;
+}
+form.products ul.propertyValues .panel .form-group input {
+  width: 280px;
+}
 .crudTable {
   margin-top: 20px;
 }
@@ -65,22 +81,6 @@ span.field-validation-error {
 }
 .crudTable tbody tr td > button:not(:last-child) {
   margin-right: 5px;
-}
-.productCategoryProperties ul > li .form-group {
-  margin-bottom: 0;
-}
-ul.propertyValues {
-  list-style-type: none;
-  padding-left: 0;
-}
-ul.propertyValues .panel {
-  width: fit-content;
-}
-ul.propertyValues .panel .form-group {
-  margin: 10px;
-}
-ul.propertyValues .panel .form-group input {
-  width: 280px;
 }
 table.detail {
   margin-top: 20px;
