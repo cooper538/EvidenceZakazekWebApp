@@ -484,6 +484,9 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <None Include="Content\Site.less" />
     <Content Include="PackageManager_comands.txt" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers\productController.js" />
+    <Content Include="Scripts\app\services\productCategoryService.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -572,6 +575,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jqueryFixes.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />

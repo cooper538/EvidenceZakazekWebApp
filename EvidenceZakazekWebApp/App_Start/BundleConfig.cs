@@ -11,10 +11,14 @@ namespace EvidenceZakazekWebApp
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/app/app.js",
+                        "~/Scripts/app/services/productCategoryService.js",
+                        "~/Scripts/app/controllers/productController.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jqueryFixes.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
