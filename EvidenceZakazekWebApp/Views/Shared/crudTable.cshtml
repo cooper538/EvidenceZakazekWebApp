@@ -29,6 +29,7 @@
         @foreach (var CrudRowViewModel in Model.CrudRowViewModels)
         {
             <tr>
+                @* Pokud se to povede pres JS, je mozne tento sloupec odstranit a ulehcit si praci s jeho skryvanim *@
                 <td>@CrudRowViewModel.Id</td>
 
                 @foreach (var property in CrudRowViewModel.Properties)
@@ -36,7 +37,7 @@
                     <td>@property.Value</td>
                 }
 
-                <td>
+                <td data-itemId="@CrudRowViewModel.Id" >
                     @btnFactory("btn-warning js-btn-edit", "pencil")
                     @btnFactory("btn-danger js-btn-delete", "remove")
                     @btnFactory("btn-info js-btn-detail", "info-sign")
@@ -49,69 +50,11 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/datatables-js")
-
     <script>
-        var controllerName = $(".table").attr("data-controller-name");
-        var controllerNameCap = fnCapitalizeFirstLetter(controllerName);
-
         $(document).ready(function () {
-            var table = $(".table").DataTable({
-                searching: false,
-                paging: false,
-                ordering: false,
-                info: false
-            });
+            var controllerName = $(".table").attr("data-controller-name");
 
-            // hint URL by http://www.webreference.com/html/tutorial2/3.html
-            table.on('click', '.js-btn-edit', function () {
-                var data = table.row($(this).parents('tr')).data();
-                var id = data[0];
-                window.location.href = "/" + controllerNameCap + "/Edit/" + id;
-            });
-
-            table.on('click', '.js-btn-detail', function () {
-                var data = table.row($(this).parents('tr')).data();
-                var id = data[0];
-                window.location.href = "/" + controllerNameCap + "/Detail/" + id;
-            });
-
-            table.on('click', '.js-btn-delete', function () {
-                var row = table.row($(this).parents('tr'));
-                var data = table.row($(this).parents('tr')).data();
-                var productId = data[0];
-
-                var confirmMsg = "";
-                switch (controllerName) {
-                    case "products":
-                        confirmMsg = "<p>Opravdu chceš odstanit tento produkt?</p>";
-                        break;
-                    case "productCategories":
-                        confirmMsg = '<p>Opravdu chceš odstanit tuto kategorii?</p>';
-                        confirmMsg += '<p class="text-danger"><b>(Produkty patřící kategorii budou odstraněny)</b></p>';
-                        break;
-                    default:
-                        cofirmMsg = "Text pro tento kontroler nebyl implementován!!"
-                }
-
-                CreateConfirmBootboxDialog(
-                    "Potvrdit",
-                    confirmMsg,
-                    function () {
-                        $.ajax({
-                            url: "/api/" + controllerNameCap + "/" + productId,
-                            method: "Delete"
-                        })
-                        .done(function () {
-                            row.remove().draw();
-                        })
-                        .fail(function () {
-                            alert("Něco se pokazilo!");
-                        });
-                    },
-                    function () {}
-                );             
-            });
+            CrudTableController.init(controllerName);
         });
     </script>
 }

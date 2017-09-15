@@ -6,8 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/app")
 
     @if (IsSectionDefined("AddToHead"))
     {
@@ -40,9 +40,6 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/commonUtils")
     @RenderSection("scripts", required: false)
     @section scripts
     {

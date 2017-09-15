@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace EvidenceZakazekWebApp
 {
@@ -10,32 +9,29 @@ namespace EvidenceZakazekWebApp
         // Js
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
                         "~/Scripts/app/app.js",
                         "~/Scripts/app/services/productCategoryService.js",
-                        "~/Scripts/app/controllers/productController.js"));
+                        "~/Scripts/app/services/crudService.js",
+                        "~/Scripts/app/controllers/productController.js",
+                        "~/Scripts/app/controllers/crudTableController.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/javascriptExtensions.js",
+                         "~/Scripts/bootbox.js",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/respond.js",
+                        "~/Scripts/DataTables/jquery.dataTables.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
-                        "~/Scripts/jqueryFixes.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jqueryValFixes.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootbox.js",
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/datatables-js").Include(
-                      "~/Scripts/DataTables/jquery.dataTables.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/commonUtils").Include(
-            "~/Scripts/commonUtils.js"));
 
             // Css
             bundles.Add(new StyleBundle("~/Content/css").Include(
