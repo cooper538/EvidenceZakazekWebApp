@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.Models;
 
 namespace EvidenceZakazekWebApp.Controllers

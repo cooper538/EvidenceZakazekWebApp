@@ -1,20 +1,20 @@
 ﻿namespace EvidenceZakazekWebApp.Migrations
 {
-    using EvidenceZakazekWebApp.Migrations.Seed;
     using Models;
+    using Seed;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
     using System.Text;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<EvidenceZakazekWebApp.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(EvidenceZakazekWebApp.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

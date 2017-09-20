@@ -50,7 +50,7 @@ namespace EvidenceZakazekWebApp.Migrations.Seed
                 .Id;
 
             // PropertyDefinitions
-            for (int i = 0; i < categoryDef.PropDefAndValDefinitions.Count ; i++)
+            for (int i = 0; i < categoryDef.PropDefAndValDefinitions.Count; i++)
             {
                 context.PropertyDefinitions.AddOrUpdate(
                 pd => new { pd.Name },
@@ -67,7 +67,7 @@ namespace EvidenceZakazekWebApp.Migrations.Seed
 
             // Products
             var rnd = new Random();
-            for (int i = 0; i < categoryDef.ProductsCount ; i++)
+            for (int i = 0; i < categoryDef.ProductsCount; i++)
             {
                 context.Products.AddOrUpdate(
                     p => new { p.Name },

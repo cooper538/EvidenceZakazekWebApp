@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace EvidenceZakazekWebApp.Models
+namespace EvidenceZakazekWebApp.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {
