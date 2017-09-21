@@ -21,10 +21,10 @@ namespace EvidenceZakazekWebApp.Repositories
                 .SingleOrDefault(pc => pc.Id == id);
         }
 
-        public ProductCategory GetCategoryWithDefinitionsAndProducts(int id)
+        public ProductCategory GetCategoryWithProductsAndProperties(int id)
         {
             return _context.ProductCategories
-                .Include(pc => pc.PropertyDefinitions)
+                .Include(pc => pc.PropertyDefinitions.Select(pd => pd.PropertyValues))
                 .Include(pc => pc.Products)
                 .SingleOrDefault(pc => pc.Id == id);
         }
@@ -32,6 +32,19 @@ namespace EvidenceZakazekWebApp.Repositories
         public void Add(ProductCategory productCategory)
         {
             _context.ProductCategories.Add(productCategory);
+        }
+
+        public void RemoveWithProductsWithProperties(ProductCategory productCategory)
+        {
+            foreach (var propertyDefinition in productCategory.PropertyDefinitions)
+            {
+                _context.PropertyValues.RemoveRange(propertyDefinition.PropertyValues);
+            }
+
+            _context.PropertyDefinitions.RemoveRange(productCategory.PropertyDefinitions);
+            _context.Products.RemoveRange(productCategory.Products);
+
+            _context.ProductCategories.Remove(productCategory);
         }
 
         public IEnumerable<ProductCategory> GetCategories()

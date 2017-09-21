@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Models;
-using System.Data.Entity;
-using System.Linq;
+using EvidenceZakazekWebApp.Persistence;
 using System.Web.Http;
 
 namespace EvidenceZakazekWebApp.Controllers.Api
@@ -9,36 +8,26 @@ namespace EvidenceZakazekWebApp.Controllers.Api
     public class ProductCategoriesController : ApiController
     {
 
-        ApplicationDbContext _context;
+        private readonly UnitOfWork _unitOfWork;
         IMapper _mapper;
 
         public ProductCategoriesController()
         {
-            _context = new ApplicationDbContext();
+            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
             _mapper = MvcApplication.MapperConfiguration.CreateMapper();
         }
 
         [HttpDelete]
         public IHttpActionResult Detele(int id)
         {
-            var categoryForDelete = _context.ProductCategories
-                .Include(pc => pc.PropertyDefinitions.Select(pd => pd.PropertyValues))
-                .Include(pc => pc.Products)
-                .Single(p => p.Id == id);
+            var productCategory = _unitOfWork.ProductCategories // TODO: Zkontrolovat dodržení rozdílu mezi remove a Delete
+                .GetCategoryWithProductsAndProperties(id);
 
-            if (categoryForDelete == null)
+            if (productCategory == null)
                 return NotFound();
 
-            foreach (var propertyDefinition in categoryForDelete.PropertyDefinitions)
-            {
-                _context.PropertyValues.RemoveRange(propertyDefinition.PropertyValues);
-            }
-
-            _context.PropertyDefinitions.RemoveRange(categoryForDelete.PropertyDefinitions);
-            _context.Products.RemoveRange(categoryForDelete.Products);
-
-            _context.ProductCategories.Remove(categoryForDelete);
-            _context.SaveChanges();
+            _unitOfWork.ProductCategories.RemoveWithProductsWithProperties(productCategory);
+            _unitOfWork.Complete();
 
             return Ok();
         }

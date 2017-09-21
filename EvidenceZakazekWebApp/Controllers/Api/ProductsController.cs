@@ -1,36 +1,31 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Models;
-using System.Data.Entity;
-using System.Linq;
+using EvidenceZakazekWebApp.Persistence;
 using System.Web.Http;
 
 namespace EvidenceZakazekWebApp.Controllers.Api
 {
     public class ProductsController : ApiController
     {
-        ApplicationDbContext _context;
+        private readonly UnitOfWork _unitOfWork;
         IMapper _mapper;
 
         public ProductsController()
         {
-            _context = new ApplicationDbContext();
+            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
             _mapper = MvcApplication.MapperConfiguration.CreateMapper();
         }
 
         [HttpDelete]
         public IHttpActionResult Detele(int id)
         {
-            var productForDelete = _context.Products
-                .Include(p => p.PropertyValues)
-                .Single(p => p.Id == id);
+            var product = _unitOfWork.Products.GetProductWithProperties(id);
 
-            if (productForDelete == null)
+            if (product == null)
                 return NotFound();
 
-            _context.PropertyValues.RemoveRange(productForDelete.PropertyValues);
-
-            _context.Products.Remove(productForDelete);
-            _context.SaveChanges();
+            _unitOfWork.Products.RemoveWithValues(product);
+            _unitOfWork.Complete();
 
             return Ok();
         }

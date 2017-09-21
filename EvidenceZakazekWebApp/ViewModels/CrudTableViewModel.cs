@@ -9,5 +9,6 @@ namespace EvidenceZakazekWebApp.ViewModels
         public string ControllerName { get; set; }
 
         public IEnumerable<CrudRowViewModel> CrudRowViewModels { get; set; }
+        // TODO: aaImportant přidat list IEnumerable<string> CollumnNames, explicit sorting
     }
 }

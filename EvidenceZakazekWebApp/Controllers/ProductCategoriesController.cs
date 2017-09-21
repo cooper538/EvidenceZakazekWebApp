@@ -85,7 +85,7 @@ namespace EvidenceZakazekWebApp.Controllers
                 return View("ProductCategoryForm", viewModel);
             }
 
-            var productCategory = _unitOfWork.ProductCategories.GetCategoryWithDefinitionsAndProducts(viewModel.Id);
+            var productCategory = _unitOfWork.ProductCategories.GetCategoryWithProductsAndProperties(viewModel.Id);
 
             //TODO: aaIMPORTANT zjednodušit mazanani - pridat do partial view modelu stav, něco jako new, delste updated apod??
             var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);

@@ -14,7 +14,7 @@ namespace EvidenceZakazekWebApp.Repositories
             _context = context;
         }
 
-        public Product GetExtendedProduct(int id)
+        public Product GetProductWithProperties(int id)
         {
             return _context.Products
                 .Include(p => p.Supplier)
@@ -28,8 +28,10 @@ namespace EvidenceZakazekWebApp.Repositories
             _context.Products.Add(product);
         }
 
-        public void Remove(Product product)
+        public void RemoveWithValues(Product product)
         {
+            _context.PropertyValues.RemoveRange(product.PropertyValues);
+
             _context.Products.Remove(product);
         }
 

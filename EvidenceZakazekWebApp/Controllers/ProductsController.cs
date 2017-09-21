@@ -67,7 +67,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Edit(int id)
         {
-            var product = _unitOfWork.Products.GetExtendedProduct(id);
+            var product = _unitOfWork.Products.GetProductWithProperties(id);
 
             var viewModel = new ProductFormViewModel
             {
@@ -90,7 +90,7 @@ namespace EvidenceZakazekWebApp.Controllers
                 return View("ProductForm", viewModel);
             }
 
-            var product = _unitOfWork.Products.GetExtendedProduct(viewModel.Id);
+            var product = _unitOfWork.Products.GetProductWithProperties(viewModel.Id);
 
             // Delete old PropertyValues
             _unitOfWork.PropertyValues.RemoveValuesByProduct(product.Id);
@@ -105,7 +105,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Detail(int id)
         {
-            var product = _unitOfWork.Products.GetExtendedProduct(id);
+            var product = _unitOfWork.Products.GetProductWithProperties(id);
 
             var viewModel = new DetailViewModel()
             {
