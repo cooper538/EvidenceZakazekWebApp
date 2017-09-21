@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Models;
+using EvidenceZakazekWebApp.Persistence;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -11,20 +11,20 @@ namespace EvidenceZakazekWebApp.Controllers
 {
     public class ProductCategoriesController : Controller
     {
-        ApplicationDbContext _context;
+        UnitOfWork _unitOfWork;
         IMapper _mapper;
 
         public ProductCategoriesController()
         {
-            _context = new ApplicationDbContext();
+            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
             _mapper = MvcApplication.MapperConfiguration.CreateMapper();
         }
 
         public ActionResult Index()
         {
-            var productCategories = _context.ProductCategories.ToList();
+            var productCategories = _unitOfWork.ProductCategories.GetCategories();
 
-            var crudRowViewModels = _mapper.Map<List<ProductCategory>, List<CrudRowViewModel>>(productCategories);
+            var crudRowViewModels = _mapper.Map<IEnumerable<CrudRowViewModel>>(productCategories);
 
             var viewModel = new CrudTableViewModel()
             {
@@ -56,20 +56,17 @@ namespace EvidenceZakazekWebApp.Controllers
                 return View("ProductCategoryForm", viewModel);
             }
 
-            var productCategory = _mapper
-                .Map<ProductCategoryFormViewModel, ProductCategory>(viewModel);
+            var productCategory = _mapper.Map<ProductCategory>(viewModel);
 
-            _context.ProductCategories.Add(productCategory);
-            _context.SaveChanges();
+            _unitOfWork.ProductCategories.Add(productCategory);
+            _unitOfWork.Complete();
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
         {
-            var productCategory = _context.ProductCategories
-                .Include(pc => pc.PropertyDefinitions)
-                .Single(pc => pc.Id == id);
+            var productCategory = _unitOfWork.ProductCategories.GetCategoryWithDefinitions(id);
 
             var viewModel = new ProductCategoryFormViewModel
             {
@@ -88,39 +85,29 @@ namespace EvidenceZakazekWebApp.Controllers
                 return View("ProductCategoryForm", viewModel);
             }
 
-            var productCategory = _context.ProductCategories
-                .Include(pc => pc.Products)
-                .Include(pc => pc.PropertyDefinitions)
-                .Single(pc => pc.Id == viewModel.Id);
+            var productCategory = _unitOfWork.ProductCategories.GetCategoryWithDefinitionsAndProducts(viewModel.Id);
 
+            //TODO: aaIMPORTANT zjednodušit mazanani - pridat do partial view modelu stav, něco jako new, delste updated apod??
             var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);
 
             // Check of deleted properties
-            foreach (var oldPropertyDefinition in productCategory.PropertyDefinitions.ToList())
+            var oldPropertyDefinitions = productCategory.PropertyDefinitions.ToList();
+            foreach (var oldPropertyDefinition in oldPropertyDefinitions)
             {
-                if (!updatedPropertyDefinitions.Any(npd => npd.Id == oldPropertyDefinition.Id))
-                {
-                    var propertyDefinitionForDelete = _context.PropertyDefinitions
-                        .Include(pdfd => pdfd.PropertyValues)
-                        .Single(pdfd => pdfd.Id == oldPropertyDefinition.Id);
-
-                    _context.PropertyValues.RemoveRange(propertyDefinitionForDelete.PropertyValues);
-                    _context.PropertyDefinitions.Remove(propertyDefinitionForDelete);
-                }
+                if (!updatedPropertyDefinitions.Any(pd => pd.Id == oldPropertyDefinition.Id))
+                    _unitOfWork.PropertyDefinitions.RemoveWithValues(oldPropertyDefinition.Id);
             }
 
             productCategory.Modify(_mapper.Map<ProductCategory>(viewModel));
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Detail(int id)
         {
-            var productCategory = _context.ProductCategories
-                .Include(pc => pc.PropertyDefinitions)
-                .SingleOrDefault(pc => pc.Id == id);
+            var productCategory = _unitOfWork.ProductCategories.GetCategoryWithDefinitions(id);
 
             var viewModel = new DetailViewModel()
             {
@@ -133,6 +120,7 @@ namespace EvidenceZakazekWebApp.Controllers
             return View("Detail", viewModel);
         }
 
+        // TODO: aaIMPORTANT Nepatří tyto akce do jiného kontrloleru?? Myslím si že Ano
         public ActionResult GetPropertyDefinitionForm()
         {
             return PartialView("Partial/PropertyDefinitionForm", new PropertyDefinitionFormViewModel());
@@ -141,9 +129,8 @@ namespace EvidenceZakazekWebApp.Controllers
         [HttpGet]
         public ActionResult GetPropertyValuesForm(int categoryId)
         {
-            var propertyDefinitions = _context.PropertyDefinitions
-                .Where(pd => pd.ProductCategoryId == categoryId)
-                .ToList();
+            var propertyDefinitions = _unitOfWork.PropertyDefinitions
+                .GetDefinitionsByCategory(categoryId);
 
             List<PropertyValueFormViewModel> propertyValues = propertyDefinitions.Select(
                 pd => new PropertyValueFormViewModel()

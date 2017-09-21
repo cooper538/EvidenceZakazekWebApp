@@ -1,43 +1,34 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Models;
+using EvidenceZakazekWebApp.Persistence;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
     public class ProductsController : Controller
     {
-        ApplicationDbContext _context;
+        UnitOfWork _unitOfWork;
         IMapper _mapper;
 
         public ProductsController()
         {
-            _context = new ApplicationDbContext();
-            _mapper = MvcApplication.MapperConfiguration.CreateMapper();
+            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _mapper = MvcApplication.MapperConfiguration.CreateMapper(); // Todo: Inject dependency
 
         }
 
         public ActionResult Index(int id = 1)
         {
-            var products = _context.ProductCategories
-                .Include(pc => pc.Products.Select(p => p.ProductCategory))
-                .Include(pc => pc.Products.Select(p => p.Supplier))
-                .Include(pc => pc.Products.Select(p => p.PropertyValues.Select(pv => pv.PropertyDefinition)))
-                .Single(pc => pc.Id == id)
-                .Products
-                .ToList();
-
-            var crudRowViewModels = _mapper.Map<List<Product>, List<CrudRowViewModel>>(products);
+            var products = _unitOfWork.Products.GetProductsWithPropertiesByCategory(id);
 
             var viewModel = new CrudTableViewModel()
             {
                 Heading = "Produkty",
                 ControllerName = "products",
-                CrudRowViewModels = crudRowViewModels
+                CrudRowViewModels = _mapper.Map<IEnumerable<CrudRowViewModel>>(products)
             };
 
             return View("CrudTable", viewModel);
@@ -48,8 +39,8 @@ namespace EvidenceZakazekWebApp.Controllers
             var viewModel = new ProductFormViewModel
             {
                 Heading = "Přidej produkt",
-                Suppliers = _context.Suppliers.ToList(),
-                ProductCategories = _context.ProductCategories.ToList()
+                Suppliers = _unitOfWork.Suppliers.GetSuppliers(), //ToDo: Změnit typ kolekce ve ViewModelu na IEnumerble? Rozumně, podle smyslu
+                ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
 
             return View("ProductForm", viewModel);
@@ -61,32 +52,28 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Suppliers = _context.Suppliers.ToList();
-                viewModel.ProductCategories = _context.ProductCategories.ToList();
+                viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
+                viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
                 return View("ProductForm", viewModel);
             }
 
             var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
 
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            _unitOfWork.Products.Add(product);
+            _unitOfWork.Complete();
 
             return RedirectToAction("Index", "Products");
         }
 
         public ActionResult Edit(int id)
         {
-            var product = _context.Products
-                .Include(p => p.Supplier)
-                .Include(p => p.ProductCategory)
-                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
-                .Single(p => p.Id == id);
+            var product = _unitOfWork.Products.GetExtendedProduct(id);
 
             var viewModel = new ProductFormViewModel
             {
                 Heading = $"Editace produktu s id:{product.Id}",
-                Suppliers = _context.Suppliers.ToList(),
-                ProductCategories = _context.ProductCategories.ToList()
+                Suppliers = _unitOfWork.Suppliers.GetSuppliers(),
+                ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
 
             _mapper.Map(product, viewModel);
@@ -98,38 +85,27 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Suppliers = _context.Suppliers.ToList();
-                viewModel.ProductCategories = _context.ProductCategories.ToList();
+                viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
+                viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
                 return View("ProductForm", viewModel);
             }
 
-            var product = _context.Products
-                .Include(p => p.Supplier)
-                .Include(p => p.ProductCategory)
-                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
-                .Single(p => p.Id == viewModel.Id);
+            var product = _unitOfWork.Products.GetExtendedProduct(viewModel.Id);
 
-            // delete old PropertyValues
-            var oldPropertyValues = _context.PropertyValues
-                .Where(pv => pv.ProductId == product.Id)
-                .ToList();
+            // Delete old PropertyValues
+            _unitOfWork.PropertyValues.RemoveValuesByProduct(product.Id);
 
-            _context.PropertyValues.RemoveRange(oldPropertyValues);
-
-            // Update Product and add PropertyValues 
+            // Update Product and add new PropertyValues 
             product.Modify(_mapper.Map<Product>(viewModel));
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Detail(int id)
         {
-            var product = _context.Products
-                .Include(p => p.Supplier)
-                .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
-                .SingleOrDefault(p => p.Id == id);
+            var product = _unitOfWork.Products.GetExtendedProduct(id);
 
             var viewModel = new DetailViewModel()
             {

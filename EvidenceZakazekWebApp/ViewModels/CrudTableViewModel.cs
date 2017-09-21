@@ -1,6 +1,5 @@
 ﻿using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace EvidenceZakazekWebApp.ViewModels
 {
@@ -9,11 +8,6 @@ namespace EvidenceZakazekWebApp.ViewModels
         public string Heading { get; set; }
         public string ControllerName { get; set; }
 
-        public ICollection<CrudRowViewModel> CrudRowViewModels { get; set; }
-
-        public CrudTableViewModel()
-        {
-            CrudRowViewModels = new Collection<CrudRowViewModel>();
-        }
+        public IEnumerable<CrudRowViewModel> CrudRowViewModels { get; set; }
     }
 }

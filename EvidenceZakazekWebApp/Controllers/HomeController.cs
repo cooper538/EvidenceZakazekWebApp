@@ -1,26 +1,21 @@
 ﻿using EvidenceZakazekWebApp.Models;
-using System.Data.Entity;
-using System.Linq;
+using EvidenceZakazekWebApp.Persistence;
 using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationDbContext _context;
+        private readonly UnitOfWork _unitOfWork;
 
         public HomeController()
         {
-            _context = new ApplicationDbContext();
+            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
 
         public ActionResult Index()
         {
-            var products = _context.Products
-                .Include(p => p.Supplier)
-                .ToList();
-
-            return View(products);
+            return View(_unitOfWork.Products.GetProducts());
         }
 
         public ActionResult About()

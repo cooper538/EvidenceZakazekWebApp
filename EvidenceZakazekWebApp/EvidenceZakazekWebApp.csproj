@@ -203,6 +203,12 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Helpers\IEnumerableHelper.cs" />
     <Compile Include="Migrations\Seed\ProductCategorySeed.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
+    <Compile Include="Repositories\ProductCategoryRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\PropertyDefinitionRepository.cs" />
+    <Compile Include="Repositories\PropertyValueRepository.cs" />
+    <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="ViewModels\Partial\CrudRowViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

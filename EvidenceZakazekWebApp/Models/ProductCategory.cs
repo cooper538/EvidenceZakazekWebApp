@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,7 +26,7 @@ namespace EvidenceZakazekWebApp.Models
         public void Modify(ProductCategory updatedProductCategory)
         {
             Name = updatedProductCategory.Name;
-            AddOrUpdatePropertyDefinitions(updatedProductCategory.PropertyDefinitions.ToList());           
+            AddOrUpdatePropertyDefinitions(updatedProductCategory.PropertyDefinitions.ToList());
         }
 
         private void AddOrUpdatePropertyDefinitions(ICollection<PropertyDefinition> updatedPropertyDefinitions)
