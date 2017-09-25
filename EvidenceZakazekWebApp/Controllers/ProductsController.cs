@@ -10,13 +10,13 @@ namespace EvidenceZakazekWebApp.Controllers
 {
     public class ProductsController : Controller
     {
-        UnitOfWork _unitOfWork;
-        IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ProductsController()
+        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
-            _mapper = MvcApplication.MapperConfiguration.CreateMapper(); // Todo: Inject dependency
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
 
         }
 

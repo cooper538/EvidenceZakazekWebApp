@@ -10,11 +10,8 @@ namespace EvidenceZakazekWebApp
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        internal static MapperConfiguration MapperConfiguration { get; private set; }
-
         protected void Application_Start()
         {
-            MapperConfiguration = MapperConfig.MapperConfiguration();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

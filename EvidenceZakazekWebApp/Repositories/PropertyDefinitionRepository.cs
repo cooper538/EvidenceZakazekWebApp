@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EvidenceZakazekWebApp.Repositories
 {
-    public class PropertyDefinitionRepository
+    public class PropertyDefinitionRepository : IPropertyDefinitionRepository
     {
         private readonly ApplicationDbContext _context;
 

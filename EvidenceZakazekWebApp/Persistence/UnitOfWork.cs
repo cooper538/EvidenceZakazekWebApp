@@ -3,15 +3,15 @@ using EvidenceZakazekWebApp.Repositories;
 
 namespace EvidenceZakazekWebApp.Persistence
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductRepository Products { get; private set; }
-        public ProductCategoryRepository ProductCategories { get; private set; }
-        public SupplierRepository Suppliers { get; private set; }
-        public PropertyValueRepository PropertyValues { get; set; }
-        public PropertyDefinitionRepository PropertyDefinitions { get; set; }
+        public IProductRepository Products { get; private set; }
+        public IProductCategoryRepository ProductCategories { get; private set; }
+        public ISupplierRepository Suppliers { get; private set; }
+        public IPropertyValueRepository PropertyValues { get; private set; }
+        public IPropertyDefinitionRepository PropertyDefinitions { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {

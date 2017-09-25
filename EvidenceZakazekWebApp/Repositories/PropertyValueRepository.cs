@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EvidenceZakazekWebApp.Repositories
 {
-    public class PropertyValueRepository
+    public class PropertyValueRepository : IPropertyValueRepository
     {
         private readonly ApplicationDbContext _context;
 

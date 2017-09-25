@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EvidenceZakazekWebApp.Repositories
 {
-    public class ProductCategoryRepository
+    public class ProductCategoryRepository : IProductCategoryRepository
     {
         private readonly ApplicationDbContext _context;
 

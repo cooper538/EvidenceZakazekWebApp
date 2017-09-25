@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EvidenceZakazekWebApp.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -22,7 +22,7 @@ namespace EvidenceZakazekWebApp.Repositories
                 .Include(p => p.PropertyValues.Select(pv => pv.PropertyDefinition))
                 .SingleOrDefault(p => p.Id == id);
         }
-
+        
         public void Add(Product product)
         {
             _context.Products.Add(product);

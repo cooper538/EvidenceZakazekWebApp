@@ -4,7 +4,8 @@ using System.Linq;
 
 namespace EvidenceZakazekWebApp.Repositories
 {
-    public class SupplierRepository
+
+    public class SupplierRepository : ISupplierRepository
     {
         private readonly ApplicationDbContext _context;
 

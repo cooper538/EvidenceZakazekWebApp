@@ -11,13 +11,13 @@ namespace EvidenceZakazekWebApp.Controllers
 {
     public class ProductCategoriesController : Controller
     {
-        UnitOfWork _unitOfWork;
-        IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ProductCategoriesController()
+        public ProductCategoriesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
-            _mapper = MvcApplication.MapperConfiguration.CreateMapper();
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public ActionResult Index()

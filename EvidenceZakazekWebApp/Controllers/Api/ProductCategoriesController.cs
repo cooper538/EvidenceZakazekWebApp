@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using EvidenceZakazekWebApp.Models;
-using EvidenceZakazekWebApp.Persistence;
+﻿using EvidenceZakazekWebApp.Persistence;
 using System.Web.Http;
 
 namespace EvidenceZakazekWebApp.Controllers.Api
@@ -8,13 +6,11 @@ namespace EvidenceZakazekWebApp.Controllers.Api
     public class ProductCategoriesController : ApiController
     {
 
-        private readonly UnitOfWork _unitOfWork;
-        IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProductCategoriesController()
+        public ProductCategoriesController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
-            _mapper = MvcApplication.MapperConfiguration.CreateMapper();
+            _unitOfWork = unitOfWork;
         }
 
         [HttpDelete]
