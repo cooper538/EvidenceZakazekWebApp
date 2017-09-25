@@ -1,9 +1,10 @@
 ﻿using EvidenceZakazekWebApp.Helpers;
-using EvidenceZakazekWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using EvidenceZakazekWebApp.Core.Models;
+using EvidenceZakazekWebApp.Persistence;
 
 namespace EvidenceZakazekWebApp.Migrations.Seed
 {

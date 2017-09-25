@@ -227,71 +227,71 @@
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Helpers\IEnumerableHelper.cs" />
-    <Compile Include="Migrations\Seed\ProductCategorySeed.cs" />
-    <Compile Include="Persistence\IUnitOfWork.cs" />
+    <Compile Include="Persistence\Migrations\Seed\ProductCategorySeed.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
-    <Compile Include="Repositories\IProductCategoryRepository.cs" />
-    <Compile Include="Repositories\IProductRepository.cs" />
-    <Compile Include="Repositories\IPropertyDefinitionRepository.cs" />
-    <Compile Include="Repositories\IPropertyValueRepository.cs" />
-    <Compile Include="Repositories\ISupplierRepository.cs" />
-    <Compile Include="Repositories\ProductCategoryRepository.cs" />
-    <Compile Include="Repositories\ProductRepository.cs" />
-    <Compile Include="Repositories\PropertyDefinitionRepository.cs" />
-    <Compile Include="Repositories\PropertyValueRepository.cs" />
-    <Compile Include="Repositories\SupplierRepository.cs" />
+    <Compile Include="Core\Repositories\IProductCategoryRepository.cs" />
+    <Compile Include="Core\Repositories\IProductRepository.cs" />
+    <Compile Include="Core\Repositories\IPropertyDefinitionRepository.cs" />
+    <Compile Include="Core\Repositories\IPropertyValueRepository.cs" />
+    <Compile Include="Core\Repositories\ISupplierRepository.cs" />
+    <Compile Include="Persistence\Repositories\ProductCategoryRepository.cs" />
+    <Compile Include="Persistence\Repositories\ProductRepository.cs" />
+    <Compile Include="Persistence\Repositories\PropertyDefinitionRepository.cs" />
+    <Compile Include="Persistence\Repositories\PropertyValueRepository.cs" />
+    <Compile Include="Persistence\Repositories\SupplierRepository.cs" />
     <Compile Include="ViewModels\Partial\CrudRowViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MyHtmlHelper.cs" />
     <Compile Include="Helpers\MigrationHelper.cs" />
-    <Compile Include="Migrations\201708160658231_InitialModel.cs" />
-    <Compile Include="Migrations\201708160658231_InitialModel.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708160658231_InitialModel.cs" />
+    <Compile Include="Persistence\Migrations\201708160658231_InitialModel.Designer.cs">
       <DependentUpon>201708160658231_InitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708160902170_AddProductAndSupplierTable.cs" />
-    <Compile Include="Migrations\201708160902170_AddProductAndSupplierTable.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708160902170_AddProductAndSupplierTable.cs" />
+    <Compile Include="Persistence\Migrations\201708160902170_AddProductAndSupplierTable.Designer.cs">
       <DependentUpon>201708160902170_AddProductAndSupplierTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708161301422_RenameKeyForeignPropertyInProduct.cs" />
-    <Compile Include="Migrations\201708161301422_RenameKeyForeignPropertyInProduct.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708161301422_RenameKeyForeignPropertyInProduct.cs" />
+    <Compile Include="Persistence\Migrations\201708161301422_RenameKeyForeignPropertyInProduct.Designer.cs">
       <DependentUpon>201708161301422_RenameKeyForeignPropertyInProduct.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708180856498_CreateProductCategoryAndProperty.cs" />
-    <Compile Include="Migrations\201708180856498_CreateProductCategoryAndProperty.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708180856498_CreateProductCategoryAndProperty.cs" />
+    <Compile Include="Persistence\Migrations\201708180856498_CreateProductCategoryAndProperty.Designer.cs">
       <DependentUpon>201708180856498_CreateProductCategoryAndProperty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708231125433_AddCategoryIdToProduct.cs" />
-    <Compile Include="Migrations\201708231125433_AddCategoryIdToProduct.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708231125433_AddCategoryIdToProduct.cs" />
+    <Compile Include="Persistence\Migrations\201708231125433_AddCategoryIdToProduct.Designer.cs">
       <DependentUpon>201708231125433_AddCategoryIdToProduct.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708231145201_Product-ProductCategoryId-DropDefault.cs" />
-    <Compile Include="Migrations\201708231145201_Product-ProductCategoryId-DropDefault.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708231145201_Product-ProductCategoryId-DropDefault.cs" />
+    <Compile Include="Persistence\Migrations\201708231145201_Product-ProductCategoryId-DropDefault.Designer.cs">
       <DependentUpon>201708231145201_Product-ProductCategoryId-DropDefault.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.cs" />
-    <Compile Include="Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.cs" />
+    <Compile Include="Persistence\Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.Designer.cs">
       <DependentUpon>201708240724269_SetMeasureUnitInPropertyDefinitionOptional.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708281116177_RemoveProductPropertyTable.cs" />
-    <Compile Include="Migrations\201708281116177_RemoveProductPropertyTable.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708281116177_RemoveProductPropertyTable.cs" />
+    <Compile Include="Persistence\Migrations\201708281116177_RemoveProductPropertyTable.Designer.cs">
       <DependentUpon>201708281116177_RemoveProductPropertyTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708281118212_PropertyValue-ProductId-DropDefault.cs" />
-    <Compile Include="Migrations\201708281118212_PropertyValue-ProductId-DropDefault.Designer.cs">
+    <Compile Include="Persistence\Migrations\201708281118212_PropertyValue-ProductId-DropDefault.cs" />
+    <Compile Include="Persistence\Migrations\201708281118212_PropertyValue-ProductId-DropDefault.Designer.cs">
       <DependentUpon>201708281118212_PropertyValue-ProductId-DropDefault.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductCategory.cs" />
-    <Compile Include="Models\PropertyDefinition.cs" />
-    <Compile Include="Models\PropertyValue.cs" />
-    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Core\Models\Product.cs" />
+    <Compile Include="Core\Models\ProductCategory.cs" />
+    <Compile Include="Core\Models\PropertyDefinition.cs" />
+    <Compile Include="Core\Models\PropertyValue.cs" />
+    <Compile Include="Core\Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CrudTableViewModel.cs" />
@@ -510,7 +510,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -672,44 +672,44 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Dtos\" />
+    <Folder Include="Core\Dtos\" />
     <Folder Include="Scripts\app\helpers\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708160658231_InitialModel.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708160658231_InitialModel.resx">
       <DependentUpon>201708160658231_InitialModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708160902170_AddProductAndSupplierTable.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708160902170_AddProductAndSupplierTable.resx">
       <DependentUpon>201708160902170_AddProductAndSupplierTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708161301422_RenameKeyForeignPropertyInProduct.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708161301422_RenameKeyForeignPropertyInProduct.resx">
       <DependentUpon>201708161301422_RenameKeyForeignPropertyInProduct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708180856498_CreateProductCategoryAndProperty.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708180856498_CreateProductCategoryAndProperty.resx">
       <DependentUpon>201708180856498_CreateProductCategoryAndProperty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708231125433_AddCategoryIdToProduct.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708231125433_AddCategoryIdToProduct.resx">
       <DependentUpon>201708231125433_AddCategoryIdToProduct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708231145201_Product-ProductCategoryId-DropDefault.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708231145201_Product-ProductCategoryId-DropDefault.resx">
       <DependentUpon>201708231145201_Product-ProductCategoryId-DropDefault.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708240724269_SetMeasureUnitInPropertyDefinitionOptional.resx">
       <DependentUpon>201708240724269_SetMeasureUnitInPropertyDefinitionOptional.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708281116177_RemoveProductPropertyTable.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708281116177_RemoveProductPropertyTable.resx">
       <DependentUpon>201708281116177_RemoveProductPropertyTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708281118212_PropertyValue-ProductId-DropDefault.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201708281118212_PropertyValue-ProductId-DropDefault.resx">
       <DependentUpon>201708281118212_PropertyValue-ProductId-DropDefault.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

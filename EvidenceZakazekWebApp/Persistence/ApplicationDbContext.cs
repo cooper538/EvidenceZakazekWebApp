@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using EvidenceZakazekWebApp.Core.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace EvidenceZakazekWebApp.Models
+namespace EvidenceZakazekWebApp.Persistence
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

@@ -1,7 +1,7 @@
-﻿using EvidenceZakazekWebApp.Models;
-using System.Linq;
+﻿using System.Linq;
+using EvidenceZakazekWebApp.Core.Repositories;
 
-namespace EvidenceZakazekWebApp.Repositories
+namespace EvidenceZakazekWebApp.Persistence.Repositories
 {
     public class PropertyValueRepository : IPropertyValueRepository
     {

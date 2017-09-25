@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace EvidenceZakazekWebApp.Models
+namespace EvidenceZakazekWebApp.Core.Models
 {
     public class ProductCategory
     {

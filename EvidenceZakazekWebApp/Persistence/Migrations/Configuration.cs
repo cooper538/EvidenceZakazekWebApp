@@ -1,6 +1,8 @@
-﻿namespace EvidenceZakazekWebApp.Migrations
+﻿using EvidenceZakazekWebApp.Core.Models;
+using EvidenceZakazekWebApp.Persistence;
+
+namespace EvidenceZakazekWebApp.Migrations
 {
-    using Models;
     using Seed;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
@@ -12,6 +14,7 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"Persistence\Migrations";
         }
 
         protected override void Seed(ApplicationDbContext context)

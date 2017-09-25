@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Linq;
+using EvidenceZakazekWebApp.Core.Models;
 
 namespace EvidenceZakazekWebApp.App_Start
 {

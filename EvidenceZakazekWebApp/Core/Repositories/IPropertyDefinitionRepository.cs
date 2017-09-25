@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using EvidenceZakazekWebApp.Models;
+using EvidenceZakazekWebApp.Core.Models;
 
-namespace EvidenceZakazekWebApp.Repositories
+namespace EvidenceZakazekWebApp.Core.Repositories
 {
     public interface IPropertyDefinitionRepository
     {

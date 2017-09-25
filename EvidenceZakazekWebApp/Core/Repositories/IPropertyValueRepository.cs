@@ -1,4 +1,4 @@
-﻿namespace EvidenceZakazekWebApp.Repositories
+﻿namespace EvidenceZakazekWebApp.Core.Repositories
 {
     public interface IPropertyValueRepository
     {

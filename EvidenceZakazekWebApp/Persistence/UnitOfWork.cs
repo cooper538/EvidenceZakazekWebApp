@@ -1,5 +1,7 @@
-﻿using EvidenceZakazekWebApp.Models;
-using EvidenceZakazekWebApp.Repositories;
+﻿using EvidenceZakazekWebApp.Core;
+using EvidenceZakazekWebApp.Core.Models;
+using EvidenceZakazekWebApp.Core.Repositories;
+using EvidenceZakazekWebApp.Persistence.Repositories;
 
 namespace EvidenceZakazekWebApp.Persistence
 {

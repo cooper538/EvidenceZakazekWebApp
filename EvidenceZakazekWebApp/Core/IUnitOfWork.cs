@@ -1,6 +1,6 @@
-﻿using EvidenceZakazekWebApp.Repositories;
+﻿using EvidenceZakazekWebApp.Core.Repositories;
 
-namespace EvidenceZakazekWebApp.Persistence
+namespace EvidenceZakazekWebApp.Core
 {
     public interface IUnitOfWork
     {

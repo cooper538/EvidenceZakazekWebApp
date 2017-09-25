@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace EvidenceZakazekWebApp.Models
+namespace EvidenceZakazekWebApp.Core.Models
 {
     public class PropertyDefinition
     {

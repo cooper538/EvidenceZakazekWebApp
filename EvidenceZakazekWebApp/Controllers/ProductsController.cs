@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.Persistence;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using EvidenceZakazekWebApp.Core;
+using EvidenceZakazekWebApp.Core.Models;
 
 namespace EvidenceZakazekWebApp.Controllers
 {

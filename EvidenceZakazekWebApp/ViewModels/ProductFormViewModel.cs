@@ -1,5 +1,4 @@
 ﻿using EvidenceZakazekWebApp.Controllers;
-using EvidenceZakazekWebApp.Models;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using EvidenceZakazekWebApp.Core.Models;
 
 namespace EvidenceZakazekWebApp.ViewModels
 {

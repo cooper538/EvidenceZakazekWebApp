@@ -1,9 +1,10 @@
-﻿using EvidenceZakazekWebApp.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using EvidenceZakazekWebApp.Core.Models;
+using EvidenceZakazekWebApp.Core.Repositories;
 
-namespace EvidenceZakazekWebApp.Repositories
+namespace EvidenceZakazekWebApp.Persistence.Repositories
 {
     public class ProductRepository : IProductRepository
     {
