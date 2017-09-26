@@ -11,7 +11,7 @@ namespace EvidenceZakazekWebApp
         {
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                         "~/Scripts/app/app.js",
-                        "~/Scripts/app/services/productCategoryService.js",
+                        "~/Scripts/app/services/propertyValueService.js",
                         "~/Scripts/app/services/crudService.js",
                         "~/Scripts/app/controllers/productController.js",
                         "~/Scripts/app/controllers/crudTableController.js"));

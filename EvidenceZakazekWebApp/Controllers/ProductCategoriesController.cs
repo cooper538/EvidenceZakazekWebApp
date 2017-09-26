@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Persistence;
+using EvidenceZakazekWebApp.Core;
+using EvidenceZakazekWebApp.Core.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using EvidenceZakazekWebApp.Core;
-using EvidenceZakazekWebApp.Core.Models;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
@@ -119,30 +118,6 @@ namespace EvidenceZakazekWebApp.Controllers
             _mapper.Map(productCategory, viewModel);
 
             return View("Detail", viewModel);
-        }
-
-        // TODO: aaIMPORTANT Nepatří tyto akce do jiného kontrloleru?? Myslím si že Ano
-        public ActionResult GetPropertyDefinitionForm()
-        {
-            return PartialView("Partial/PropertyDefinitionForm", new PropertyDefinitionFormViewModel());
-        }
-
-        [HttpGet]
-        public ActionResult GetPropertyValuesForm(int categoryId)
-        {
-            var propertyDefinitions = _unitOfWork.PropertyDefinitions
-                .GetDefinitionsByCategory(categoryId);
-
-            List<PropertyValueFormViewModel> propertyValues = propertyDefinitions.Select(
-                pd => new PropertyValueFormViewModel()
-                {
-                    PropertyDefinitionId = pd.Id,
-                    PropertyDefinitionName = pd.Name,
-                    MeasureUnit = pd.MeasureUnit,
-                    Value = "",
-                }).ToList();
-
-            return PartialView("Partial/PropertyValuesForm", propertyValues);
         }
     }
 }

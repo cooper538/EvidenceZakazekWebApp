@@ -226,6 +226,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\PropertyDefinitionsController.cs" />
+    <Compile Include="Controllers\PropertyValuesController.cs" />
     <Compile Include="Helpers\IEnumerableHelper.cs" />
     <Compile Include="Persistence\Migrations\Seed\ProductCategorySeed.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
@@ -525,8 +527,7 @@
     <Content Include="Scripts\app\controllers\crudTableController.js" />
     <Content Include="Scripts\app\controllers\productController.js" />
     <Content Include="Scripts\app\services\crudService.js" />
-    <Content Include="Scripts\app\services\productCategoryService.js" />
-    <Content Include="Scripts\app\services\productService.js" />
+    <Content Include="Scripts\app\services\propertyValueService.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -665,8 +666,8 @@
     <Content Include="Views\ProductCategories\ProductCategoryForm.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\Shared\Partial\PropertyDefinitionForm.cshtml" />
-    <Content Include="Views\Shared\Partial\PropertyValuesForm.cshtml" />
+    <Content Include="Views\PropertyDefinition\PropertyDefinitionForm.cshtml" />
+    <Content Include="Views\PropertyValues\PropertyValueListForm.cshtml" />
     <Content Include="Views\Shared\Detail.cshtml" />
     <Content Include="Views\Shared\CrudTable.cshtml" />
   </ItemGroup>
@@ -674,6 +675,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Core\Dtos\" />
     <Folder Include="Scripts\app\helpers\" />
+    <Folder Include="Views\Shared\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />

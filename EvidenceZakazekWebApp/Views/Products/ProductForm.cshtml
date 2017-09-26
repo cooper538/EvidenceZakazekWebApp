@@ -38,7 +38,7 @@
         <ul class="propertyValues">
             @if (Model.Action == "Update")
             {
-                @Html.Partial("Partial/PropertyValuesForm", Model.PropertyValues)
+                @Html.Partial("/Views/PropertyValues/PropertyValueListForm.cshtml", Model.PropertyValues)
             }
         </ul>
     </div>

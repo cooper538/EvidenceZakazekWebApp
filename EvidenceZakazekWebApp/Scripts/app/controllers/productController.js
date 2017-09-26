@@ -1,14 +1,14 @@
-﻿var ProductController = function (productCategoryService) {
-    
+﻿var ProductController = function (propertyValueService) {
+
     var init = function () {
         $(".productCategory").change(showPropertiesByCategory);
     };
 
-    var showPropertiesByCategory = function (e) {
+    showPropertiesByCategory = function (e) {
         var categorySelect = e.target;
         var categoryId = categorySelect.value;
-        productCategoryService.getPropertyValuesForm(categoryId, done, fail);
-    }
+        propertyValueService.getPropertyValuesFormByCategory(categoryId, done, fail);
+    };
 
     var done = function (data) {
         $(".propertyValues").html(data);
@@ -30,4 +30,4 @@
     return {
         init: init
     }
-}(ProductCategoryService);
+}(PropertyValueService);

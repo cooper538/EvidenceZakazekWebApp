@@ -20,8 +20,13 @@
         @Html.LabelFor(m => m.PropertyDefinitions, htmlAttributes: new { @class = "control-label" })
         <div class="">
             @* solved by https://blog.rsuter.com/asp-net-mvc-how-to-implement-an-edit-form-for-an-entity-with-a-sortable-child-collection/*@
-            @Html.CollectionEditorFor(m => m.PropertyDefinitions, "Partial/PropertyDefinitionForm", "/ProductCategories/GetPropertyDefinitionForm",
-            "Přidej vlastnost", new { @class = "btn btn-default" })
+            @Html.CollectionEditorFor(m =>
+                m.PropertyDefinitions,
+                "/Views/PropertyDefinition/PropertyDefinitionForm.cshtml",  // View
+                "/PropertyDefinitions/GetNewPropertyDefinitionForm",  // Get Action
+                "Přidej vlastnost",
+                new { @class = "btn btn-default" })
+
             @Html.ValidationMessageFor(m => m.PropertyDefinitions)
         </div>
     </div>
