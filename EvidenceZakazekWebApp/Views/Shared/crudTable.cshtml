@@ -7,7 +7,7 @@
     @Styles.Render("~/bundles/datatables-css")
 }
 
-@helper btnFactory(string classes, string glyphName) {
+@helper BtnFactory(string classes, string glyphName) {
     <button type="button" class="btn btn-default btn-xs @classes "><span class="glyphicon glyphicon-@glyphName "></span></button>
 }
 
@@ -17,30 +17,30 @@
     <thead>
         <tr>
             <th>id</th>
-            @foreach (var ColumnName in Model.CrudRowViewModels.FirstOrDefault().ColumnNames)
+            @foreach (var columnName in Model.ColumnNames)
             {
-                <th>@ColumnName</th>
+                <th>@columnName</th>
             }
             <th>Akce</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var CrudRowViewModel in Model.CrudRowViewModels)
+        @foreach (var crudRowViewModel in Model.CrudRowViewModels)
         {
             <tr>
                 @* Pokud se to povede pres JS, je mozne tento sloupec odstranit a ulehcit si praci s jeho skryvanim *@
-                <td>@CrudRowViewModel.Id</td>
+                <td>@crudRowViewModel.Id</td>
 
-                @foreach (var property in CrudRowViewModel.Properties)
+                @foreach (var property in crudRowViewModel.Properties)
                 {
                     <td>@property.Value</td>
                 }
 
-                <td data-itemId="@CrudRowViewModel.Id" >
-                    @btnFactory("btn-warning js-btn-edit", "pencil")
-                    @btnFactory("btn-danger js-btn-delete", "remove")
-                    @btnFactory("btn-info js-btn-detail", "info-sign")
+                <td data-itemId="@crudRowViewModel.Id" >
+                    @BtnFactory("btn-warning js-btn-edit", "pencil")
+                    @BtnFactory("btn-danger js-btn-delete", "remove")
+                    @BtnFactory("btn-info js-btn-detail", "info-sign")
                 </td>
             </tr>
         }
