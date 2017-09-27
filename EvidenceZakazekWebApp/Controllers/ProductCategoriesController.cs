@@ -4,7 +4,6 @@ using EvidenceZakazekWebApp.Core.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
@@ -83,18 +82,13 @@ namespace EvidenceZakazekWebApp.Controllers
             {
                 return View("ProductCategoryForm", viewModel);
             }
+            var productCategory = _unitOfWork.ProductCategories
+                .GetCategoryWithProductsAndProperties(viewModel.Id);
 
-            var productCategory = _unitOfWork.ProductCategories.GetCategoryWithProductsAndProperties(viewModel.Id);
-
-            // Remove deleted properties
-            var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);
-            var oldPropertyDefinitions = productCategory.PropertyDefinitions.ToList();
-
-            var propertyDefinitionsForDelete = oldPropertyDefinitions.Where(oldPd =>
-                updatedPropertyDefinitions.Any(updatedPd =>
-                    updatedPd.Id != oldPd.Id)).ToList();
-
-            propertyDefinitionsForDelete.ForEach(pd => _unitOfWork.PropertyDefinitions.RemoveWithValues(pd.Id));
+            // Update PropertyDefinitions for Category
+            _unitOfWork.PropertyDefinitions.UpdateDefinitionsForProductCategory(
+                productCategory.Id,
+                _mapper.Map<ICollection<PropertyDefinition>>(viewModel.PropertyDefinitions));
 
             // Update
             productCategory.Modify(_mapper.Map<ProductCategory>(viewModel));
