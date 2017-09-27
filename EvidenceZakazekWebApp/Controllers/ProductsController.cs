@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using EvidenceZakazekWebApp.Persistence;
+using EvidenceZakazekWebApp.Core;
+using EvidenceZakazekWebApp.Core.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using EvidenceZakazekWebApp.Core;
-using EvidenceZakazekWebApp.Core.Models;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
@@ -16,19 +15,18 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ProductsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
+
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-
         }
 
         public ActionResult Index(int id = 1)
         {
             var products = _unitOfWork.Products.GetProductsWithPropertiesByCategory(id);
 
-            var viewModel = new CrudTableViewModel()
+            var viewModel = new CrudTableViewModel
             {
                 Heading = "Produkty",
-                ControllerName = "products",
                 CrudRowViewModels = _mapper.Map<IEnumerable<CrudRowViewModel>>(products)
             };
 
@@ -63,7 +61,7 @@ namespace EvidenceZakazekWebApp.Controllers
             _unitOfWork.Products.Add(product);
             _unitOfWork.Complete();
 
-            return RedirectToAction("Index", "Products");
+            return RedirectToAction(nameof(Index), "Products");
         }
 
         public ActionResult Edit(int id)
@@ -96,27 +94,26 @@ namespace EvidenceZakazekWebApp.Controllers
             // Delete old PropertyValues
             _unitOfWork.PropertyValues.RemoveValuesByProduct(product.Id);
 
-            // Update Product and add new PropertyValues 
+            // Update Product and add new PropertyValues
             product.Modify(_mapper.Map<Product>(viewModel));
 
             _unitOfWork.Complete();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult Detail(int id)
         {
             var product = _unitOfWork.Products.GetProductWithProperties(id);
 
-            var viewModel = new DetailViewModel()
+            var viewModel = new DetailViewModel
             {
-                Heading = "Detail produktu s id:" + id,
-                ControllerName = "Products" // TODO: refaktoring to dynamic name, no magic strings
+                Heading = "Detail produktu s id:" + id
             };
 
             _mapper.Map(product, viewModel);
 
-            return View("Detail", viewModel);
+            return View(viewModel);
         }
     }
 }

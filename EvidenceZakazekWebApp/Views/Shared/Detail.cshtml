@@ -1,11 +1,12 @@
 ﻿@model EvidenceZakazekWebApp.ViewModels.DetailViewModel
 @{
     ViewBag.Title = Model.Heading;
+    ViewBag.ControllerName = @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
 }
 
 <h2>@Model.Heading</h2>
 
-<a class="btn btn-default voffset1" href="@Url.Action("Index", Model.ControllerName, new { id = "" })" role="button">Zpět</a>
+<a class="btn btn-default voffset1" href="@Url.Action("Index", ViewBag.ControllerName, new { id = "" })" role="button">Zpět</a>
 
 <table class="table table-striped table-bordered table-nonfluid detail">
     <tbody>

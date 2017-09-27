@@ -1,6 +1,7 @@
 ﻿@model EvidenceZakazekWebApp.ViewModels.CrudTableViewModel
 @{
     ViewBag.Title = Model.Heading;
+    ViewBag.ControllerName = @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
 }
 
 @section AddToHead{
@@ -13,7 +14,7 @@
 
 <h2>@Model.Heading</h2>
 
-<table class="table table-striped table-bordered dataTable no-footer crudTable" data-controller-name="@Model.ControllerName">
+<table class="table table-striped table-bordered dataTable no-footer crudTable">
     <thead>
         <tr>
             <th>id</th>
@@ -52,7 +53,7 @@
 {
     <script>
         $(document).ready(function () {
-            var controllerName = $(".table").attr("data-controller-name");
+            var controllerName = "@ViewBag.ControllerName";
 
             CrudTableController.init(controllerName);
         });

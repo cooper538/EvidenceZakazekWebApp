@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using EvidenceZakazekWebApp.Core.Models;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Linq;
-using EvidenceZakazekWebApp.Core.Models;
 
 namespace EvidenceZakazekWebApp.App_Start
 {
@@ -26,17 +26,17 @@ namespace EvidenceZakazekWebApp.App_Start
 
             CreateMap<Product, DetailViewModel>()
                 .ForMember(dvm => dvm.Properties, opt => opt.MapFrom(p =>
-                    new Dictionary<string, string> {
-                        { "Název", p.Name },
-                        { "Dodavatel", p.Supplier.Name },
-                        { "Objednací číslo", p.OrderNumber },
-                        { "Typové označení", p.TypeName },
-                        { "Cena", $"{p.Price} Kč"  }
-                    }
-                    .Concat(PropertyValuesToDict(p)).ToDictionary(s => s.Key, s => s.Value)
-                    ))
-                .ForMember(dvm => dvm.Heading, opt => opt.Ignore())
-                .ForMember(dvm => dvm.ControllerName, opt => opt.Ignore());
+                    new Dictionary<string, string>
+                        {
+                            {"Název", p.Name},
+                            {"Dodavatel", p.Supplier.Name},
+                            {"Objednací číslo", p.OrderNumber},
+                            {"Typové označení", p.TypeName},
+                            {"Cena", $"{p.Price} Kč"}
+                        }
+                        .Concat(PropertyValuesToDict(p)).ToDictionary(s => s.Key, s => s.Value)
+                ))
+                .ForMember(dvm => dvm.Heading, opt => opt.Ignore());
 
 
             CreateMap<ProductFormViewModel, Product>()
@@ -57,12 +57,13 @@ namespace EvidenceZakazekWebApp.App_Start
 
             CreateMap<ProductCategory, DetailViewModel>()
                 .ForMember(dvm => dvm.Properties, opt => opt.MapFrom(pc =>
-                    new Dictionary<string, string> {
-                        { "Název", pc.Name }}
-                    .Concat(PropertyDefinitionsToDict(pc)).ToDictionary(s => s.Key, s => s.Value)
+                    new Dictionary<string, string>
+                        {
+                            {"Název", pc.Name}
+                        }
+                        .Concat(PropertyDefinitionsToDict(pc)).ToDictionary(s => s.Key, s => s.Value)
                 ))
-                .ForMember(dvm => dvm.Heading, opt => opt.Ignore())
-                .ForMember(dvm => dvm.ControllerName, opt => opt.Ignore());
+                .ForMember(dvm => dvm.Heading, opt => opt.Ignore());
 
 
             CreateMap<ProductCategoryFormViewModel, ProductCategory>()
@@ -98,7 +99,7 @@ namespace EvidenceZakazekWebApp.App_Start
 
         // Product functions
 
-        public IDictionary<string, string> PropertyValuesToDict(Product product)
+        private IDictionary<string, string> PropertyValuesToDict(Product product)
         {
             return product.PropertyValues.ToDictionary(pv =>
                 pv.PropertyDefinition.Name, pv => pv.Value);
@@ -106,7 +107,7 @@ namespace EvidenceZakazekWebApp.App_Start
 
         // ProductCategory functions
 
-        public IDictionary<string, string> PropertyDefinitionsToDict(ProductCategory productCategory)
+        private IDictionary<string, string> PropertyDefinitionsToDict(ProductCategory productCategory)
         {
             return productCategory.PropertyDefinitions
                 .ToDictionary(dp => dp.Name, dp => dp.MeasureUnit);

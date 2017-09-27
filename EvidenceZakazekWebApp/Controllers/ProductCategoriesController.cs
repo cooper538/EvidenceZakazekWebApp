@@ -26,10 +26,9 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var crudRowViewModels = _mapper.Map<IEnumerable<CrudRowViewModel>>(productCategories);
 
-            var viewModel = new CrudTableViewModel()
+            var viewModel = new CrudTableViewModel
             {
                 Heading = "Kategorie",
-                ControllerName = "productCategories",
                 CrudRowViewModels = crudRowViewModels
             };
 
@@ -38,7 +37,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Create()
         {
-            var viewModel = new ProductCategoryFormViewModel()
+            var viewModel = new ProductCategoryFormViewModel
             {
                 Heading = "Přidej kategorii"
             };
@@ -61,7 +60,7 @@ namespace EvidenceZakazekWebApp.Controllers
             _unitOfWork.ProductCategories.Add(productCategory);
             _unitOfWork.Complete();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult Edit(int id)
@@ -102,22 +101,21 @@ namespace EvidenceZakazekWebApp.Controllers
 
             _unitOfWork.Complete();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult Detail(int id)
         {
             var productCategory = _unitOfWork.ProductCategories.GetCategoryWithDefinitions(id);
 
-            var viewModel = new DetailViewModel()
+            var viewModel = new DetailViewModel
             {
-                Heading = "Detail kategorie s id:" + id,
-                ControllerName = "ProductCategories"
+                Heading = "Detail kategorie s id:" + id
             };
 
             _mapper.Map(productCategory, viewModel);
 
-            return View("Detail", viewModel);
+            return View(viewModel);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using EvidenceZakazekWebApp.Core;
 using EvidenceZakazekWebApp.ViewModels.Partial;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -21,8 +20,8 @@ namespace EvidenceZakazekWebApp.Controllers
             var propertyDefinitions = _unitOfWork.PropertyDefinitions
                 .GetDefinitionsByCategory(categoryId);
 
-            List<PropertyValueFormViewModel> propertyValues = propertyDefinitions.Select(
-                pd => new PropertyValueFormViewModel()
+            var propertyValues = propertyDefinitions.Select(
+                pd => new PropertyValueFormViewModel
                 {
                     PropertyDefinitionId = pd.Id,
                     PropertyDefinitionName = pd.Name,

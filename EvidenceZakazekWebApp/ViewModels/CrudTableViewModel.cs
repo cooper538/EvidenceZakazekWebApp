@@ -7,7 +7,6 @@ namespace EvidenceZakazekWebApp.ViewModels
     public class CrudTableViewModel
     {
         public string Heading { get; set; }
-        public string ControllerName { get; set; }
 
         public IEnumerable<CrudRowViewModel> CrudRowViewModels { get; set; }
         public IEnumerable<string> ColumnNames => CrudRowViewModels.FirstOrDefault()?.ColumnNames;
