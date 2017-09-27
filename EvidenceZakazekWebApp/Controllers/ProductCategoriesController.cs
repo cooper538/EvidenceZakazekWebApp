@@ -87,17 +87,17 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var productCategory = _unitOfWork.ProductCategories.GetCategoryWithProductsAndProperties(viewModel.Id);
 
-            //TODO: aaIMPORTANT zjednodušit mazanani - pridat do partial view modelu stav, něco jako new, delste updated apod??
-            var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);
-
             // Check of deleted properties
+            var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);
             var oldPropertyDefinitions = productCategory.PropertyDefinitions.ToList();
-            foreach (var oldPropertyDefinition in oldPropertyDefinitions)
-            {
-                if (!updatedPropertyDefinitions.Any(pd => pd.Id == oldPropertyDefinition.Id))
-                    _unitOfWork.PropertyDefinitions.RemoveWithValues(oldPropertyDefinition.Id);
-            }
 
+            var propertyDefinitionsForDelete = oldPropertyDefinitions.Where(oldPd =>
+                updatedPropertyDefinitions.Any(updatedPd =>
+                    updatedPd.Id != oldPd.Id)).ToList();
+
+            propertyDefinitionsForDelete.ForEach(pd => _unitOfWork.PropertyDefinitions.RemoveWithValues(pd.Id));
+
+            // Update
             productCategory.Modify(_mapper.Map<ProductCategory>(viewModel));
 
             _unitOfWork.Complete();
