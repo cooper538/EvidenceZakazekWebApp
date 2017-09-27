@@ -17,7 +17,7 @@ namespace EvidenceZakazekWebApp.Controllers.Api
         [HttpDelete]
         public IHttpActionResult Detele(int id)
         {
-            var productCategory = _unitOfWork.ProductCategories // TODO: Zkontrolovat dodržení rozdílu mezi remove a Delete
+            var productCategory = _unitOfWork.ProductCategories
                 .GetCategoryWithProductsAndProperties(id);
 
             if (productCategory == null)

@@ -91,7 +91,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var product = _unitOfWork.Products.GetProductWithProperties(viewModel.Id);
 
-            // Delete old PropertyValues
+            // Remove old PropertyValues
             _unitOfWork.PropertyValues.RemoveValuesByProduct(product.Id);
 
             // Update Product and add new PropertyValues

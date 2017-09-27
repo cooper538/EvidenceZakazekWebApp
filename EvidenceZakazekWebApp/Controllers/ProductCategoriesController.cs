@@ -86,7 +86,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             var productCategory = _unitOfWork.ProductCategories.GetCategoryWithProductsAndProperties(viewModel.Id);
 
-            // Check of deleted properties
+            // Remove deleted properties
             var updatedPropertyDefinitions = _mapper.Map<List<PropertyDefinition>>(viewModel.PropertyDefinitions);
             var oldPropertyDefinitions = productCategory.PropertyDefinitions.ToList();
 
