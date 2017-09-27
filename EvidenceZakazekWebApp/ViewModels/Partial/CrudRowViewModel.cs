@@ -9,7 +9,7 @@ namespace EvidenceZakazekWebApp.ViewModels.Partial
 
         public IDictionary<string, string> Properties { get; set; }
 
-        public ICollection<string> ColumnNames
+        public IEnumerable<string> ColumnNames
         {
             get
             {

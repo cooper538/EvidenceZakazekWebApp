@@ -7,10 +7,5 @@ namespace EvidenceZakazekWebApp.ViewModels
         public string Heading { get; set; }
 
         public Dictionary<string, string> Properties { get; set; }
-
-        public DetailViewModel()
-        {
-            Properties = new Dictionary<string, string>();
-        }
     }
 }

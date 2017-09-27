@@ -22,7 +22,7 @@ namespace EvidenceZakazekWebApp.ViewModels
 
         [EnsureOneElement(ErrorMessage = "Je nutné zadat minimálně 1 vlastnost")]
         [DisplayName("Vlastnosti produktů v kategorii")]
-        public ICollection<PropertyDefinitionFormViewModel> PropertyDefinitions { get; set; }
+        public IEnumerable<PropertyDefinitionFormViewModel> PropertyDefinitions { get; set; }
 
         public string Action
         {
