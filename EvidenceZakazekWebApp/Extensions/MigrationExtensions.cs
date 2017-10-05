@@ -6,7 +6,6 @@ namespace EvidenceZakazekWebApp.Extensions
 {
     public static class MigrationExtensions
     {
-
         public static void DeleteDefaultContraint(this IDbMigration migration, string tableName, string colName, bool suppressTransaction = false)
         {
             var sql = new SqlOperation(String.Format(@"DECLARE @SQL varchar(1000)

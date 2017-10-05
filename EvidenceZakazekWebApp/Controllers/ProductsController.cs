@@ -5,6 +5,7 @@ using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using EvidenceZakazekWebApp.Helpers.FlashMessagesHelper;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
@@ -18,11 +19,17 @@ namespace EvidenceZakazekWebApp.Controllers
 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+
         }
 
         public ActionResult Index(int id = 1)
         {
             //TODO: IF kategorie nenalezena
+            if (_unitOfWork.ProductCategories.GetCategory(id) == null)
+                this.AddFlashMessage(FlashMessageType.Info, "Zadaná kategorie nebyla nalezena");
+
+            this.AddFlashMessage(FlashMessageType.Success, "Ale to nevadí");
+
             // TODO: Vrací prázdnou kolekci, vyřešit v crud table
             var products = _unitOfWork.Products.GetProductsWithPropertiesByCategory(id);
 

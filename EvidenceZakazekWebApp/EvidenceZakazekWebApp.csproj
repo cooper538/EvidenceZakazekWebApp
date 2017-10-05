@@ -228,7 +228,10 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PropertyDefinitionsController.cs" />
     <Compile Include="Controllers\PropertyValuesController.cs" />
+    <Compile Include="Helpers\FlashMessagesHelper\FlashMessage.cs" />
+    <Compile Include="Helpers\FlashMessagesHelper\FlashControllerExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Helpers\FlashMessagesHelper\FlashHtmlHelper.cs" />
     <Compile Include="Persistence\Migrations\Seed\ProductCategorySeed.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
@@ -246,7 +249,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\BeginCollectionHelper.cs" />
     <Compile Include="Extensions\MigrationExtensions.cs" />
     <Compile Include="Persistence\Migrations\201708160658231_InitialModel.cs" />
     <Compile Include="Persistence\Migrations\201708160658231_InitialModel.Designer.cs">

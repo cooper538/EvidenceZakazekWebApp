@@ -2,7 +2,6 @@ using EvidenceZakazekWebApp.Extensions;
 
 namespace EvidenceZakazekWebApp.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
 
     public partial class PropertyValueProductIdDropDefault : DbMigration

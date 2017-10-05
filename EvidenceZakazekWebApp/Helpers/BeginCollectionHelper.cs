@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EvidenceZakazekWebApp.Extensions
+namespace EvidenceZakazekWebApp.Helpers
 {
-    public static class HtmlHelperExtensions
+    public static class BeginCollectionHelper
     {
         private const string IdsToReuseKey = "__HtmlModelBindingHelperExtensions_IdsToReuse_";
 
@@ -71,5 +71,8 @@ namespace EvidenceZakazekWebApp.Extensions
                 _templateInfo.HtmlFieldPrefix = _previousHtmlFieldPrefix;
             }
         }
+
+
+
     }
 }

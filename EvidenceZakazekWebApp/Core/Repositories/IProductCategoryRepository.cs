@@ -5,6 +5,7 @@ namespace EvidenceZakazekWebApp.Core.Repositories
 {
     public interface IProductCategoryRepository
     {
+        ProductCategory GetCategory(int id);
         ProductCategory GetCategoryWithDefinitions(int id);
         ProductCategory GetCategoryWithProductsAndProperties(int id);
         void Add(ProductCategory productCategory);

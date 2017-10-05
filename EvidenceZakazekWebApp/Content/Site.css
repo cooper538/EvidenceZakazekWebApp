@@ -59,6 +59,9 @@ span.field-validation-error {
   width: 1%;
 }
 /* Page-level styles */
+.allertsContainer {
+  margin-top: 20px;
+}
 form.productCategories .properties ul > li .form-group {
   margin-bottom: 0;
 }

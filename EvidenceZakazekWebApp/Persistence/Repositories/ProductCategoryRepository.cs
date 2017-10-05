@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using EvidenceZakazekWebApp.Core.Models;
+using EvidenceZakazekWebApp.Core.Repositories;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using EvidenceZakazekWebApp.Core.Models;
-using EvidenceZakazekWebApp.Core.Repositories;
 
 namespace EvidenceZakazekWebApp.Persistence.Repositories
 {
@@ -13,6 +13,12 @@ namespace EvidenceZakazekWebApp.Persistence.Repositories
         public ProductCategoryRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public ProductCategory GetCategory(int id)
+        {
+            return _context.ProductCategories
+                .SingleOrDefault(pc => pc.Id == id);
         }
 
         public ProductCategory GetCategoryWithDefinitions(int id)
