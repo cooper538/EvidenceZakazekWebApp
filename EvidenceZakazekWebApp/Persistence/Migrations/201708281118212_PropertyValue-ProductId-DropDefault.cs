@@ -1,6 +1,7 @@
+using EvidenceZakazekWebApp.Extensions;
+
 namespace EvidenceZakazekWebApp.Migrations
 {
-    using Helpers;
     using System;
     using System.Data.Entity.Migrations;
 
@@ -8,12 +9,12 @@ namespace EvidenceZakazekWebApp.Migrations
     {
         public override void Up()
         {
-            MigrationHelper.DeleteDefaultContraint(this, "PropertyValues", "ProductId");
+            MigrationExtensions.DeleteDefaultContraint(this, "PropertyValues", "ProductId");
         }
 
         public override void Down()
         {
-            MigrationHelper.SetDefaultContraint(this, "PropertyValues", "ProductId", "0");
+            MigrationExtensions.SetDefaultContraint(this, "PropertyValues", "ProductId", "0");
         }
     }
 }

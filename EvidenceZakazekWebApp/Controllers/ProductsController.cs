@@ -20,7 +20,7 @@ namespace EvidenceZakazekWebApp.Controllers
             _mapper = mapper;
         }
 
-        public ActionResult Index(int id = 100)
+        public ActionResult Index(int id = 1)
         {
             //TODO: IF kategorie nenalezena
             // TODO: Vrací prázdnou kolekci, vyřešit v crud table

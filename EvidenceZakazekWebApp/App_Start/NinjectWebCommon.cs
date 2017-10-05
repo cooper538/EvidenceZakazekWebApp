@@ -1,4 +1,4 @@
-usingw AutoMapper;
+using AutoMapper;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(EvidenceZakazekWebApp.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(EvidenceZakazekWebApp.App_Start.NinjectWebCommon), "Stop")]

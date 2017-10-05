@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EvidenceZakazekWebApp.Helpers
+namespace EvidenceZakazekWebApp.Extensions
 {
     // https://stackoverflow.com/a/7259419/2756329
-    public static class IEnumerableHelper
+    public static class EnumerableExtensions
     {
         public static T RandomElement<T>(this IEnumerable<T> enumerable)
         {

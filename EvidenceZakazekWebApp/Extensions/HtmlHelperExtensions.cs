@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EvidenceZakazekWebApp.Helpers
+namespace EvidenceZakazekWebApp.Extensions
 {
-    public static class MyHtmlHelper
+    public static class HtmlHelperExtensions
     {
         private const string IdsToReuseKey = "__HtmlModelBindingHelperExtensions_IdsToReuse_";
 

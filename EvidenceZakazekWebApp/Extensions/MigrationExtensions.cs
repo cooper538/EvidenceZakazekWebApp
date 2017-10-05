@@ -2,9 +2,9 @@
 using System.Data.Entity.Migrations.Infrastructure;
 using System.Data.Entity.Migrations.Model;
 
-namespace EvidenceZakazekWebApp.Helpers
+namespace EvidenceZakazekWebApp.Extensions
 {
-    public static class MigrationHelper
+    public static class MigrationExtensions
     {
 
         public static void DeleteDefaultContraint(this IDbMigration migration, string tableName, string colName, bool suppressTransaction = false)
