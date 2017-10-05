@@ -20,8 +20,10 @@ namespace EvidenceZakazekWebApp.Controllers
             _mapper = mapper;
         }
 
-        public ActionResult Index(int id = 1)
+        public ActionResult Index(int id = 100)
         {
+            //TODO: IF kategorie nenalezena
+            // TODO: Vrací prázdnou kolekci, vyřešit v crud table
             var products = _unitOfWork.Products.GetProductsWithPropertiesByCategory(id);
 
             var viewModel = new CrudTableViewModel
@@ -38,9 +40,11 @@ namespace EvidenceZakazekWebApp.Controllers
             var viewModel = new ProductFormViewModel
             {
                 Heading = "Přidej produkt",
-                Suppliers = _unitOfWork.Suppliers.GetSuppliers(), //ToDo: Změnit typ kolekce ve ViewModelu na IEnumerble? Rozumně, podle smyslu
+                Suppliers = _unitOfWork.Suppliers.GetSuppliers(),
                 ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
+
+            // TODO: Try-catche, pokud selže db, navrat na Crud table s flush
 
             return View("ProductForm", viewModel);
         }
@@ -61,6 +65,8 @@ namespace EvidenceZakazekWebApp.Controllers
             _unitOfWork.Products.Add(product);
             _unitOfWork.Complete();
 
+            // TODO: Try-catche, pokud selže db, navrat na formular s flush message, jinak zobrazit hlasku o uspesnem pridani
+
             return RedirectToAction(nameof(Index), "Products");
         }
 
@@ -68,12 +74,17 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var product = _unitOfWork.Products.GetProductWithProperties(id);
 
+            // TODO: IF, pokud vrati null, navrat na Crud table s flush
+
+
             var viewModel = new ProductFormViewModel
             {
                 Heading = $"Editace produktu s id:{product.Id}",
                 Suppliers = _unitOfWork.Suppliers.GetSuppliers(),
                 ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
+
+            // TODO: Try-catche, pokud selže db, navrat na Crud table
 
             _mapper.Map(product, viewModel);
 
@@ -99,6 +110,8 @@ namespace EvidenceZakazekWebApp.Controllers
 
             _unitOfWork.Complete();
 
+            // TODO: Try-catche, pokud selže db, navrat na formulář s flush
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -110,6 +123,8 @@ namespace EvidenceZakazekWebApp.Controllers
             {
                 Heading = "Detail produktu s id:" + id
             };
+
+            // TODO: IF, pokud vrati null, navrat na Crud table s flush Produkt nenalezen
 
             _mapper.Map(product, viewModel);
 

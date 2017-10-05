@@ -673,7 +673,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Core\Dtos\" />
     <Folder Include="Scripts\app\helpers\" />
     <Folder Include="Views\Shared\Partial\" />
   </ItemGroup>

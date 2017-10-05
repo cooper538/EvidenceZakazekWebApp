@@ -1,6 +1,7 @@
 ﻿OK 1. Refactorovat jména V a VM a Action v Controller z PropertyValues na něco jako CategoryPropertyValues - nevidím smysl
-2. Ošetřit konkurenční problém v EF
-3. Styly v CategoryCreate
-4. Přidat validační FM
-4.1 Promyslet vylidaci a to zvláště když je funkce závislá na JS
-5. Ošetřit všchny možné stavy: žádný záznam v DB, null exeptions, null stavy
+2. Ošetřit všchny možné stavy: žádný záznam v DB, null exeptions, null stavy
+3. Přidat validační FM
+3.1 Promyslet vylidaci a to zvláště když je funkce závislá na JS
+4. Ošetřit konkurenční problém v EF
+5. Styly v CategoryCreate
+

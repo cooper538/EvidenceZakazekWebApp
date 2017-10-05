@@ -1,6 +1,5 @@
-﻿using EvidenceZakazekWebApp.Persistence;
+﻿using EvidenceZakazekWebApp.Core;
 using System.Web.Mvc;
-using EvidenceZakazekWebApp.Core;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
@@ -15,7 +14,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Index()
         {
-            return View(_unitOfWork.Products.GetProducts());
+            return View();
         }
 
         public ActionResult About()

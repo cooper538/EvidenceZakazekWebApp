@@ -22,7 +22,7 @@
         targetRow = $(e.target).closest("td");
         itemId = targetRow.attr("data-itemId");
 
-        var action = ($(e.target).closest("button").hasClass("js-btn-edit")) ? "/Edit/" : "/Detail/"
+        var action = ($(e.target).closest("button").hasClass("js-btn-edit")) ? "/Edit/" : "/Detail/";
 
         window.location.href = "/" + controllerName + action + itemId;
     }
