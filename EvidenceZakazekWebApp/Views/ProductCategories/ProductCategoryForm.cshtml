@@ -1,10 +1,13 @@
 ﻿@model EvidenceZakazekWebApp.ViewModels.ProductCategoryFormViewModel
+@using EvidenceZakazekWebApp.Helpers.FlashMessagesHelper
 @using MyToolkit.Html
 @{
     ViewBag.Title = Model.Heading;
 }
 
 <h2>@ViewBag.Title</h2>
+
+@Html.RenderFlashMessages()
 
 @using (Html.BeginForm(Model.Action, "ProductCategories", FormMethod.Post, new { @class = "productCategories" }))
 {

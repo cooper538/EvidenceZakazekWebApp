@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using EvidenceZakazekWebApp.Core;
 using EvidenceZakazekWebApp.Core.Models;
+using EvidenceZakazekWebApp.Helpers.FlashMessagesHelper;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using EvidenceZakazekWebApp.Helpers.FlashMessagesHelper;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
@@ -24,11 +25,13 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Index(int id = 1)
         {
-            //TODO: IF kategorie nenalezena
             if (_unitOfWork.ProductCategories.GetCategory(id) == null)
-                this.AddFlashMessage(FlashMessageType.Info, "Zadaná kategorie nebyla nalezena");
+            {
+                this.AddFlashMessage(FlashMessageType.Warning, $"Kategorie s id: {id} nebyla nalezena.");
+                RouteData.Values.Remove(nameof(id));
+                return RedirectToAction(nameof(Index));
+            }
 
-            // TODO: Vrací prázdnou kolekci, vyřešit v crud table
             var products = _unitOfWork.Products.GetProductsWithPropertiesByCategory(id);
 
             var viewModel = new CrudTableViewModel
@@ -49,8 +52,6 @@ namespace EvidenceZakazekWebApp.Controllers
                 ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
 
-            // TODO: Try-catche, pokud selže db, navrat na Crud table s flush
-
             return View("ProductForm", viewModel);
         }
 
@@ -58,19 +59,33 @@ namespace EvidenceZakazekWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductFormViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            var isException = false;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
+                    _unitOfWork.Products.Add(product);
+                    _unitOfWork.Complete();
+                }
+                catch (Exception e)
+                {
+                    // Todo: Přidat logování
+                    isException = true;
+                }
+            }
+            else
             {
                 viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
                 viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
                 return View("ProductForm", viewModel);
             }
 
-            var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
-
-            _unitOfWork.Products.Add(product);
-            _unitOfWork.Complete();
-
-            // TODO: Try-catche, pokud selže db, navrat na formular s flush message, jinak zobrazit hlasku o uspesnem pridani
+            if (isException || !ModelState.IsValid)
+                this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.");
+            else
+                this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
 
             return RedirectToAction(nameof(Index), "Products");
         }
@@ -79,8 +94,12 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var product = _unitOfWork.Products.GetProductWithProperties(id);
 
-            // TODO: IF, pokud vrati null, navrat na Crud table s flush
-
+            if (product == null)
+            {
+                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt s id: {id} nebyl nalezen.");
+                RouteData.Values.Remove(nameof(id));
+                return RedirectToAction(nameof(Index));
+            }
 
             var viewModel = new ProductFormViewModel
             {
@@ -89,8 +108,6 @@ namespace EvidenceZakazekWebApp.Controllers
                 ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
 
-            // TODO: Try-catche, pokud selže db, navrat na Crud table
-
             _mapper.Map(product, viewModel);
 
             return View("ProductForm", viewModel);
@@ -98,24 +115,39 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Update(ProductFormViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            var isException = false;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var product = _unitOfWork.Products.GetProductWithProperties(viewModel.Id);
+
+                    // Remove old PropertyValues
+                    _unitOfWork.PropertyValues.RemoveValuesByProduct(product.Id);
+
+                    // Update Product and add new PropertyValues
+                    product.Modify(_mapper.Map<Product>(viewModel));
+
+                    _unitOfWork.Complete();
+                }
+                catch (Exception e)
+                {
+                    // Todo: Přidat logování
+                    isException = true;
+                }
+            }
+            else
             {
                 viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
                 viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
                 return View("ProductForm", viewModel);
             }
 
-            var product = _unitOfWork.Products.GetProductWithProperties(viewModel.Id);
-
-            // Remove old PropertyValues
-            _unitOfWork.PropertyValues.RemoveValuesByProduct(product.Id);
-
-            // Update Product and add new PropertyValues
-            product.Modify(_mapper.Map<Product>(viewModel));
-
-            _unitOfWork.Complete();
-
-            // TODO: Try-catche, pokud selže db, navrat na formulář s flush
+            if (isException || !ModelState.IsValid)
+                this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.");
+            else
+                this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
 
             return RedirectToAction(nameof(Index));
         }
@@ -124,12 +156,17 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var product = _unitOfWork.Products.GetProductWithProperties(id);
 
+            if (product == null)
+            {
+                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt s id: {id} nebyl nalezen.");
+                RouteData.Values.Remove(nameof(id));
+                return RedirectToAction(nameof(Index));
+            }
+
             var viewModel = new DetailViewModel
             {
                 Heading = "Detail produktu s id:" + id
             };
-
-            // TODO: IF, pokud vrati null, navrat na Crud table s flush Produkt nenalezen
 
             _mapper.Map(product, viewModel);
 
