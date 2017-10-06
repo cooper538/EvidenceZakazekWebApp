@@ -28,8 +28,6 @@ namespace EvidenceZakazekWebApp.Controllers
             if (_unitOfWork.ProductCategories.GetCategory(id) == null)
                 this.AddFlashMessage(FlashMessageType.Info, "Zadaná kategorie nebyla nalezena");
 
-            this.AddFlashMessage(FlashMessageType.Success, "Ale to nevadí");
-
             // TODO: Vrací prázdnou kolekci, vyřešit v crud table
             var products = _unitOfWork.Products.GetProductsWithPropertiesByCategory(id);
 
