@@ -9,7 +9,7 @@
     var init = function (controller) {
 
         table = $(".crudTable");
-        controllerName = controller;
+        controllerName = controller.LowercaseFirstLetter();
 
         createDataTable();
 
