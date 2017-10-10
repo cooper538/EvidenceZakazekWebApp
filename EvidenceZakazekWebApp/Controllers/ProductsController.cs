@@ -6,6 +6,7 @@ using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
@@ -27,7 +28,7 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             if (_unitOfWork.ProductCategories.GetCategory(id) == null)
             {
-                this.AddFlashMessage(FlashMessageType.Warning, $"Kategorie s id: {id} nebyla nalezena.");
+                this.AddFlashMessage(FlashMessageType.Warning, $"Kategorie nebyla nalezena. (CategoryId: {id})");
                 RouteData.Values.Remove(nameof(id));
                 return RedirectToAction(nameof(Index));
             }
@@ -47,10 +48,9 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             var viewModel = new ProductFormViewModel
             {
-                Heading = "Přidej produkt",
-                Suppliers = _unitOfWork.Suppliers.GetSuppliers(),
-                ProductCategories = _unitOfWork.ProductCategories.GetCategories()
+                Heading = "Přidej produkt"
             };
+            LoadDataForSelects(viewModel);
 
             return View("ProductForm", viewModel);
         }
@@ -59,33 +59,27 @@ namespace EvidenceZakazekWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductFormViewModel viewModel)
         {
-            var isException = false;
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
                     var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
                     _unitOfWork.Products.Add(product);
                     _unitOfWork.Complete();
+                    this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
                 }
-                catch (Exception e)
+                else
                 {
-                    // Todo: Přidat logování
-                    isException = true;
+                    LoadDataForSelects(viewModel);
+                    return View("ProductForm", viewModel);
                 }
-            }
-            else
-            {
-                viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
-                viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
-                return View("ProductForm", viewModel);
-            }
 
-            if (isException || !ModelState.IsValid)
+            }
+            catch (DbEntityValidationException ex)
+            {
                 this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.");
-            else
-                this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
+                // Todo: přidat logování
+            }
 
             return RedirectToAction(nameof(Index), "Products");
         }
@@ -96,7 +90,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             if (product == null)
             {
-                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt s id: {id} nebyl nalezen.");
+                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt nebyl nalezen. (ProductId: {id})");
                 RouteData.Values.Remove(nameof(id));
                 return RedirectToAction(nameof(Index));
             }
@@ -104,9 +98,8 @@ namespace EvidenceZakazekWebApp.Controllers
             var viewModel = new ProductFormViewModel
             {
                 Heading = $"Editace produktu s id:{product.Id}",
-                Suppliers = _unitOfWork.Suppliers.GetSuppliers(),
-                ProductCategories = _unitOfWork.ProductCategories.GetCategories()
             };
+            LoadDataForSelects(viewModel);
 
             _mapper.Map(product, viewModel);
 
@@ -115,11 +108,9 @@ namespace EvidenceZakazekWebApp.Controllers
 
         public ActionResult Update(ProductFormViewModel viewModel)
         {
-            var isException = false;
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
                     var product = _unitOfWork.Products.GetProductWithProperties(viewModel.Id);
 
@@ -130,24 +121,19 @@ namespace EvidenceZakazekWebApp.Controllers
                     product.Modify(_mapper.Map<Product>(viewModel));
 
                     _unitOfWork.Complete();
+                    this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
                 }
-                catch (Exception e)
+                else
                 {
-                    // Todo: Přidat logování
-                    isException = true;
+                    LoadDataForSelects(viewModel);
+                    return View("ProductForm", viewModel);
                 }
             }
-            else
+            catch (DbEntityValidationException ex)
             {
-                viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
-                viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
-                return View("ProductForm", viewModel);
-            }
-
-            if (isException || !ModelState.IsValid)
                 this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.");
-            else
-                this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
+                // Todo: přidat logování
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -158,7 +144,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             if (product == null)
             {
-                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt s id: {id} nebyl nalezen.");
+                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt nebyl nalezen. (ProductId: {id})");
                 RouteData.Values.Remove(nameof(id));
                 return RedirectToAction(nameof(Index));
             }
@@ -171,6 +157,12 @@ namespace EvidenceZakazekWebApp.Controllers
             _mapper.Map(product, viewModel);
 
             return View(viewModel);
+        }
+
+        private void LoadDataForSelects(ProductFormViewModel viewModel)
+        {
+            viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
+            viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
         }
     }
 }
