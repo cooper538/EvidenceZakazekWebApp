@@ -1,10 +1,9 @@
-﻿@using System.Activities.Expressions
-@using System.Diagnostics.Eventing.Reader
+﻿@using EvidenceZakazekWebApp.Extensions
 @using EvidenceZakazekWebApp.Helpers.FlashMessagesHelper
 @model EvidenceZakazekWebApp.ViewModels.CrudTableViewModel
 @{
     ViewBag.Title = Model.Heading;
-    ViewBag.ControllerName = @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    ViewBag.ControllerName = @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().LowercaseFirstLetter();
 }
 
 @section AddToHead{
@@ -57,16 +56,26 @@
 }
 else
 {
-    <h3>Kategorie neobsahuje produkty.</h3>
+    <h3>
+        @{
+            switch ((string)ViewBag.ControllerName)
+            {
+                case "products": <text>Nebyl nalezen žádný produkt.</text>
+                    break;
+                case "productCategories": <text>Nebyla nalezena žádna kategorie produktů.</text>
+                    break;
+                default:
+                    throw new NotImplementedException($"Any items found message on CrudTable for \"{(string) ViewBag.ControllerName}\"");
+            }
+        }
+    </h3>
 }
-
-
 
 
 @section scripts
 {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var controllerName = "@ViewBag.ControllerName";
 
             CrudTableController.init(controllerName);
