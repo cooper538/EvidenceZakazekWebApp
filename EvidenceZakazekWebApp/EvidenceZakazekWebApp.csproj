@@ -229,6 +229,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PropertyDefinitionsController.cs" />
     <Compile Include="Controllers\PropertyValuesController.cs" />
+    <Compile Include="Core\PropertyDefinitionEqualityComparer.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\FlashMessagesHelper\FlashMessage.cs" />
     <Compile Include="Helpers\FlashMessagesHelper\FlashControllerExtensions.cs" />

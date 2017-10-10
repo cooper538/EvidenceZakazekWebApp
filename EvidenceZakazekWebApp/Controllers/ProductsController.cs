@@ -7,6 +7,8 @@ using EvidenceZakazekWebApp.ViewModels.Partial;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
@@ -63,6 +65,17 @@ namespace EvidenceZakazekWebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (!HasValidProperties(viewModel))
+                    {
+                        this.AddFlashMessage(
+                            FlashMessageType.Warning, 
+                            "Vlastnosti produktu nebyly správně zadány. " +
+                            "Nastala chyba při načítání vlastností podle kategorie");
+
+                        LoadDataForSelects(viewModel);
+                        return View("ProductForm", viewModel);
+                    }
+
                     var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
                     _unitOfWork.Products.Add(product);
                     _unitOfWork.Complete();
@@ -163,6 +176,17 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
             viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
+            // Todo: nacist vlastnosti
+
+        }
+
+        private bool HasValidProperties(ProductFormViewModel viewModel)
+        {
+            var propertyDefinitionsByCategory = _unitOfWork.PropertyDefinitions
+                .GetDefinitionsByCategory(viewModel.ProductCategoryId);
+
+            return propertyDefinitionsByCategory.All(pd =>
+                viewModel.PropertyValues.Any(pv => pv.PropertyDefinitionId == pd.Id));
         }
     }
 }
