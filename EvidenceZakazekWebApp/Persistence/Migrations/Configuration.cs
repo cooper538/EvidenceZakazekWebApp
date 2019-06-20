@@ -36,7 +36,7 @@ namespace EvidenceZakazekWebApp.Migrations
                 // Product Categories
                 var seedProductCategoryDefinitions1 = new SeedProductCategoryDefinition
                 {
-                    CatregoryName = "Jističe",
+                    CategoryName = "Jističe",
                     ProductNameBase = "Jistič",
                     ProductsCount = 10,
                     PropDefAndValDefinitions = new List<SeedPropDefnAndValDefinition>
@@ -62,7 +62,7 @@ namespace EvidenceZakazekWebApp.Migrations
 
                 var seedProductCategoryDefinitions2 = new SeedProductCategoryDefinition
                 {
-                    CatregoryName = "Stykače",
+                    CategoryName = "Stykače",
                     ProductNameBase = "Relé",
                     ProductsCount = 10,
                     PropDefAndValDefinitions = new List<SeedPropDefnAndValDefinition>

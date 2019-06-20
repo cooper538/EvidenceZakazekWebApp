@@ -16,7 +16,7 @@ namespace EvidenceZakazekWebApp.Migrations.Seed
             PropDefAndValDefinitions = new List<SeedPropDefnAndValDefinition>();
         }
 
-        public string CatregoryName { get; set; }
+        public string CategoryName { get; set; }
         public string ProductNameBase { get; set; }
         public int ProductsCount { get; set; }
         public List<SeedPropDefnAndValDefinition> PropDefAndValDefinitions { get; set; }
@@ -39,7 +39,7 @@ namespace EvidenceZakazekWebApp.Migrations.Seed
                 pc => pc.Name,
                 new ProductCategory
                 {
-                    Name = categoryDef.CatregoryName
+                    Name = categoryDef.CategoryName
                 });
 
             context.SaveChanges();

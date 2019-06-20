@@ -4,10 +4,8 @@ using EvidenceZakazekWebApp.Core.Models;
 using EvidenceZakazekWebApp.Helpers.FlashMessagesHelper;
 using EvidenceZakazekWebApp.ViewModels;
 using EvidenceZakazekWebApp.ViewModels.Partial;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -68,7 +66,7 @@ namespace EvidenceZakazekWebApp.Controllers
                     if (!HasValidProperties(viewModel))
                     {
                         this.AddFlashMessage(
-                            FlashMessageType.Warning, 
+                            FlashMessageType.Warning,
                             "Vlastnosti produktu nebyly správně zadány. " +
                             "Nastala chyba při načítání vlastností podle kategorie");
 
@@ -176,8 +174,6 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             viewModel.Suppliers = _unitOfWork.Suppliers.GetSuppliers();
             viewModel.ProductCategories = _unitOfWork.ProductCategories.GetCategories();
-            // Todo: nacist vlastnosti
-
         }
 
         private bool HasValidProperties(ProductFormViewModel viewModel)
