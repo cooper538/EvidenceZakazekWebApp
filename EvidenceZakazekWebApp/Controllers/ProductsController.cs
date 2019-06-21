@@ -28,7 +28,7 @@ namespace EvidenceZakazekWebApp.Controllers
         {
             if (_unitOfWork.ProductCategories.GetCategory(id) == null)
             {
-                this.AddFlashMessage(FlashMessageType.Warning, $"Kategorie nebyla nalezena. (CategoryId: {id})");
+                this.AddFlashMessage(FlashMessageType.Warning, $"Kategorie nebyla nalezena. (CategoryId: {id})", 3000);
                 RouteData.Values.Remove(nameof(id));
                 return RedirectToAction(nameof(Index));
             }
@@ -68,7 +68,8 @@ namespace EvidenceZakazekWebApp.Controllers
                         this.AddFlashMessage(
                             FlashMessageType.Warning,
                             "Vlastnosti produktu nebyly správně zadány. " +
-                            "Nastala chyba při načítání vlastností podle kategorie");
+                            "Nastala chyba při načítání vlastností podle kategorie",
+                            3000);
 
                         LoadDataForSelects(viewModel);
                         return View("ProductForm", viewModel);
@@ -77,7 +78,7 @@ namespace EvidenceZakazekWebApp.Controllers
                     var product = _mapper.Map<ProductFormViewModel, Product>(viewModel);
                     _unitOfWork.Products.Add(product);
                     _unitOfWork.Complete();
-                    this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
+                    this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.", 3000);
                 }
                 else
                 {
@@ -88,7 +89,7 @@ namespace EvidenceZakazekWebApp.Controllers
             }
             catch (DbEntityValidationException ex)
             {
-                this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.");
+                this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.", 3000);
                 // Todo: přidat logování
             }
 
@@ -101,7 +102,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             if (product == null)
             {
-                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt nebyl nalezen. (ProductId: {id})");
+                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt nebyl nalezen. (ProductId: {id})", 3000);
                 RouteData.Values.Remove(nameof(id));
                 return RedirectToAction(nameof(Index));
             }
@@ -132,7 +133,7 @@ namespace EvidenceZakazekWebApp.Controllers
                     product.Modify(_mapper.Map<Product>(viewModel));
 
                     _unitOfWork.Complete();
-                    this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.");
+                    this.AddFlashMessage(FlashMessageType.Success, "Produkt byl uložen.", 3000);
                 }
                 else
                 {
@@ -142,7 +143,7 @@ namespace EvidenceZakazekWebApp.Controllers
             }
             catch (DbEntityValidationException ex)
             {
-                this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.");
+                this.AddFlashMessage(FlashMessageType.Danger, "Produkt nebyl uložen. Kontaktujte podporu.", 3000);
                 // Todo: přidat logování
             }
 
@@ -155,7 +156,7 @@ namespace EvidenceZakazekWebApp.Controllers
 
             if (product == null)
             {
-                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt nebyl nalezen. (ProductId: {id})");
+                this.AddFlashMessage(FlashMessageType.Warning, $"Produkt nebyl nalezen. (ProductId: {id})", 3000);
                 RouteData.Values.Remove(nameof(id));
                 return RedirectToAction(nameof(Index));
             }

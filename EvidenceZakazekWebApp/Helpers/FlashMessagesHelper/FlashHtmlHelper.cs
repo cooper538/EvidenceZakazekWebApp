@@ -21,6 +21,7 @@ namespace EvidenceZakazekWebApp.Helpers.FlashMessagesHelper
                 var alertDiv = new TagBuilder("div");
                 alertDiv.AddCssClass($"alert {flashMessage.GetClass()}");
                 alertDiv.SetInnerText(flashMessage.Message);
+                alertDiv.MergeAttribute("data-delay-to-hide", flashMessage.DelayToHideMiliseconds.ToString());
 
                 flashMessagesHtml.Append(alertDiv);
             }
