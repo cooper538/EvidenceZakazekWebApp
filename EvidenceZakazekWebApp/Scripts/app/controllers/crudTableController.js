@@ -1,4 +1,4 @@
-﻿var CrudTableController = function (crudService) {
+﻿var CrudTableController = function (crudService, flashService) {
 
     var controllerName;
     var table;
@@ -78,6 +78,7 @@
 
     var doneDelete = function () {
         table.api().row(targetRow).remove().draw();
+        flashService.addFlashMsgSuccess("Produkt byl smazán.", 2000)
     };
 
     var fail = function (e) {
@@ -96,4 +97,4 @@
     return {
         init: init
     }
-}(CrudService);
+}(CrudService, FlashService);

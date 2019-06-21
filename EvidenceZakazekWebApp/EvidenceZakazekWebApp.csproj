@@ -534,6 +534,7 @@
     <Content Include="Scripts\app\controllers\crudTableController.js" />
     <Content Include="Scripts\app\controllers\productController.js" />
     <Content Include="Scripts\app\services\crudService.js" />
+    <Content Include="Scripts\app\services\flashService.js" />
     <Content Include="Scripts\app\services\propertyValueService.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
