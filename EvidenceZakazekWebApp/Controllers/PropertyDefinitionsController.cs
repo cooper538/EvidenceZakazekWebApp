@@ -3,8 +3,10 @@ using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
+    [Authorize]
     public class PropertyDefinitionsController : Controller
     {
+
         [HttpGet]
         public ActionResult GetNewPropertyDefinitionForm()
         {

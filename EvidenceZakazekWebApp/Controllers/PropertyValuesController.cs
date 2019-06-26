@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
+    [Authorize]
     public class PropertyValuesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace EvidenceZakazekWebApp.Controllers
 {
+    [Authorize]
     public class ProductCategoriesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
