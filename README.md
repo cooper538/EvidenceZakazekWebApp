@@ -1,14 +1,12 @@
-v0.1 - CRUD for Products and ProductCategories is complete. In very straightforward way.
+# Inventory web app
+build in ASP.NET MVC
 
-in next version (v0.2):
-- refactoting 
-- - rich model/ light controller / maybe add services
-- - integrita modelu
-- - repozitáře
-- - automatizované testy
+v0.2 - Add dynamic property for products  
+v0.1 - CRUD for Products and ProductCategories is complete.
 
-- fukce
-- - select Products pro export xls, csv
-- - upload souborů pro Products
+in next version (v0.3):
+- refactor Products View
+- refactor DataAnotation to FluetApi
+- add tests
 
-- přispůsobení GUI pro Alpha testování
+(vrabec853 and cooper538 are one person😏)
