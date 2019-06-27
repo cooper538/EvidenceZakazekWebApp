@@ -8,3 +8,5 @@ in next version (v0.3):
 - refactor Products View
 - refactor DataAnotation to FluetApi
 - add tests
+
+(vrabec853 and cooper538 are one person😏)
